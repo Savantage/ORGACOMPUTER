@@ -1,0 +1,23 @@
+     1                                  global		_main
+     2                                  section		.data
+     3 00000000 05000000                	num1	dd	5
+     4 00000004 06000000                	num2	dd	6
+     5                                  section		.bss
+     6 00000000 <res 00000004>          	resMay	resd	1
+     7 00000004 <res 00000004>          	resMen	resd	1
+     8                                  section		.text
+     9                                  _main:
+    10 00000000 A1[00000000]            	mov		eax,[num1]
+    11 00000005 8B1D[04000000]          	mov		ebx,[num2]
+    12 0000000B 01D8                    	add		eax,ebx
+    13 0000000D 83F80A                  	cmp		eax,10
+    14                                  
+    15 00000010 7F07                    	jg		mayor
+    16 00000012 A3[04000000]            	mov		[resMen],eax
+    17                                  	
+    18 00000017 EB05                    	jmp		fin
+    19                                  mayor:
+    20 00000019 A3[00000000]            	mov		[resMay],eax
+    21                                  fin:	
+    22 0000001E C3                      	ret
+    23                                  	

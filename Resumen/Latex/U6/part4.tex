@@ -1,0 +1,73 @@
+\subsection{MAGNETIC TAPE}
+\subsubsection{Definicion}
+Magnetic tape is a medium for magnetic recording, made of a thin, magnetizable coating on a long, narrow strip of plastic film.
+
+\subsubsection{Medio}
+\begin{itemize}
+\item Poliester flexible cubierto de material magnetizable
+	\begin{itemize}
+	\item Carretes abiertos
+	\item Paquetes cerrados (cartuchos)
+	\end{itemize}
+\item Ancho de cinta entre 0.38 cm (0.25 pulgadas) y 1.27 cm (0.5 pulgadas)
+\item Acceso secuencial a la información: si estoy en el registro 1 y quiero llegar al N tengo que “leer” los N-1 del medio
+\item Si quiero leer un registro anterior tengo que rebobinar y volver a buscar el registro
+\end{itemize}
+
+\subsubsection{Técnicas de grabación}
+	Grabación en paralelo
+		\begin{itemize}
+		\item Técnica usada originalmente
+		\item Cabeza de grabación estacionaria
+		\item Se graban pistas en paralelo a lo largo de la cinta
+		\item Al principio eran de 9 pistas (8 bits de datos y 1 bit de paridad para detectar errores)
+		\item Luego fueron 18 (palabra) o 36 (doble palabra) pistas
+		\end{itemize}
+	Grabación en serie
+		\begin{itemize}
+		\item Sistema moderno de grabación
+		\item Cabeza de grabación estacionaria
+		\item Se escriben los datos a lo largo de una pista primero hasta llegar al final de la cinta y luego se pasa a otra
+		\item Grabación en “serpentina”
+		\item Pueden grabarse n pistas adyacentes en simultáneo (n entre 2 y 8)
+		\end{itemize}
+	Grabación helicoidal
+		\begin{itemize}
+		\item Cabeza de grabación rotatoria
+		\item Símil video casseteras
+		\item Evita problema de movimiento veloz de la cinta de las otras técnicas
+		\item La cinta se mueve en forma lenta mientras que la cabeza rota en forma rápida
+		\item Las pistas pueden estar más cercanas unas a otras
+		\end{itemize}
+
+\subsubsection{Modos de operación}
+	\begin{itemize}
+	\item Modo start-stop por bloque
+		\begin{itemize}
+		\item Viejo uso de grabación por registro/bloque
+		\item La cinta se usaba para guardar archivos para procesamiento posterior
+		\item Se podía actualizar un registro/bloque particular siempre y cuando no cambiara su tamaño
+		\item Los datos se grababan en bloques físicos
+		\item Entre los bloques había espacios (IRG – Inter Record Gap) para sincronización de la unidad
+		\end{itemize}
+	\item Modo streaming
+		\begin{itemize}
+		\item Uso para backup o archivo de información
+		\item No se requiere operación de start-stop por bloque
+		\item No se requiere actualización de bloques particulares dentro de un archivo
+		\item Se escriben archivos completos como un “stream” de datos contiguo
+		\item La información de graba físicamente en bloques pero no se pueden localizar o modificar bloques particulares
+		\end{itemize}
+	\end{itemize}
+
+\subsubsection{Usos y características}
+	\begin{itemize}
+	\item Fue el primer medio de almacenamiento secundario
+	\item Aun es usado para backup y archivo de información (30 años o más de duración) dado su bajo costo por byte y su capacidad de almacenamiento
+	\item Es el medio más lento de la pirámide de jerarquía de memoria
+	\item Marcas físicas en las cintas
+		\begin{itemize}
+		\item BOT (Beginning of tape)
+		\item EOT (End of tape)
+		\end{itemize}
+	\end{itemize}

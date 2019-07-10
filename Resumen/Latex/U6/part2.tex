@@ -1,0 +1,206 @@
+\subsection{Medios Opticos}
+In 1983, one of the most successful consumer products of all time was introduced:
+the compact disk (CD) digital audio system. The CD is a nonerasable disk that can
+store more than 60 minutes of audio information on one side. The huge commercial
+success of the CD enabled the development of low-cost optical-disk storage
+technology that has revolutionized computer data storage. A variety of optical-disk
+systems have been introduced (Table 6.6). We briefly review each of these.
+
+CD-ROM Both the audio CD and the CD-ROM (compact disk read-only
+memory) share a similar technology. The main difference is that CD-ROM players
+are more rugged and have error correction devices to ensure that data are properly
+transferred from disk to computer. Both types of disk are made the same way. The
+disk is formed from a resin, such as polycarbonate. Digitally recorded information
+(either music or computer data) is imprinted as a series of microscopic pits on the
+surface of the polycarbonate. This is done, first of all, with a finely focused, highintensity
+laser to create a master disk. The master is used, in turn, to make a die to
+stamp out copies onto polycarbonate. The pitted surface is then coated with a highly
+reflective surface, usually aluminum or gold. This shiny surface is protected against
+dust and scratches by a top coat of clear acrylic. Finally, a label can be silkscreened
+onto the acrylic.
+Information is retrieved from a CD or CD-ROM by a low-powered laser
+housed in an optical-disk player, or drive unit. The laser shines through the clear
+polycarbonate while a motor spins the disk past it (Figure 6.12). The intensity of
+the reflected light of the laser changes as it encounters a pit. Specifically, if the laser
+beam falls on a pit, which has a somewhat rough surface, the light scatters and a low
+intensity is reflected back to the source. The areas between pits are called lands.
+A land is a smooth surface, which reflects back at higher intensity. The change
+between pits and lands is detected by a photosensor and converted into a digital
+signal. The sensor tests the surface at regular intervals. The beginning or end of
+a pit represents a 1; when no change in elevation occurs between intervals, a 0 is
+recorded.
+Recall that on a magnetic disk, information is recorded in concentric tracks.
+With the simplest constant angular velocity (CAV) system, the number of bits per
+track is constant. An increase in density is achieved with multiple zoned recording,
+in which the surface is divided into a number of zones, with zones farther from the
+center containing more bits than zones closer to the center. Although this technique
+increases capacity, it is still not optimal.
+To achieve greater capacity, CDs and CD-ROMs do not organize information
+on concentric tracks. Instead, the disk contains a single spiral track, beginning near
+the center and spiraling out to the outer edge of the disk. Sectors near the outside
+of the disk are the same length as those near the inside. Thus, information is packed
+evenly across the disk in segments of the same size and these are scanned at the
+same rate by rotating the disk at a variable speed. The pits are then read by the laser
+at a constant linear velocity (CLV). The disk rotates more slowly for accesses near
+the outer edge than for those near the center. Thus, the capacity of a track and the
+rotational delay both increase for positions nearer the outer edge of the disk. The
+data capacity for a CD-ROM is about 680 MB.
+
+\begin{itemize}
+\item CD: Compact Disk. A nonerasable disk that stores digitized audio information. The standard system uses 12-cm disks and can record more than 60 minutes of uninterrupted playing time.
+\item CD-ROM:  Compact Disk Read-Only Memory. A nonerasable disk used for storing computer data. The standard system uses 12-cm disks and can hold more than 650 Mbytes.
+\item CD-R: CD Recordable. Similar to a CD-ROM. The user can write to the disk only once. 
+\item CD-RW: CD Rewritable. Similar to a CD-ROM. The user can erase and rewrite to the disk multiple times.
+\item DVD: Digital Versatile Disk. A technology for producing digitized, compressed representation of video information,
+as well as large volumes of other digital data. Both 8 and 12 cm diameters are used, with a
+double-sided capacity of up to 17 Gbytes. The basic DVD is read-only (DVD-ROM).
+\item DVD-R: DVD Recordable. Similar to a DVD-ROM. The user can write to the disk only once. Only one-sided
+disks can be used.
+\item DVD-RW: DVD Rewritable. Similar to a DVD-ROM. The user can erase and rewrite to the disk multiple times.
+Only one-sided disks can be used.
+\item Blu-ray DVD: High-definition video disk. Provides considerably greater data storage density than DVD, using a 405-nm
+(blue-violet) laser. A single layer on a single side can store 25 Gbytes.
+\end{itemize}
+
+/*211*/
+/*212*/
+
+Data on the CD-ROM are organized as a sequence of blocks. A typical block
+format is shown in Figure 6.13. It consists of the following fields:
+\begin{itemize}
+\item Sync: The sync field identifies the beginning of a block. It consists of a byte of
+all 0s, 10 bytes of all 1s, and a byte of all 0s.
+\item Header: The header contains the block address and the mode byte. Mode
+0 specifies a blank data field; mode 1 specifies the use of an error-correcting
+code and 2048 bytes of data; mode 2 specifies 2336 bytes of user data with no
+error-correcting code.
+\item Data: User data.
+\item Auxiliary: Additional user data in mode 2. In mode 1, this is a 288-byte errorcorrecting
+code.
+\end{itemize}
+With the use of CLV, random access becomes more difficult. Locating a specific
+address involves moving the head to the general area, adjusting the rotation
+speed and reading the address, and then making minor adjustments to find and
+access the specific sector. 
+CD-ROM is appropriate for the distribution of large amounts of data to a
+large number of users. Because of the expense of the initial writing process, it is not
+appropriate for individualized applications. Compared with traditional magnetic
+disks, the CD-ROM has two advantages:
+\begin{itemize}
+\item The optical disk together with the information stored on it can be mass replicated
+inexpensively—unlike a magnetic disk. The database on a magnetic disk
+has to be reproduced by copying one disk at a time using two disk drives.
+\item The optical disk is removable, allowing the disk itself to be used for archival
+storage. Most magnetic disks are nonremovable. The information on nonremovable
+magnetic disks must first be copied to another storage medium
+before the disk drive/disk can be used to store new information.
+The disadvantages of CD-ROM are as follows:
+\item It is read-only and cannot be updated.
+\item It has an access time much longer than that of a magnetic disk drive, as much
+as half a second.
+\end{itemize} 
+\paragraph{CD RECORDABLE}\mbox{}\\\\%%
+To accommodate applications in which only one or a small
+number of copies of a set of data is needed, the write-once read-many CD, known
+as the CD recordable (CD-R), has been developed. For CD-R, a disk is prepared
+in such a way that it can be subsequently written once with a laser beam of
+modest -intensity. Thus, with a some what more expensive disk controller than for
+CD-ROM, the customer can write once as well as read the disk.
+The CD-R medium is similar to but not identical to that of a CD or
+CD-ROM. For CDs and CD-ROMs, information is recorded by the pitting of
+the surface of the medium, which changes reflectivity. For a CD-R, the medium
+includes a dye layer. The dye is used to change reflectivity and is activated
+by a high-intensity laser. The resulting disk can be read on a CD-R drive or a
+CD-ROM drive.
+The CD-R optical disk is attractive for archival storage of documents and files.
+It provides a permanent record of large volumes of user data.
+\paragraph{ CD REWRITABLE }\mbox{}\\\\%%
+The CD-RW optical disk can be repeatedly written and
+overwritten, as with a magnetic disk. Although a number of approaches have been
+tried, the only pure optical approach that has proved attractive is called phase
+change. The phase change disk uses a material that has two significantly different
+reflectivities in two different phase states. There is an amorphous state, in which the
+molecules exhibit a random orientation that reflects light poorly; and a crystalline
+state, which has a smooth surface that reflects light well. A beam of laser light can
+change the material from one phase to the other. The primary disadvantage of
+phase change optical disks is that the material eventually and permanently loses
+its desirable properties. Current materials can be used for between 500,000 and
+1,000,000 erase cycles.
+The CD-RW has the obvious advantage over CD-ROM and CD-R that it can
+be rewritten and thus used as a true secondary storage. As such, it competes with
+magnetic disk. A key advantage of the optical disk is that the engineering tolerances
+for optical disks are much less severe than for high-capacity magnetic disks. Thus,
+they exhibit higher reliability and longer life.
+\paragraph{Digital Versatile Disk }\mbox{}\\\\%%
+With the capacious digital versatile disk (DVD), the electronics industry has at last
+found an acceptable replacement for the analog VHS video tape. The DVD has
+replaced the videotape used in video cassette recorders (VCRs) and, more important
+for this discussion, replace the CD-ROM in personal computers and servers.
+The DVD takes video into the digital age. It delivers movies with impressive picture
+quality, and it can be randomly accessed like audio CDs, which DVD machines
+can also play. Vast volumes of data can be crammed onto the disk, currently seven
+times as much as a CD-ROM. With DVD’s huge storage capacity and vivid quality,
+PC games have become more realistic and educational software incorporates more
+video. Following in the wake of these developments has been a new crest of traffic
+over the Internet and corporate intranets, as this material is incorporated into
+Web sites.
+The DVD’s greater capacity is due to three differences from CDs (Figure 6.14):
+\begin{itemize}
+\item Bits are packed more closely on a DVD. The spacing between loops of a spiral on a
+CD is 1.6 $\mu $m and the minimum distance between pits along the spiral is 0.834 $\mu $m.
+
+/*214*/
+
+The DVD uses a laser with shorter wavelength and achieves a loop spacing of
+0.74 $\mu$m and a minimum distance between pits of 0.4 $\mu$m. The result of these
+two improvements is about a seven-fold increase in capacity, to about 4.7 GB.
+\item The DVD employs a second layer of pits and lands on top of the first layer. A
+dual-layer DVD has a semireflective layer on top of the reflective layer, and
+by adjusting focus, the lasers in DVD drives can read each layer separately.
+This technique almost doubles the capacity of the disk, to about 8.5 GB. The
+lower reflectivity of the second layer limits its storage capacity so that a full
+doubling is not achieved.
+\item The DVD-ROM can be two sided, whereas data are recorded on only one side
+of a CD. This brings total capacity up to 17 GB.
+As with the CD, DVDs come in writeable as well as read-only versions (Table 6.6).
+\end{itemize}
+\paragraph{High-Definition Optical Disks}\mbox{}\\\\%%
+
+High-definition optical disks are designed to store high-definition videos and to
+provide significantly greater storage capacity compared to DVDs. The higher bit
+density is achieved by using a laser with a shorter wavelength, in the blue-violet
+
+/*215*/
+range. The data pits, which constitute the digital 1s and 0s, are smaller on the highdefinition
+optical disks compared to DVD because of the shorter laser wavelength.
+Two competing disk formats and technologies initially competed for market
+acceptance: HD DVD and Blu-ray DVD. The Blu-ray scheme ultimately achieved
+market dominance. The HD DVD scheme can store 15 GB on a single layer on a
+single side. Blu-ray positions the data layer on the disk closer to the laser (shown on
+the right-hand side of each diagram in Figure 6.15). This enables a tighter focus and
+less distortion and thus smaller pits and tracks. Blu-ray can store 25 GB on a single
+layer. Three versions are available: read only (BD-ROM), recordable once (BD-R),
+and rerecordable (BD-RE).
+
+\paragraph{Sony / Panasonic: Tecnología “ Archival Disc”}\mbox{}\\\\%%
+
+$https://en.wikipedia.org/wiki/Archival_Disc$
+\begin{itemize}
+\item Primera generación
+\item Segunda generación
+\item Tercera generación
+\end{itemize}
+
+\paragraph{Sony “ Optical Disc Archive”}\mbox{}\\\\%%
+
+$https://en.wikipedia.org/wiki/Optical_Disc_Archive$
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,457 @@
+Sistemas de numeración
+
+En las computadoras se necesitan almacenar distintos tipos de datos, ya sean letras, numeros, simbolos.
+
+Sistemas de numeracion posicionales: El valor de un simbolo es independiente de la posicion que ocupa. Ejemplo: Numeros romanos
+
+Sistemas de numeracion posicionales: El valor de un simbolo depende de la posicion que ocupa. Ejemplo: Numeros decimales
+El punto fraccionario es llamado punto decimal, en base diez, y punto binario, en base binaria.
+
+Ditos de distintos sistemas:
+Binario: 0, 1; generalmente se denominan bits.
+Octal: 0, 1, 2, 3, 4, 5, 6, 7
+Hexadecimal: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F
+
+Cambio de base
+  Numeros enteros
+  Base b a base 10
+    ABCD_b = (Ab^3 + Bb^2 + Cb^1 + Db^0)_10
+  Base 10 a base n
+    Divisiones sucesivas, y se escribe al reves.
+  Base n a base m
+    Hacemos de base n a base 10 y posteriormente de base 10 a base m.
+  
+  Partes fraccionarias
+  De base b a base 10
+    0,ABCD_b = (Ab^-1 + Bb^-2 + Cb^-3 + Db^-4)_10
+  De base 10 a base b
+    Se resuelve mediante multiplicaciones sucesivas.
+    0,125_10 a base 2
+      0,125 x 2 = 0,250 0
+      0,250 x 2 = 0,500 0
+      0,500 x 2 = 1,000 1
+    0,125_10 = 0,001_2
+  De base n a base m:
+    Se hace el pasaje de la base n a la base 10 y de la base 10 a la base m.
+
+Casos especiales de cambio de base    
+ 1- b^x = p 
+    2^3 = 8, tomo de a 3 dígitos
+ 2- b^(1/x)=p 
+    16^(1/4)=2, se expanden en 4 digitos
+
+Numeros de precision finita
+  En la mayoria de las computadoras la cantidad de digitos para representar un
+  número, se fija en su diseño. Observemos un ejemplo con números enteros positivos
+  de tres digitos.
+  
+  600+600 = 1200 muy grande
+  003-005 = -002 negativo
+  007/002 = 3.5  no es un enteros
+  
+  Las exclusiones se dividen en dos grupos, los resultados que no pertenecen al conjunto
+  y los resultados que son mayores o menos al mayor y mínimo número del conjunto (overflow)
+  
+Representación de números negativos:
+  En las computadoras existen cuatro posibles métodos:
+  1 Signo y magnitud
+  2 Complemento a uno
+  3 Complemento a la base
+  4 Complemento a dos
+  5 Exceso a la base
+  
+  1 Signo y magnitud: Se usa un bit para representa el signo, a menudo es el bit más significativo y por convención
+  se usa el cero para números positivos y 1 para los negativos.
+  Los n-1 bits restantes se usan para representar el significando que es la magnitud del número en
+  valor absoluto.
+  
+  Ventajas:
+  a Posee un rango simetrico
+  Desventajas:
+  a No permite operar arimeticamente
+  b Posee doble representación del cero
+  
+  2 Complemento a uno: Consiste en aplicarle un NOT bit a bit al número.
+  Se usa un bit para representar el signo, a menudo es el bit más significativo, por convención se usa un cero para los positivos
+  y un 1 para los negativos.
+  Los n-1 bit restantes para representar el significando que es la magnitud del numero en valor absoluto
+  para el caso de números positivos o bien, es el complemento a uno del valor absoluto del número en caso de ser negativo.
+  
+  Ventajas:
+  a Posee un rango simétrico
+  b Permite operar arimeticamente y para obtener el resultado correcto al operar se debe sumar el acarreo obtenido al final de la suma/resta
+    realizadas en caso de haberlo obtenido, este acarreo es conocido con el nombre de end-around carry.
+  
+  Desventajas:
+  a Posee doble representación del cero
+
+  3 Complemento a la base:
+  El complemento de un número dado en una base es aquel que sumado al número original da la base a la n, siendo n la cantidad de dígitos
+  que componene a ese número.
+  Complemento a 10 de 13579_10 = 100000 - 13579 = 86421_10
+  El concepto de complemento puede ser usado para transformar una operación de resta de dos números en la suma de uno de ellos más el complemento
+  del otro.
+  A-B = C 
+  A-B+D = C + D [donde -B+D = B complemento]
+  A + Bcomp = C + D 
+  
+  ejemplo:
+  A = 10376 B = 234 
+  A-B = C
+  A+Bcomp = C+D [Bcomp = 100000-234=99766]
+  10376 + 99766 = d + 100000
+  10142 = d
+  
+  4 Complemento a dos:
+  Permite representar números negatvios en el sistema binario y la realización de restas mediante sumas.
+  Estos números negativos están representados a través de su complmento.
+  El complemento a 2 de un número se obtiene de sumar 1 al número negado bit a bit.
+  Complemento a dos de 01101_2 = 10010 + 00001 = 10011_2
+  Ventajas:
+  No posee doble representación del cero
+  Permite operar arimeticamente
+  Desventajas:
+  Posee un rango asimetrico (-2^n-1, -1+2^n-1)
+  
+  5 Exceso a base
+  Consiste en tomar el valor real del número a representar
+  Sumarle la base elevada según la cantidad de dígitos menos 1 que se tienen disponibles
+  
+  Esto se lo conoce como representación en Exceso a base B^(n-1), puesto que a cada número se le suma
+  el mismo valor y está en exceso por dicho valor.
+  
+  Ejemplo: con 8 bits disponibles, el exceso es 2^8-1=128
+  -97_10 + 128 = 31_10
+  31_10 = 00011111
+  10110101_2 = 181_10, 181-128=53_10
+  
+  Ventajas:
+  No hay empaquetación del número 
+  Permite operar arimeticamente
+  Desventajas:
+  Requiere operaciónes arimeticas intermedias
+  Posee un rango asimetrico
+  
+Formato y Configuracion
+
+Formato: Representación computacional
+Configuración: Representación en una determinada base de un número en un formato
+
+Ejemplos:
+1Binario punto fijo sin signo
+2binario de punto fijo con signo
+3empaquetado
+4zoneado
+5binario de punto flotante
+
+Expansión y truncamiento:
+Expandir formato: Significa completar la representación computacional sin alterar el numero representado
+en el mismo. 
+Truncar formato: Descartar digitos de su representación sin alterar el número representado en el mismo.
+
+1:	Formato binario de punto fijo sin signo 
+	base: 2
+	representa: números enteros positivos
+	maximo: (2^n - 1)_10
+	
+	Almacenar:
+	1) Pasar el numero a base 2
+	2) completar con ceros a izquierda la capacidad del formato
+	Recuperar:
+	1) Pasamos el numero de base 2 a la base deseada
+
+2: 	Formato binario de punto fijo con signo
+	base: 2
+	representa: Enteros positivos y negativos
+	primer bit: reservado para el signo (0 = +) (1 = -)
+	maximo: 2^(n-1)-1
+	minimo -2^(n-1)
+	
+	Almacenar:
+	1) Numero a base 2
+	2) Completar con zeros a la izquierda
+	3) Si es un numero negativo hacerle el complemento a 2.
+	
+	Recuperar:
+	1) Si el bit de signo es cero, se pasa de base 2 a base 10
+	2) Si el bit es 1, el numero es negativo, por lo que debemos complementarlo
+	3) Quitamos los ceros a la izquierda
+	4) Numero de base 2 a base 10
+	5) Colocamos el signo
+	
+	Expansión y Truncamiento:
+	Expansión: Se completa con el bit de signo a la izquierda
+	Truncamiento: Se extraen bits a la izquierda siempre y cuando no se esté
+	alterando el bit de signo del número.
+	
+3:	Formato empaquetado:
+	base: 16
+	representa: enteros positivos y negativos
+	maximo: 10^(2n-1) -1
+	minimo: -10^(2n-1)+1
+	
+	Se divide un byte en 4 bits, a cada grupo de 4 bits se le llama Nibble.
+	
+	Almacenar:
+	1) Numero a base 10
+	2) Colocal cada digito decimal en un nibble dejando el ultimo nibble ya que en el mismo
+	se almacena el signo.
+	3) Colocar en el ultimo nible el signo, CAFE = + , DF = -
+	4) Se rellena con 0 hasta alcanzar la cantidad de bytes usados
+	
+	Recuperar: 
+	Se realizan en orden inverso los pasos para almacenar
+	
+4:	Formato Zoneado
+	base: 16
+	representa: enteros positivos y negativos 
+	maximo: 10^n -1
+	minimo -10^n + 1
+	
+	almacenar:
+	1 numero a base 10
+	2 colocar cada uno de los digitos decimales en un nibble derecho
+	3 completar todos los nibbles de izquierda con F salvo el ultimo que se completa con el
+	 signo siguiendo las mismas reglas que para empaquetados.
+	 CAFE = + , DF = -
+	4 se rellena con F0 hasta alcanzar la cantidad de bytes usados
+	
+	recuperar:
+	los pasos en orden inverso
+	
+5:	punto flotante:
+	es la manera que tiene una arquitectura de representar a los numeros reales.
+	su notación cientifica se expresa de la siguiente manera M x B^E
+	M: Mantissa B: base E: Exponente
+	
+	Un numero binario está normalizado si el digito de la izquierda del punto es igual a 1.
+	
+	- Formato binario punto flotante IEEE754
+	Precision Simple: signo: 1 bit exponente: 8 bits fraccion: 23 bits
+	Signo: 0 = +  1 = -
+	Exponente: Exceso 127
+	Precision Doble: signo: 1 bit exponente 11bits fraccion: 52 bits
+	Signo: 0 = +  1 = -
+	Exponente: Exceso 1023
+	
+	ancho de paso:
+	Marca cual es la distancia entre un flotante y su siguiente numero representable en el formato
+	
+	overflow y underflow:
+	overflow: el exponente excede el limite superior, tanto para mantisas positivas como para negatvias, dando lugar a +inf, - inf
+	underflow: el exponente excede el minimo valor permitido y caga en el intervalo (-inf, -0) y (+0,+inf)
+	
+	Desnormalizados (subnormales): tienen como exponente al cero, y el bit implicito a la izquierda del punto binario, es ahora un cero
+	implicito. la diferencia entre los desnormalizados y los normalizados es que, estos ultimos no permiten al cero como exponente.
+	Los normalizados tienen 24 bits significativos, mientras que los normalizados poseen 23.
+	
+	Normalizado 	| +/-| 0<exp<max | cualquier patron de bits
+	Desnormalizado  | +/-| 0		 | cualquier patron de bits != 0
+	Cero		 	| +/-| 0		 | 0
+	infinito	 	| +/-| 11...11 	 | 0
+	NAN				|+/- | 11...11	 | Cualquier patron de bits != 0
+	
+	Infinito dividido Infinito = NAN
+	Cero + = 0 00000000 00000000000000000000000
+	Cero - = 1 00000000 00000000000000000000000
+	Infinito + = 0 11111111 00000000000000000000000 
+	Infinito - = 1 11111111 00000000000000000000000
+	No normalizados/Subnormales (no se asume que haya que añadir un 1 al significando para obtener su valor)
+	1 00000000 00100010001001010101010
+	
+	Valores no numericos:
+	NaN (Not a number). 2 tipos, QNaN (quiet nan) y SNaN (signalling nan) 
+	Qnan = indeterminado Snan = operacion no valida
+	
+	qnan = 0 11111111 10000100000000000000000
+	snan = 1 11111111 00100010001001010101010
+	
+	Operación 						Resultado
+	n ÷ ±Infinito	 					0
+	±Infinito × ±Infinito 				±Infinito
+	±n ÷ 0 								±Infinito
+	Infinito + Infinito 				Infinito
+	Cualquier operación contra un NaN 	NaN
+	±0 ÷ ±0 							NaN
+	Infinito - Infinito 				NaN
+	±Infinito ÷ ±Infinito 				NaN
+	±Infinito × 0 						NaN
+	
+	Almacenar:
+	A = -6,12510
+	
+	1) El bit 31 tomará el valor del signo del número. (-6,125 -> 1)
+	2) Pasar a binario la mantisa decimal.
+		6=110_2
+		0,125=0,001_2
+		6,125=110,001_2
+	3) Normalizar
+		Desplazamiento a la derecha  -> Exponente negativo
+		Desplazamiento a la izquierda -> Exponente positivo
+		1,10001 , exponente = 2
+		2 expresado en Exceso 127 es 129 ->0000001_2
+	4) Mantisa representada con bit implícito: 1,10001 -> 10001 
+	5) El número final es 1 10000001 100010000000000000000002 (Se
+	agregan a la derecha los “0” necesarios para completar los 23 bits de
+	la mantisa)
+	
+	Recuperar:
+	Realizar los pasos en orden inverso
+	
+	Formato Binario de Punto Flotante (IBM mainframe)
+	Base: 16
+	representa: enteros con coma decimal positivos y negativos
+	precision: simple 4 bytes, doble, 8 bytes, extendida 16 bytes.
+	estructura: S nnnnnnn dddddd
+	s = signo 1- 0+
+	n = digitos de la caracteristica, en total son 7 bits se usan para calcular el exponente 
+	C = E + 4016 donde E corresponde al exponente
+	d =  mantisa normalizada -> 0,dddddd x 10^e _16
+	
+	almacenar:
+	- 321,54 10 -> Binario de punto flotante precisión simple
+	1) 321,54_10 = 141,8A3_16
+	2) 0,1418A3 x 10^3 _ 16
+	3) C = E + 40_16 = 3 + 40_16 = 43_16 en base 2 sería 100011_2
+	4) Agregamos el bit de signo: 1100011_2 que en base 16 es C3_16
+	5) Resultado final : C31418A3_16
+	
+	ancho de paso:
+	distancia entre un flotante y su siguiente numero representable en el formato
+	
+	0,FE04AC x 10^(-1A)_16 - 0,FE04AB x 10^(-1A)_16 =0,000001 x 10^(-1A)16 = 0,1^(-1F)_16 ANCHO DE PASO
+	
+	absorción:
+	se da en las operaciones de suma y resta entre flotantes
+	ej:
+	A = 0,15A4 x 105_16
+	B = 0,54F x 10^-2_16
+	para poder operar entre flotantes debemos igualar los exponentes llevandolos al mayor de todos.
+	A+B = 0.15A400 * 10^5 + 0,00...00 * 10^5 = 0,15A4000 * 10^5 _ 16
+	lo minimo que se puede sumar es el ancho de paso del numero de mayor exponente
+	
+	Cadenas de caracteres
+	
+	En una cadena de caracteres, cada caracter ocupa 1 byte y se representa según el codigo de caracteres que se esté utilizando.
+	ASCII o EBCDIC.
+	
+	Ej: hola en ascii = 484E4C41
+		hola en ebcdic = C8D6D3C1
+		
+	unicode:
+		
+		Codificación:  codificación organizada en planos. Cada plano tiene un espacio de 16 bits y la cantidad de planos
+		definida es 17. plano 0 al plano 16. por lo que la cantidad de codigos posibles es 17*2^16 = 1.114.112
+		
+		U-XXXXYYYY
+		XXXX el valor hexadecimal del plano
+		YYYY el valor hexadecimal correspondiente al caracter dentro del plano
+		
+		U-00000040 significa plano 0 codigo 40_16 y corresponde especificamente a la representación de la letra M.
+		
+		Para el caso particular del plano 0 suele usarse una notación simplificaa la cual omite expresar el numero del plano
+		y remplazar el - posterior a la U por el signo +. U+YYYY. Para el caso de ejemplo quedaría U+0040
+		
+		El rango total entonces es: 00000000 al 0010FFFF
+		
+		UTF - Unicode Transformation Format
+		
+		Consiste en un mapeo algoritmico de un codigo unicode a una secuencia de bytes.
+		
+		Tipos:
+			UTF-8
+			UTF-16
+			UTF-32
+		UTF-8
+		Segun el rango al cual corresponde dentro de la tabla Unicode, un caracter puede representarse como 1, 2, 3 o 4 tiras de 8 bits.
+		Rango [00...7F]
+		Se necesitan 7 bits y se representan en 1 byte.
+		  Primer bit en 0 y el resto igual que el codigo ASCII
+		Rango [80...7FF]
+		Se necesitan 11 bits y se representan en 2 bytes.
+		byte 1:
+			Los primeros 3 bits son fijos 110. Los 2 primeros en 1 previous a un 0 dan la señal de que se usaran 2 bytes para
+			la representación.
+		byte 2:
+			los primeros 2 bits son fijos 10
+			los 6 bits siguientes contienen los ultimos 6 del caracter segun la tabla unicode
+		rango [800...FFFF]
+			byte 1: los primeros 4 bits son fijos 1110
+					los 4 bits siguienten contienen los 4 primeros del caracter segun la tabla unicode
+			byte 2:	los primeros 2 bits son fijos 10
+					los siguientes 6 bits contienen los siguientes 6 del caracter segun la tabla unicode
+			byte 3:	idem segundo byte
+		rango [10000... 10FFFF]
+			Se necesitan 21 bits y se representan en 3 bytes
+			byte1:
+			los primeros 5 bits son fijos 11110
+			los 3 siguientes contienen los 3 primeros del caracter segun la tabla unicode
+			byte2:
+			los primeros 2 bits son fijos 10
+			los siguientes 6 bits contienen los siguientes 6 del caracter segun la tabla unicode
+			byte3
+			idem segundo byte
+			byte4
+			idem segundo byte
+		
+		ejemplo:
+		El código Unicode de la ñ es el 00F116 = 0000 0000 1111 0001
+		Se encuentra en el rango entre el “80 y 7FF”, por lo tanto se necesitan
+		11 bits (00011110001) y se usarán 2 bytes para la representación:
+		Byte 1: 11000011
+		Byte 2: 10110001
+			Representación Unicode 11000011101100012 = C3B1
+		
+		utf-16
+		Según el rango al cual corresponde dentro de la tabla Unicode, un caracter
+		puede representarse como 1 o 2 tiras de 16 bits cada una.
+		Rango [0...FFFF]
+		Se necesitan 16 bits y se representan en 2 bytes tal cual se define en la tabla Unicode
+		Rango [10000... 10FFFF]
+			Siendo U el código unicode del caracter a representar, y dado que el máximo
+			valor es 10FFFF se calcula:
+			C = U-10000 donde C siempre tendrá 20 bits
+			Se necesitaran 20 bits y se representan en 4 bytes
+			byte 1 y 2
+			Los primeros 6 bits son fijos 110110
+			Los restantes 10 bits son los primeros 10 de C
+			byte 3 y 4
+			primeros 6 bits son fijos 110111
+			Los restantes 10 bits son los últimos 10 de C
+		ejemplo:
+			El código Unicode es el 1D11E
+			C = 10000 - 1D11E = 0D11E16 = 0000 1101 0001 0001 1110
+			Byte 1 y 2: 1101100000 1101 00
+			Byte 3 y 4: 11011101 0001 1110
+			Representación Unicode:
+			11011000001101 00110111010001 11102 = D834 DD1E
+			
+		utf-32:
+		Es la mas simple de las 3 formas ya que todos los caracteres se representan
+		en 32 bits en forma idéntica a como se codifican en la tabla Unicode.
+		
+		Decodificación y detección de errores
+		
+		UTF-8
+		Al decodificar una tira de bits codificados en UTF-8 se mira mirar el primer bit
+			Si es 0, entonces el caracter a decodificar está en los siguientes 7 bits.
+			Si es 1:
+				Si el siguiente 0, es un error.
+				Sino hay que contar cuantos unos (1) en total hay antes del primer 0.
+				Si son más de 4, es un error.
+				Sino, los siguientes N bytes (siendo N la cantidad de unos 
+				encontrados) deben comenzar con los bits 10, sino, es error.
+				El código Unicode final se arma con los últimos 7-N bits del
+				primer byte seguido de los últimos 6 bits de los bytes siguientes.
+		UTF-16
+		Para decodificar una tira de bits codificados en UTF-16 se comienza evaluando
+		los primeros 6 bits del primer byte.
+			Si son distintos de 110110, es un dato coficado en 2 bytes y se lo
+			busca en la tabla Unicode
+			Sino, se verifican los primeros 6 bits del tercer byte:
+				Si son distintos de 110111 es un error.
+				Sino se arma el código Unicode con los últimos 2 bits del primer
+				byte, seguidos por los 8 bits del segundo byte. A esto se le
+				suman los últimos 2 bits del siguiente byte, mas los 8 bits del
+				último byte.
+			

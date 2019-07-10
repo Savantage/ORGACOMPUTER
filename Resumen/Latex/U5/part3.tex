@@ -1,0 +1,56 @@
+
+\subsection{Interrupciones}
+\subsubsection{Definicion}
+Mecanismos por los cuales otros modulos (E/S y memoria) interrumpen el normal procesamiento del CPU
+\subsubsection{¿Para que existen?}
+Para mejorar la eficiencia de procesamiento de un computador
+\subsubsection{Clases de interrupciones}
+\begin{itemize}
+	\item programa
+	\item  reloj
+	\item e/s
+	\item fallas de hardware
+\end{itemize}
+
+\subsubsection{Ciclo de instruccion}
+\begin{itemize}
+	\item Fetch instruction
+	\item  Decode instruction
+	\item Fetch operand
+	\item Execute instruction
+	\item Store result
+	\item ----------------> interrupt breakpoint
+	\item process interrupt
+\end{itemize}
+
+\subsubsection{Transferencia de control al S.O. (Handler)}
+/*4pdf*/
+	
+\subsubsection{Procesamiento de interrupciones }
+/*5pdf*/
+
+/*6pdf ejemplo*/
+	
+\subsubsection{Multiples interrupciones}
+
+
+\paragraph{Deshabilitar interrupciones (secuencia)}\mbox{}\\\\%%
+/*7pdf*/
+\paragraph{Priorizar interrupciones (anidadas)}\mbox{}\\\\%%
+/*8pdf*/
+	
+\paragraph{Múltiples interrupciones - ejemplo}\mbox{}\\\\%%
+Tres dispositivos de E/S
+\begin{itemize}
+	\item Línea de comunicación (Prioridad 1)
+	\item  Disco (Prioridad 2)
+	\item Impresora (Prioridad 3)
+\end{itemize}
+Eventos
+\begin{itemize}
+	\item T=10 Interrupción de Impresora
+	\item T=15 Interrupción de línea de comunicación
+	\item T=20 Interrupción de disco
+\end{itemize}
+
+/*10pdf*/

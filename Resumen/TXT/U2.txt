@@ -1,0 +1,147 @@
+﻿Data: Data is raw, unorganized facts that need to be processed. Data can be something simple and seemingly random and useless until it is organized.
+Information: When data is processed, organized, structured or presented in a given context so as to make it useful, it is called information
+
+Bit: Unidad de información
+Digito binario: unidad de información más pequeña con la que pueden trabajar los dispositivos electrónicos que constituyen una computadora digital.
+Biestable: Un biestable, es un multivibrador capaz de permanecer en uno de dos estados posibles durante un tiempo indefinido en ausencia de perturbaciones.
+Byte: Unidad de información de base utilizada en computación y en telecomunicaciones, y que resulta equivalente a un conjunto ordenado de ocho bits,
+Proceso: Serie de operaciones llevadas acabo por una computadora.
+Computadora: Es una máquina que consta de elementos mecánicos, eléctricos y electrónicos capaz de procesar gran cantidad de información a alta velocidad.
+
+
+Clasificación de computadoras según su generación
+
+Generación 0 - Computadoras Mecánicas (1642 - 1945)
+Pascal
+	Máquina mecánica de cálculo 1642
+	Babbage
+Máquina de diferencias 1790
+	Máquina analítica (propósito general) Primera programadora (ADA) 1834
+Aiken 
+	Máquina analítica Mark I (Harvard 1944)
+
+Generación 1 - Tubos de vacío (1945-1955)
+Turing
+	Colossus - Computadora electrónica (1943)
+Mauchley/Eckert
+	ENIAC - Programable por switches (1946)
+Von Neumann
+	IAS Machine - Programa almacenado (1952)
+
+Generación 2 - Transistores (1955-1965)
+DEC
+	PDP 1 - Primera minicomputadora (1961)
+	PDP 8 - Primera mini masiva / Omnibus (1965)
+IBM
+	7094 - Dominio en uso cientifico (1962)
+CDC
+	6600 - Primera supercomputadora (1964)
+Burroughs
+	B5000 - Primera computadora diseñada para un lenguale de alto nivel (1963)
+	
+Generación 3 - Circuitos Integrados (1965 - 1980)
+DEC
+	PDP 11 - Minicomputadora dominante (1970)
+IBM
+	SYSTEM/360 - Familia de computadoras (1964)
+		Uso comercial y cientifico
+		Distintos modelos compatibles entre sí con distintas capacidades
+		multiprogramación
+		simulaba otras arquitecturas con microarquitectura programada (7094 y 1401)
+
+Generación 4 - Integración a muy gran escala VLSI (1980 - ?)
+	IBM
+		PC - Comienzo era computadores personales (1981)
+			Intel 8088
+			MS-DOS
+	Apple
+		Apple Lisa - Primera computadora con GUI (1983)
+	DEC
+		Alpha - Primera computadora RISC de 64 bits (1992)
+	COMMODORE/ATARI
+		Computadoras hogareñas sin estandar
+Generación 5 - Computadoras "invisibles"
+	Apple
+		Newton - Primera palmtop (1993)
+	Computadores embebidos
+		Relojes inteligentes
+		Celulares
+		Electrodomésticos
+
+Arquitectura de Von Neumann
+
+							MEMORIA
+							   |
+			  __________________________________________
+			  |		|								|	|
+		
+		Control Unit  ------------------------	Arithmetic Logic Unit
+		
+		Input --------->               ---------->    output
+		
+Principios básicos de Von Neumann
+Programa almacenado:
+	Tanto las instrucciones como los datos que en ellas se usan residen en una misma memoria
+Ruptura de secuencia
+	Debe existir una instrucción que permita a la máquina no seguir con la secuencia de ejecución
+
+
+
+Compuerta: Son circuitos electrónicos biestables unidireccionales, es decir, permiten el pasaje de información en un sólo sentido.
+Registro: memoria muy rápida “ que permite almacenar una cierta cantidad de bits
+Celda de memoria 
+	Contenido
+	Direccion
+Bus: 
+Bus de Datos: mueve la información por los componentes de hardware internos y externos del sistema tanto de entrada como de salida (teclado, Mouse etc.)
+Bus de Direcciones: ubica los datos en la memoria teniendo relación directa con los procesos de la CPU.
+Bus de Control: marca el estado de una instrucción que fue dada a la PC.
+
+/*Proceso de transferencia de información*/
+
+Máquina Abacus
+/*Grafico Maquina Abacus*/
+
+Elementos:
+	Dispositivo de Entrada/Salida
+	Unidad Arimetico Logica : Acumulador
+	Unidad de Control: Secuenciador de Instrucciones, Registro de próxima instrucción, Registro de Instrucción.
+	Memoria: Registro de Dirección de Memoria, Registro de Memoria, Celda.
+	Buses: Bus de Direcciones, Bus de Datos
+	Compuertas
+
+Relaciones:
+Tamaño RPI = Tamaño RDM = Tamaño Op = Cantidad de Celdas Direccionables
+Tamaño AC = Tamaño RI = Tamaño RM = Longitud de Instrucción = Longitud de Celda
+
+Memoria: Operaciones
+Unidad Arimetica y Logica: Operaciones
+Unidad de control
+Instrucciones: 
+	Fase de búsqueda
+	La unidad de control ordena la transferencia del contenido del RPI al RDM y envía a la memoria una orden de lectura. El contenido de la celda de memoria queda almacenado en el RM, luego la Unidad de Control ordena la transferencia del contenido del RM al RI, pudiendo entonces los circuitos especializados analizar el código de operación de la instrucción. Finalmente se prepara el RPI para ejecutar la próxima instrucción.
+Para realizar la búsqueda de un operando, una vez que la Unidad de control analiza el contenido del código de operación, ordena la transferencia del contenido del campo operando del RI al RDM y luego envía una orden de operación de lectura. El operando buscado queda disponible en el RM.
+	Fase de ejecución
+	la ejecución de cada instrucción implica el movimiento de los datos y como estos pasos se realizan en forma secuencial y ordenada la UCP sigue las señales dadas por el reloj del sistema. Se ha indicado más arriba que esta fase depende exclusivamente del tipo de tarea que se deba realizar, por ende se analizarán casos particulares.
+	Suma: se debe sumar el contenido del RM al contenido del acumulador
+	Carga: se debe almacenar en el acumulador un dato contenido en memoria
+	Almacenamiento: se debe “guardar” en memoria el contenido del acumulador
+	Bifurcación: se debe “saltar” a la dirección indicada en la instrucción. La dirección de bifurcación debe ser transferida al RPI (para buscar la próxima instrucción a ejecutar).
+
+Super Abacus:
+/* Gráfico Máquina Super Abacus*/
+	Características Principales
+		Registros Generales (Datos o direcciones)
+		No posee RPI, R0 contiene la dirección de la próxima instrucción. Incremento vía sumador.
+		Máquina de dos direcciones (dos operandos)
+		UAL permite hacer cálculos con direcciones y datos
+
+	Formato de Instrucciones:
+		/*Gráfico  de formato de instrucciones*/
+	Fáse de Búsqueda: /* Escribir */ 
+	Fase de ejecución:	
+			Sumar Registro
+			Sumar Inmediato
+			Sumar palabra en memoria (Registro Indirecto)
+			Sumar palabra en memoria (desplazamiento)
+	¿Como se da cuenta la maquina Superabacus en el llenado de los operandos? Y la respuesta es la siguiente, cada instrucción Sumar tiene un código de operación diferente en cada caso.

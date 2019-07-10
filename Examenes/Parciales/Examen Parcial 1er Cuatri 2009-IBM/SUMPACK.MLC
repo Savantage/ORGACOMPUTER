@@ -1,0 +1,53 @@
+SUMPACK  SUBENTRY BASE=3
+         LR    4,1         Backup de R1 en R4
+         L     5,4(4)      (R5)=dir de CANTELEM
+
+         LA    6,0         (R6)=0
+         ICM   6,1,0(5)    (R6)=CANTELEM
+
+         LA    10,0        (R10)=SUMATORIA EN 0
+         C     6,=F'0'     Si la tabla esta vacia
+         BE    FIN         se va a FIN
+         
+         L     5,0(4)      (R5)=dir TABELEM
+NEXTNUM  LR    7,5
+
+         LA    8,8         (R8)=CANT BYTE C/NUMERO
+VALOCTA  CLI   0(7),X'F0'
+         BL    INVAL
+         CLI   0(7),X'F7'
+         BH    INVAL
+         LA    7,1(7)
+         BCT   8,VALOCTA
+         
+         LA    9,0         (R9)=0
+         ICM   8,15,4(5)   (R8)=1eros 4 bytes de la tira
+
+         LA    7,4         (R7)=Cant bytes cada parte de la tira
+NEXTBYTE SRDL  8,3         Corro a R9 3 bits
+         SRL   8,5         Descarto los 4 bits de las F y el bit 0
+         BCT   7,NEXTBYTE
+
+         ICM   8,15,0(5)   (R8)=ultimos 4 bytes de la tira
+         
+         LA    7,4
+NEXTBYT2 SRDL  8,3
+         SRL   8,5
+         BCT   7,NEXTBYT2
+
+         SRL   9,8
+         ST    9,EMPA
+         ZAP   DOBLE,EMPA
+         CVB   9,DOBLE
+         AR    10,9
+         
+INVAL    LA    5,8(5)
+         BCT   6,NEXTNUM
+         
+FIN      L     5,8(4)      (R5)=DIR RESULT
+         ST    10,0(5)
+
+         SUBEXIT
+EMPA     DS    PL4
+DOBLE    DS    D
+         END

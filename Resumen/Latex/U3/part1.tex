@@ -1,0 +1,193 @@
+\section{Arquitectura del conjunto de Instrucciones}
+
+\subsection{Definiciones}
+\begin{itemize}
+\item Arquitectura de computadoras: Son las características computacionales visibles al programador, es decir, los atributos que tienen impacto directo en la ejecución lógica de un programa.
+\item Organización de computadoras: Implementación de la arquitectura (microarquitectura). Define las unidades operativas y sus interconexiones (señales de control, interfaces entre el CPU y los periféricos, tecnología de memoria, trayecto de datos, etc.)
+\end{itemize}
+
+
+\subsection{Modelo de capas}
+
+\begin{center}
+\begin{tabular}{ |l|l| } \hline
+  \multicolumn{2}{|c|}{Software} \\ \hline
+  Level 6 & Problem Oriented Language Level (Translation - Compiler) \\
+  Level 5 & Assembly Language Level (Translation - Assembler)\\
+  Level 4 & Operating System Machine Level (Partial Interpretation)\\
+  Level 3 & Instruction Set Architecture Level (Interpretation/Direct Execution) \\ \hline
+  \multicolumn{2}{|c||}{Hardware} \\ \hline
+  Level 2 & Micro-Architecture Level (registers)\\
+  Level 1 & Digital logic level (gates) \\
+  Level 0 & Device Level (individual transistors)\\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{ISA - Instruction Set Architecture}
+
+\subsubsection{Arquitectura de computadoras}
+\begin{itemize}
+\item Repertorio de instrucciones
+\item  Especificacion de su operacion
+\item  Registros
+\item  Tipos de datos
+\item  Modos de direccionamiento
+\item  Formato de instrucciones
+\item  Memoria
+	\begin{itemize}
+	\item  Word size
+	\item  Big/Little  ENdian
+	\item  Direccionamiento
+	\item   Espacio de direcciones (address space)
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Organizacion de computadoras}
+\begin{itemize}
+\item Diferentes implementaciones de una misma arquitectura
+	\begin{itemize}
+	\item  Costos
+	\item  Velocidad de procesamiento
+	\item  Consumo de energía
+	\end{itemize}
+\item Microarquitectura
+	\begin{itemize}
+	\item  Cableada (hardware - latches, contadores, decodificadores, etc.)
+	\item  Microprogramada (software - microprograma)
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Familia de computadoras}
+\begin{itemize}
+\item Misma arquitectura base, distintas organizaciones (implementaciones)
+\item Modelos con prestaciones y precios diferentes pero compatibles entre si
+\end{itemize}
+
+\paragraph{Ejemplos}\mbox{}\\\\
+\begin{itemize}
+\item Intel 80x86
+\item IBM Mainframe (360/370/390/zArch)
+\item PowerPC
+\item Sparc
+\item Arm
+\end{itemize}
+
+\subsubsection{Clasificación de computadoras según su poder de cálculo}
+
+\paragraph{Supercomputadoras}\mbox{}\\\\%%
+\begin{itemize}
+\item extremadamente rápidas
+\item manejan volúmenes de datos enormes
+\item poseen miles de cpus
+\item usos específicos (aplicaciones científicas, simulaciones, campo militar)
+\end{itemize}
+
+\subparagraph{Ejemplos}\mbox{}\\\\
+\begin{itemize}
+\item Summit USA
+\item Sierra USA
+\item Sunway TaihuLight China
+\item DeepBlue IBM USA
+\end{itemize}
+
+\paragraph{Macrocomputadoras o Mainframes}\mbox{}\\\\%%
+\begin{itemize}
+\item Muy rápidas
+\item Manejan volúmenesde datos muy grandes
+\item Poseen cientos de CPU
+\item Muy alta disponibilidad
+\item Usos comerciales y científicos
+	\begin{itemize}
+	\item Sistemas de gestión bancarios
+	\item Telecomunicaciones
+	\item Instituciones gubernamentales
+	\end{itemize}
+\end{itemize}
+
+\subparagraph{Ejemplos}\mbox{}\\\\
+\begin{itemize}
+\item IBM Mainframe
+\end{itemize}
+
+\paragraph{Minicomputadoras o servidores middle range}\mbox{}\\\\%%
+\begin{itemize}
+\item Rápidas
+\item Manejan volúmenesde datos muy grandes
+\item Poseen decenas de CPUS
+\item Usos comerciales
+	\begin{itemize}
+	\item Empresas medianas y grandes
+	\item Varios equipos en una misma empresa
+	\end{itemize}
+\end{itemize}
+
+\subparagraph{Ejemplos}\mbox{}\\\\
+\begin{itemize}
+\item IBM RS/6000
+\item SUn UltraSparc
+\item HP-NonStop (Itanium)
+\end{itemize}
+
+\paragraph{Minicomputadoras / PC}\mbox{}\\\\%%
+\begin{itemize}
+\item Uso individual o redes pequeñas a medianas
+\item Manejan volúmenes de datos no muy grandes
+\item Poseen uno o varios CPU
+\item Uso hogareño, educativo, comercial, recreativo
+	\begin{itemize}
+	\item estaciones de trabajo en empresas
+	\item Computadora en el hogar
+	\item Negocios/Colegios
+	\item Consolas de videojuego
+	\end{itemize}
+\end{itemize}
+
+\subparagraph{Ejemplos}\mbox{}\\\\
+\begin{itemize}
+\item IBM PC compatible
+\item Apple Macintosh
+\item Video consolas
+\end{itemize}
+
+\paragraph{Computadoras portátiles / notebooks / netbooks}\mbox{}\\\\%%
+\begin{itemize}
+\item Uso individual portátil
+\item Manejan volúmenes de datos no muy grandes
+\item Poseen uno o varios CPU
+\item Uso hogareño, educativo, comercial, recreativo
+	\begin{itemize}
+	\item Estaciones de trabajo
+	\item Computadora en el hogar
+	\item Negocios/Colegios
+	\item Consolas de videojuego
+	\end{itemize}
+\end{itemize}
+
+\subparagraph{Ejemplos}\mbox{}\\\\
+\begin{itemize}
+\item Sony
+\item Toshiba
+\item HP
+\item Dell
+\end{itemize}
+
+\paragraph{Computadoras de mano}\mbox{}\\\\%%
+\begin{itemize}
+\item Uso individual portátil acotado
+\item Manejan volúmenes de datos pequeños
+\item Poseen uno o varios CPU
+\item Uso hogareño, educativo, comercial, recreativo
+	\begin{itemize}
+	\item Acopio de datos en vía pública
+	\item Información personal
+	\item Visualización de contenidos
+	\item Consolas de videojuego
+	\end{itemize}
+\end{itemize}
+
+\subparagraph{Ejemplos}\mbox{}\\\\
+\begin{itemize}
+\item Smartphones
+\item Tablets
+\item Dispositivos Usables (Samsun gear 2 - reloj inteligente)
+\end{itemize}

@@ -1,0 +1,29 @@
+PPAL     SUBENTRY BASE=3
+
+         LA    1,TABPAR             (R1)=Dir tabla parametros
+         OI    8(1),X'80'           1er bit de ultima dir de tabla = 1
+         L     15,=V(SUMPACK)       (R15)=dir Rutina Externa
+         BALR  14,15                (R14)=dir de retorno
+         
+         L     10,RESULT            (R10)=resultado sumatoria
+         CVD   10,DOBLE
+         UNPK  SUMATC,DOBLE
+         MVZ   SUMATC+14(1),=X'FF'
+         WTO   MF=(E,SUMATC-4)
+
+         SUBEXIT
+         
+TABPAR   DC    A(TABNUM)
+         DC    A(CANTELEM)
+         DC    A(RESULT)
+
+TABNUM   DC    X'F0F4F4F3F2F1F3F7F0F4F4F3F2F1F3F7'
+CANTELEM DC    X'02'
+RESULT   DC    F'0'
+DOBLE    DS    D
+         DC    H'19'
+         DC    H'0'
+SUMATC   DS    CL15
+
+         
+         END

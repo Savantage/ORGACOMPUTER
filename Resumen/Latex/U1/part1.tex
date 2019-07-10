@@ -1,0 +1,145 @@
+\section{Sistemas de numeración}
+
+\subsection{Definición}
+
+Se conoce como un sistema de numeración un conjunto finito de símbolos que se emplea con algún método para asignar numerales , o símbolos numéricos, a los números. Hay diversos sistemas que han sido, o son actualmente empleados. 
+
+\subsection{Clasificación}
+
+\subsubsection{Sistemas de numeracion no posicionales}
+El valor de un simbolo es independiente de la posicion que ocupa.
+
+Ejemplo: Numeros romanos
+
+\subsubsection{Sistemas de numeracion posicionales}\mbox{}\\
+ El valor de un simbolo depende de la posicion que ocupa.
+ El punto fraccionario es llamado punto decimal, en base diez, y punto binario, en base binaria.
+ Ejemplo: Numeros decimales
+ 
+\subsection{Dígitos en distintos sistemas}
+\begin{itemize}
+	\item Binario: 0, 1
+	\item Octal: 0, 1, 2, 3, 4, 5, 6, 7
+	\item Hexadecimal: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F
+\end{itemize}
+ 
+\subsection{Cambio de base}
+  
+\subsubsection{Numeros enteros}\mbox{}\\
+
+\paragraph{De base b a base 10}\mbox{}\\
+\paragraph{De base 10 a base n}\mbox{}\\
+\paragraph{De base n a base m}\mbox{}\\
+
+\subsubsection{Numeros fraccionarios}\mbox{}\\
+
+\paragraph{De base b a base 10}\mbox{}\\
+\paragraph{De base 10 a base b}\mbox{}\\
+\paragraph{De base n a base m}\mbox{}\\
+
+\subsubsection{Casos especiales de cambio de base}
+\begin{itemize}
+	\item \[ b^x  = p \Rightarrow 2^3 = 8 \] tomo de a 3 dígitos
+	\item \[ b^{1/x}  = p \Rightarrow 16^{1/4} = 2 \]  se expanden en 4 dígitos
+\end{itemize}
+
+\subsection{Números de precisión finita}
+En la mayoria de las computadoras la cantidad de digitos para representar un número, se fija en su diseño. Observemos un ejemplo con números enteros positivos de tres digitos.
+\begin{itemize}
+	\item 600+600 = 1200 muy grande
+	\item 003-005 = -002  negativo
+	\item 007/002 = 3.5  no es un entero
+\end{itemize}
+Las exclusiones se dividen en dos grupos, los resultados que no pertenecen al conjunto
+y los resultados que son mayores o menos al mayor y mínimo número del conjunto (overflow)
+
+\subsection{Representación de números negativos}
+
+\subsubsection{Signo y magnitud}
+Se usa un bit para representa el signo, a menudo es el bit más significativo y por convención se usa el cero para números positivos y 1 para los negativos. Los n-1 bits restantes se usan para representar el significando que es la magnitud del número en valor absoluto.
+
+\paragraph{Ventajas}
+\begin{itemize}
+\item Posee un rango simetrico
+\end{itemize}
+
+\paragraph{Desventajas}
+\begin{itemize}
+\item No permite operar arimeticamente
+\item Posee doble representación del cero
+\end{itemize}
+
+\subsubsection{Complemento a uno}
+Consiste en aplicarle un NOT bit a bit al número. Se usa un bit para representar el signo, a menudo es el bit más significativo, por convención se usa un cero para los positivos y un 1 para los negativos. Los n-1 bit restantes para representar el significando que es la magnitud del numero en valor absoluto para el caso de números positivos o bien, es el complemento a uno del valor absoluto del número en caso de ser negativo.
+
+\paragraph{Ventajas}
+\begin{itemize}
+\item Posee un rango simetrico
+\item Permite operar arimeticamente y para obtener el resultado correcto al operar se debe sumar el acarreo obtenido al final de la suma/resta realizadas en caso de haberlo obtenido, este acarreo es conocido con el nombre de end-around carry.
+\end{itemize}
+
+\paragraph{Desventajas}
+\begin{itemize}
+\item Posee doble representación del cero
+\end{itemize}
+
+\subsubsection{Complemento a la base}
+El complemento de un número dado en una base es aquel que sumado al número original da la base a la n, siendo n la cantidad de dígitos que componene a ese número. El concepto de complemento puede ser usado para transformar una operación de resta de dos números en la suma de uno de ellos más el complemento del otro.\\\\
+
+\paragraph{Complemento a 10 de $13579_{10}$}\mbox{}\\\\
+$100000 - 13579 = 86421_{10}$
+
+\paragraph{A-B}\mbox{}\\\\
+$
+A = 10376 \;\;\;\;\;\;\;\;B = 234\\
+A-B = C\\
+A+B_{comp} = C+D  \;\;\;\;\;\;\;\;\;\; B_{comp} = 100000-234=99766\\
+10376 + 99766 = D + 100000\\
+10142 = D\\
+$
+
+\subsubsection{Complemento a dos}
+Permite representar números negatvios en el sistema binario y la realización de restas mediante sumas. Estos números negativos están representados a través de su complmento. El complemento a 2 de un número se obtiene de sumar 1 al número negado bit a bit.
+
+\paragraph{Complemento a dos de $01101_2$}\mbox{}\\\\
+$10010 + 00001 = 10011_2$
+
+\paragraph{Ventajas}
+\begin{itemize}
+\item No posee doble representación del cero
+\item Permite operar arimeticamente
+\end{itemize}
+
+\paragraph{Desventajas}
+\begin{itemize}
+\item Posee un rango asimetrico
+\end{itemize}
+
+\subsubsection{Exceso a la base}
+Consiste en tomar el valor real del número a representar sumarle la base elevada según la cantidad de dígitos menos 1 que se tienen disponibles. Esto se lo conoce como representación en Exceso a base $B^{n-1}$, puesto que a cada número se le suma
+el mismo valor y está en exceso por dicho valor.
+
+\paragraph{Guardar}\mbox{}\\\\
+El exceso es $2^{8-1}=128\\
+-97_{10} + 128 = 31_{10}\\
+31_{10} = 00011111_{2}$
+
+\paragraph{Obtener}\mbox{}\\\\
+El exceso es $2^{8-1}=128\\
+181-128 = 53_{10}\\
+53_{10} = 00110101_{2}$
+
+\paragraph{Ventajas}
+\begin{itemize}
+\item No hay empaquetación del número 
+\item Permite operar arimeticamente
+\end{itemize}
+
+\paragraph{Desventajas}
+\begin{itemize}
+\item Requiere operaciónes arimeticas intermedias
+\item Posee un rango asimetrico
+\end{itemize}
+
+
+

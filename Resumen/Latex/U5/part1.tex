@@ -1,0 +1,131 @@
+\section{Componentes de un computador}
+
+\subsection{Procesador }
+
+\subsubsection{CISC: Complex Instruction Set Computer}
+\begin{itemize}
+\item Pocos registros de procesador (especializados)
+\item Set de Instrucciones amplio
+\item Muchas instrucciones para trabaja con memoria
+\item Microarquitectura en sofware /hardware compleja
+\item Instrucciones complejas (más de un ciclo de reloj)
+\item Varios modos de direccionamiento
+\item Muchos tipos de datos
+\item Muchos formatos de instrucción (variables ohíbridos)
+\item Orientado al hardware, compiladores relativamente
+\item simples (tamaño de código pequeño)
+\end{itemize}
+
+\subsubsection{RISC ( Reduced Instruction Set Computer)}
+\begin{itemize}
+\item Muchos registros de procesador de uso general
+\item Set de Instrucciones pequeño
+\item Solo acceso a memoria a través de LOAD/STORE
+\item Microarquitectura en hardware simple
+\item Instrucciones simples (un ciclo de reloj)
+\item Pocos modos de direccionamiento
+\item Pocos tipos de datos
+\item Pocos formatos de instrucción (fijos)
+\item Orientado al software, compiladores relativamente
+\item complejos (tamaño de código largo)
+\end{itemize}
+
+\subsubsection{Paralelismo}
+El paralelismo es una función que realiza el procesador para ejecutar varias tareas al mismos tiempo, es decir puede realizar varias cálculos simultáneamente, basados en principio de dividir los problemas grandes para obtener varios problemas pequeños.
+
+Limitación de la velocidad del reloj ???
+
+\paragraph{Técnicas}\mbox{}\\\\%%
+\subparagraph{A nivel instrucción}\mbox{}\\\\%%
+Un programa de ordenador es, en esencia, una corriente de instrucciones ejecutadas por un procesador. Estas instrucciones pueden ser reordenadas y se combinan en grupos que luego se ejecutan en paralelo sin cambiar el resultado del programa. Esto se conoce como paralelismo a nivel de instrucción. 
+Los procesadores modernos tienen tuberías de instrucciones de múltiples etapas. Cada etapa en la tubería corresponde a una acción diferente que el procesador lleva a cabo en el que la instrucción en esa etapa; un procesador con una tubería N-etapa puede tener hasta N diferentes instrucciones en diferentes fases de ejecución. El ejemplo canónico de un procesador segmentado es un procesador RISC, con cinco etapas: extracción de instrucción, decodificar, ejecutar, acceso a la memoria, y escribir de nuevo. El procesador Pentium 4 con una cartera de 35 etapas.
+
+Este mecanismo consiste en romper el flujo secuencial de instrucciones para simultanear la ejecución de varias en el mismo procesador. Existen diferentes estrategias para lograrlo.
+
+\begin{itemize}
+\item Pipelining: The execution of an instruction involves multiple stages of operation,
+including fetching the instruction, decoding the opcode, fetching operands,
+performing a calculation, and so on. Pipelining enables a processor to
+work simultaneously on multiple instructions by performing a different phase
+for each of the multiple instructions at the same time. The processor overlaps
+operations by moving data or instructions into a conceptual pipe with all
+stages of the pipe processing simultaneously. For example, while one instruction
+is being executed, the computer is decoding the next instruction. This is
+the same principle as seen in an assembly line.
+\item Hazards:
+The model of sequential execution assumes that each instruction completes before the next one begins; this assumption is not true on a pipelined processor. A situation where the expected result is problematic is known as a hazard. Processors that can compute the presence of a hazard may stall[definition needed], delaying processing of the second instruction (and subsequent instructions) until the values it requires as input are ready. This creates a bubble[definition needed] in the pipeline, also partly negating the advantages of pipelining.
+Some processors can not only compute the presence of a hazard but can compensate by having additional data paths that provide needed inputs to a computation step before a subsequent instruction would otherwise compute them, an attribute called operand forwarding.[5][6]
+Some processors can determine that instructions other than the next sequential one are not dependent on the current ones and can be executed without hazards. Such processors may perform out-of-order execution.
+\item Intel 80486 Pipelining
+An instructive example of an instruction pipeline is that of the Intel 80486. The
+80486 implements a five-stage pipeline:
+	\begin{itemize}
+	\item Instruction fetch unit
+	\item Instruction decode unit
+	\item Calculate the effective address
+	\item Fetch the operands from memory
+	\item Instruction execution unit
+	\item Write back unit
+	\end{itemize}
+\end{itemize}
+
+/*6 U5 CPU*/
+
+\begin{itemize}
+\item Dual pipelining:  was introduced in the Intel Pentium processor. This technology allows the processor to break down a command into two shorter commands and execute them simultaneously when it receives a long command. If there are separate tasks that must be completed for a result that are independent of one another, they can be executed simultaneously to save time
+/*8 U5 CPU*/
+\end{itemize}
+
+\begin{itemize}
+\item Superescalar:
+A superscalar implementation of a processor architecture is one in which common
+instructions—integer and floating-point arithmetic, loads, stores, and conditional
+branches—can be initiated simultaneously and executed independently. Such implementations
+raise a number of complex design issues related to the instruction pipeline.
+Superscalar design arrived on the scene hard on the heels of RISC architecture.
+Although the simplified instruction set architecture of a RISC machine lends
+itself readily to superscalar techniques, the superscalar approach can be used on
+either a RISC or CISC architecture.
+Whereas the gestation period for the arrival of commercial RISC machines
+from the beginning of true RISC research with the IBM 801 and the Berkeley
+RISC I was seven or eight years, the first superscalar machines became commercially
+available within just a year or two of the coining of the term superscalar.
+The superscalar approach has now become the standard method for implementing
+high-performance microprocessors.
+/*10 U5 CPU*/
+\end{itemize}
+
+\subparagraph{A nivel procesador}\mbox{}\\\\%%
+\begin{itemize}
+\item Procesadores paralelos de datos
+	\begin{itemize}
+	\item Una sola unidad de control
+	\item Múltiples procesadores
+	\item Métodos
+		\begin{itemize}
+		\item - SIMD - Single Instruction Multiple data: Múltiples procesadores ejecutan la misma secuencia de pasos sobre un conjunto diferente de datos.
+		\item Vector processors: la ruta de datos se multiplexa en tiempo entre los elementos del vector de operandos. No ahorra tiempo de proceso, solo permite disminuir el tamaño del código por el uso de instrucciones vectoriales
+		\end{itemize}
+	\end{itemize}
+\item Multiprocesadores
+\begin{itemize}
+	\item Múltiples CPUs que comparten memoria común
+	\item CPUs fuertemente acoplados
+	\item Diferentes implementaciones 
+		\begin{itemize}
+		\item Single bus y memoria compartida (centralizada) (UMA Uniform memory access)
+		\item CPUs con memoria local y memoria compartida (NUMA non uniform memory access)
+		\end{itemize}
+\end{itemize}
+
+\item Multicomputadores
+\begin{itemize}
+	\item Computadores interconectados con memoria local (memoria distribuida)
+	\item No hay memoria compartida
+	\item CPUs ligeramente acoplados
+	\item Intercambio de mensajes
+	\item Topologías de grillas, árboles o anillos
+\end{itemize}
+
+\end{itemize}
+

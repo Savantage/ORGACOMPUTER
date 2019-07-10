@@ -1,0 +1,87 @@
+\section{Arquitectura de Von Neumann}
+
+\subsection{Principios básicos de Von Neumann}
+
+INSERTAR GRAFICO
+
+\subsubsection{Programa almacenado}
+Tanto las instrucciones como los datos que en ellas se usan residen en una misma memoria
+\subsubsection{Ruptura de secuencia}
+Debe existir una instrucción que permita a la máquina no seguir con la secuencia de ejecución
+
+\subsection{Definiciones}
+\begin{itemize}
+\item Compuerta: Son circuitos electrónicos biestables unidireccionales, es decir, permiten el pasaje de información en un sólo sentido.
+\item Registro: memoria muy rápida “ que permite almacenar una cierta cantidad de bits
+\item Celda de memoria: Contenido/Direccion
+\item Bus de Datos: mueve la información por los componentes de hardware internos y externos del sistema tanto de entrada como de salida (teclado, Mouse etc.)
+\item Bus de Direcciones: ubica los datos en la memoria teniendo relación directa con los procesos de la CPU.
+\item Bus de Control: marca el estado de una instrucción que fue dada a la PC.
+\end{itemize}
+
+/*Proceso de transferencia de información*/
+
+\section{Maquina Abacus}
+/*Grafico Maquina Abacus*/
+
+\subsection{Elementos}
+\begin{itemize}
+\item Dispositivo de Entrada/Salida
+\item Unidad Arimetico Logica : Acumulador
+\item Unidad de Control: Secuenciador de Instrucciones, Registro de próxima instrucción, Registro de Instrucción.
+\item Memoria: Registro de Dirección de Memoria, Registro de Memoria, Celda.
+\item Buses: Bus de Direcciones, Bus de Datos
+\item Compuertas
+\end{itemize}
+
+\subsubsection{Relaciones}
+Tamaño RPI = Tamaño RDM = Tamaño Op = Cantidad de Celdas Direccionables
+Tamaño AC = Tamaño RI = Tamaño RM = Longitud de Instrucción = Longitud de Celda
+
+\subsection{Uso de elementos}
+\begin{itemize}
+\item Memoria: Operaciones
+\item Unidad Arimetica y Logica: Operaciones
+\item Unidad de Control - Instrucciones
+	\begin{itemize}
+	\item Fase de búsqueda
+	\item Fase de ejecución
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Fase de busqueda}
+La unidad de control ordena la transferencia del contenido del RPI al RDM y envía a la memoria una orden de lectura. El contenido de la celda de memoria queda almacenado en el RM, luego la Unidad de Control ordena la transferencia del contenido del RM al RI, pudiendo entonces los circuitos especializados analizar el código de operación de la instrucción. Finalmente se prepara el RPI para ejecutar la próxima instrucción.
+Para realizar la búsqueda de un operando, una vez que la Unidad de control analiza el contenido del código de operación, ordena la transferencia del contenido del campo operando del RI al RDM y luego envía una orden de operación de lectura. El operando buscado queda disponible en el RM.
+
+\subsubsection{Fase de ejecución}
+la ejecución de cada instrucción implica el movimiento de los datos y como estos pasos se realizan en forma secuencial y ordenada la UCP sigue las señales dadas por el reloj del sistema. Se ha indicado más arriba que esta fase depende exclusivamente del tipo de tarea que se deba realizar, por ende se analizarán casos particulares.
+Suma: se debe sumar el contenido del RM al contenido del acumulador
+Carga: se debe almacenar en el acumulador un dato contenido en memoria
+Almacenamiento: se debe “guardar” en memoria el contenido del acumulador
+Bifurcación: se debe “saltar” a la dirección indicada en la instrucción. La dirección de bifurcación debe ser transferida al RPI (para buscar la próxima instrucción a ejecutar).
+
+\section{Maquina Super Abacus}
+/*Grafico Maquina  Super Abacus*/
+\subsection{Características Principales}
+\begin{itemize}
+\item Registros Generales (Datos o direcciones)
+\item No posee RPI, R0 contiene la dirección de la próxima instrucción. Incremento vía sumador.
+\item Máquina de dos direcciones (dos operandos)
+\item UAL permite hacer cálculos con direcciones y datos
+\end{itemize}
+
+\subsection{Formato de Instrucciones}
+/*Gráfico  de formato de instrucciones*/
+
+\subsubsection{Fase de busqueda}
+A escribir
+\subsubsection{Fase de ejecucion}
+\begin{itemize}
+\item Sumar Registro
+\item Sumar Inmediato
+\item Sumar palabra en memoria (Registro Indirecto)
+\item Sumar palabra en memoria (desplazamiento)
+\end{itemize}
+
+\subsubsection{Adicional}
+¿Como se da cuenta la maquina Superabacus en el llenado de los operandos? Y la respuesta es la siguiente, cada instrucción Sumar tiene un código de operación diferente en cada caso.

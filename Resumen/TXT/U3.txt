@@ -1,0 +1,419 @@
+Arquitectura del conjunto de Instrucciones
+
+Arquitectura de computadoras
+	Son las características computacionales visibles al programador, es decir, los atributos que tienen impacto directo en la ejecución lógica de un programa.
+
+Organización de computadoras
+	Implementación de la arquitectura (microarquitectura). Define las unidades operativas y sus interconexiones (señales de control, interfaces entre el CPU y los periféricos, tecnología de memoria, trayecto de datos, etc.)
+
+Modelo de capas
+Software
+lv 6 Problem Oriented Language Level (Translation - Compiler) 
+lv 5 Assembly Language Level (Translation - Assembler)
+lv 4 Operating System Machine Level (Partial Interpretation)
+lv 3 Instruction Set Architecture Level (Interpretation/Direct Execution)
+Hardware
+lv2 Micro-Architecture Level (registers)
+lv1 Digital logic level (gates)
+lv0 Device Level (individual transistors)
+
+ISA - Instruction  Set Architecture
+Arquitectura de computadoras
+	Repertorio de Instrucciones
+	Especificación de su operacion 
+	Registros
+	Tipos de datos
+	Modos de direccionamiento
+	Formato de instrucciones
+	Memoria
+		Word Size
+		Big/Little Endian
+		Direccionamiento
+		Espacio de direcciones (address space)
+
+Organización de computadoras
+	Diferentes implementaciones de una misma arquitectura
+		Costos
+		Velocidad de procesamiento
+		Consumo de energía
+	Microarquitectura
+		Cableada (hardware - latches, contadores, decodificadores, etc.)
+		Microprogramada (software - microprograma)
+
+Familia de computadoras
+	Misma arquitectura base, distintas organizaciones (implementaciones)
+	Modelos con prestaciones y precios diferentes pero compatibles entre si
+	
+	Ejemplos:
+	Intel 80x86
+	IBM Mainframe (360/370/390/zArch)
+	PowerPC
+	Sparc
+	Arm
+
+Clasificación de computadoras según su poder de cálculo
+	Supercomputadoras:
+	extremadamente rápidas
+	manejan volúmenes de datos enormes
+	poseen miles de cpus
+	usos específicos (aplicaciones científicas, simulaciones, campo militar)
+	
+	Ejemplos:
+	Summit USA
+	Sierra USA
+	Sunway TaihuLight China
+	DeepBlue IBM USA
+	
+	Macrocomputadoras o Mainframes:
+	Muy rápidas
+	Manejan volúmenesde datos muy grandes
+	Poseen cientos de CPU
+	Muy alta disponibilidad
+	Usos comerciales y científicos:
+		Sistemas de gestión bancarios
+		Telecomunicaciones
+		Instituciones gubernamentales
+	Ejemplos:
+		IBM Mainframe
+		
+	Minicomputadoras o servidores middle range:
+	Rápidas
+	Manejan volúmenes de datos grandes
+	Poseen decenas de CPUS
+	Usos comerciales:
+		Empresas medianas y grandes
+		Varios equipos en una misma empresa
+	Ejemplos:
+		IBM RS/6000
+		SUn UltraSparc
+		HP-NonStop (Itanium)
+	Minicomputadoras / PC:
+	Uso individual o redes pequeñas a medianas
+	Manejan volúmenes de datos no muy grandes
+	Poseen uno o varios CPU
+	Uso hogareño, educativo, comercial, recreativo:
+		estaciones de trabajo en empresas
+		Computadora en el hogar
+		Negocios/Colegios
+		Consolas de videojuego
+	EJemplos:
+		IBM PC compatible
+		Apple Macintosh
+		Video consolas
+	Computadoras portátiles / notebooks / netbooks:
+		Uso individual portátil
+		Manejan volúmenes de datos no muy grandes
+		Poseen uno o varios CPU
+		Uso hogareño, educativo, comercial:
+		Estaciones de trabajo
+		computadora en el hogar
+		Negocios / Colegios
+		Ejemplos:
+		Sony
+		Toshiba
+		HP
+		Dell
+	Computadoras de mano:
+		Uso individual portátil acotado
+		Manejan volúmenes de datos pequeños
+		Poseen uno o varios CPU
+		Uso hogareño, comercial:
+			Acopio de datos en vía pública
+			Información personal
+			Visualización de contenidos
+		Ejemplos:
+		Smartphones
+		Tablets
+		Dispositivos Usables (Samsun gear 2 - reloj inteligente)
+
+Arquitectura Harvard:
+	/*Foto arquitecutra */	
+	Las instrucciones y los datos se almacenan en memorias diferentes
+	Hay dos conexiones entre la uniad de control de la CPU y cada sistema de memoria.
+	Las instrucciones se pueden cargar al mismo tiempo que los datos (instruction fetch y data access en paralelo por distintos buses)
+	Se manejan distintos espacios de direcciones para instrucciones y datos lo que idifculta la programación
+	Implementado en algunos microcontroladores PIC y en procesadores de señales digitles (DSP) (Ej. Texas Instruments TMS320 C55x processors)
+	Usado en los DSP para streaming de datos:
+		Mayor ancho de banda de memoria
+		Ancho de banda más predecible
+
+	
+
+
+
+Instruction types
+
+Data handling and memory operations
+	Set a register to a fixed constant value.
+	Copy data from a memory location to a register, or vice versa (a machine instruction is often called move; however, the term is misleading). Used to store the contents of a register, the result of a computation, or to retrieve stored data to perform a computation on it later. Often called load and store operations.
+	Read and write data from hardware devices.
+
+Arithmetic and logic operations
+	Add, subtract, multiply, or divide the values of two registers, placing the result in a register, possibly setting one or more condition codes in a status register.
+	Increment, decrement in some ISAs, saving operand fetch in trivial cases.
+	Perform bitwise operations, e.g., taking the conjunction and disjunction of corresponding bits in a pair of registers, taking the negation of each bit in a register.
+	Compare two values in registers (for example, to see if one is less, or if they are equal).
+	Floating-point instructions for arithmetic on floating-point numbers.
+	
+Control flow operations
+	Branch to another location in the program and execute instructions there.
+	Conditionally branch to another location if a certain condition holds.
+	Indirectly branch to another location.
+	Call another block of code, while saving the location of the next instruction as a point to return to.
+
+Coprocessor instructions
+	Load/store data to and from a coprocessor, or exchanging with CPU registers.
+	Perform coprocessor operations.
+
+Complex instructions
+	
+	Transferring multiple registers to or from memory (especially the stack) at once
+	Moving large blocks of memory (e.g. string copy or DMA transfer)
+	complicated integer and floating-point arithmetic (e.g. square root, or transcendental functions such as logarithm, sine, cosine, etc.)
+	SIMD instructions, a single instruction performing an operation on many homogeneous values in parallel, possibly in dedicated SIMD registers
+	performing an atomic test-and-set instruction or other read-modify-write atomic instruction
+	instructions that perform ALU operations with an operand from memory rather than a register
+
+
+ISA ( Instruction Set Architecture ) / Arquitectura de Programación
+
+An instruction set architecture (ISA) is an abstract model of a computer. An instruction set architecture is distinguished from a microarchitecture, which is the set of processor design techniques used, in a particular processor, to implement the instruction set. Processors with different microarchitectures can share a common instruction set. For example, the Intel Pentium and the Advanced Micro Devices Athlon implement nearly identical versions of the x86 instruction set, but have radically different internal designs.
+
+Machine instructions characteristics
+The operation of the processor is determined by the instructions it executes, referred to as machine instructions or computer instructions. The collection of different instructions that the processor can execute is referred to as the processor’s instruction set.
+
+Repertorio de instrucciones
+How many and which operations to provide, and how
+complex operations should be.
+
+Especificación de su operación
+
+Operation code: Specifies the operation to be performed (e.g., ADD, I/O).
+The operation is specified by a binary code, known as the operation code, or
+opcode.
+Source operand reference: The operation may involve one or more source
+operands, that is, operands that are inputs for the operation.
+Result operand reference: The operation may produce a result.
+Next instruction reference: This tells the processor where to fetch the next
+instruction after the execution of this instruction is complete.
+
+	Source and result operands can be in one of four areas:
+	Main or virtual memory: As with next instruction references, the main or virtual
+memory address must be supplied.
+	Processor register: With rare exceptions, a processor contains one or more
+registers that may be referenced by machine instructions. If only one register
+exists, reference to it may be implicit. If more than one register exists, then
+each register is assigned a unique name or number, and the instruction must
+contain the number of the desired register.
+	Immediate: The value of the operand is contained in a field in the instruction
+being executed.
+	I/O device: The instruction must specify the I/O module and device for the
+operation. If memory-mapped I/O is used, this is just another main or virtual
+memory address.
+	
+	Clasificación según la ubicación de los operandos
+	Stack (‘60s a ‘70s
+	Acumulador (antes de ‘60s)
+	Registro Memoria (‘70s hasta ahora)
+	Registro Registro (Load/Store) (‘60s hasta ahora)
+	Memoria Memoria (‘70s a ‘80s)
+
+Registros
+Number of processor registers that can be referenced by instructions,
+and their use
+
+Tipos de datos
+
+Numéricos
+	BPF s/s
+	BPF c/s
+	BPFlotante (IEEE 754 o
+	BCD (decimales)
+Caracteres
+	ASCII
+	EBCDIC
+	Unicode
+Datos lógicos
+Direcciones
+
+Modos de direccionamiento
+Instruction Sets: Addressing Modes
+
+ADDRESSING MODES
+/*458 William Stallings 10th edition*/
+■■ Immediate
+The simplest form of addressing is immediate addressing, in which the operand value
+is present in the instruction. The advantage of immediate addressing is that no memory reference other than the instruction fetch is required to obtain the operand, thus saving one memory or cache cycle in the instruction cycle. The disadvantage is that the size of the
+number is restricted to the size of the address field, which, in most instruction sets,
+is small compared with the word length.
+Operand = A
+■■ Direct
+A very simple form of addressing is direct addressing, in which the address field contains
+the effective address of the operand.
+The technique was common in earlier generations of computers but is not common
+on contemporary architectures. It requires only one memory reference and no
+special calculation. The obvious limitation is that it provides only a limited address
+space.
+EA = A
+■■ Indirect
+With direct addressing, the length of the address field is usually less than the word
+length, thus limiting the address range. One solution is to have the address field refer
+to the address of a word in memory, which in turn contains a full-
+length address of the operand. This is known as indirect addressing:
+EA = (A)
+As defined earlier, the parentheses are to be interpreted as meaning contents
+of. The obvious advantage of this approach is that for a word length of N, an address
+space of 2N is now available. The disadvantage is that instruction execution requires
+two memory references to fetch the operand: one to get its address and a second to
+get its value. Although the number of words that can be addressed is now equal to 2N, the
+number of different effective addresses that may be referenced at any one time is
+limited to 2K, where K is the length of the address field. Typically, this is not a burdensome
+restriction, and it can be an asset.
+
+■■ Register
+Register addressing is similar to direct addressing. The only difference is that the
+address field refers to a register rather than a main memory address:
+EA = R
+To clarify, if the contents of a register address field in an instruction is 5, then
+register R5 is the intended address, and the operand value is contained in R5. Typically,
+an address field that references registers will have from 3 to 5 bits, so that a
+total of from 8 to 32 general-
+purpose
+registers can be referenced.
+The advantages of register addressing are that (1) only a small address field
+is needed in the instruction, and (2) no time-
+consuming
+memory references are
+required. As was discussed in Chapter 4, the memory access time for a register
+internal to the processor is much less than that for a main memory address. The disadvantage
+of register addressing is that the address space is very limited.
+■■ Register indirect
+Just as register addressing is analogous to direct addressing, register indirect addressing
+is analogous to indirect addressing. In both cases, the only difference is whether
+the address field refers to a memory location or a register. Thus, for register indirect
+address,
+EA = (R)
+The advantages and limitations of register indirect addressing are basically the same
+as for indirect addressing. In both cases, the address space limitation (limited range
+of addresses) of the address field is overcome by having that field refer to a word-
+length
+location containing an address. In addition, register indirect addressing uses
+one less memory reference than indirect addressing.
+■■ Displacement
+A very powerful mode of addressing combines the capabilities of direct addressing
+and register indirect addressing. It is known by a variety of names depending on
+the context of its use, but the basic mechanism is the same. We will refer to this as
+displacement addressing:
+EA = A + (R)
+Displacement addressing requires that the instruction have two address fields, at
+least one of which is explicit. The value contained in one address field (value = A)
+is used directly. The other address field, or an implicit reference based on opcode,
+refers to a register whose contents are added to A to produce the effective address.
+We will describe three of the most common uses of displacement addressing:
+	■■ Relative addressing
+	For relative addressing, also called PC-relative addressing,
+	the implicitly referenced register is the program counter (PC). That is, the next
+	instruction address is added to the address field to produce the EA. Typically, the
+	address field is treated as a twos complement number for this operation. Thus, the
+	effective address is a displacement relative to the address of the instruction.
+	Relative addressing exploits the concept of locality. If most memory references are relatively near to the instruction being executed, then the use of relative addressing saves address bits in the instruction.
+	■■ Base-register addressing
+	For base-register addressing, the interpretation is
+	the following: The referenced register contains a main memory address, and the
+	address field contains a displacement (usually an unsigned integer representation)
+	from that address. The register reference may be explicit or implicit.
+	Base-register addressing also exploits the locality of memory references.
+	■■ Indexing
+	For indexing, the interpretation is typically the following: The address
+	field references a main memory address, and the referenced register contains a
+	positive displacement from that address. Note that this usage is just the opposite
+	of the interpretation for base-register addressing. Of course, it is more than just
+	a matter of user interpretation. Because the address field is considered to be a
+	memory address in indexing, it generally contains more bits than an address field
+	in a comparable base-register instruction. Also, we will see that there are some
+	refinements to indexing that would not be as useful in the base-
+	register context.
+	Nevertheless, the method of calculating the EA is the same for both base-
+	register addressing and indexing, and in both cases the register reference is sometimes
+	explicit and sometimes implicit (for different processor types).
+	An important use of indexing is to provide an efficient mechanism for performing
+	iterative operations. Consider, for example, a list of numbers stored starting
+	at location A. Suppose that we would like to add 1 to each element on the list.
+	We need to fetch each value, add 1 to it, and store it back. The sequence of effective
+	addresses that we need is A, A + 1, A + 2, . . . , up to the last location on the list.
+	With indexing, this is easily done. The value A is stored in the instruction’s address
+	field, and the chosen register, called an index register, is initialized to 0. After each
+	operation, the index register is incremented by 1
+■■ Stack
+The final addressing mode that we consider is stack addressing. As defined in
+Appendix I, a stack is a linear array of locations. It is sometimes referred to as a
+pushdown list or last-in-first-out queue. The stack is a reserved block of locations.
+Items are appended to the top of the stack so that, at any given time, the block is partially filled. Associated with the stack is a pointer whose value is the address of the
+top of the stack. Alternatively, the top two elements of the stack may be in processor
+registers, in which case the stack pointer references the third element of the stack.
+The stack pointer is maintained in a register. Thus, references to stack locations in
+memory are in fact register indirect addresses.
+The stack mode of addressing is a form of implied addressing. The machine
+instructions need not include a memory reference but implicitly operate on the top
+of the stack.
+
+
+Formato de instrucciones 
+Definición:“Define el despliegue de los bits que
+componen la instrucción”
+Components: 
+Opcode
+0 a n operandos
+Modo de direccionamiento de cada operando
+Flags
+
+/*Formato ARM*/ U3 Pág 11
+
+/*Formato x86*/ U3 Pág 12
+
+Ejemplo:
+Clasificación de la ISA según el número de direcciones.
+3 addresses
+Operand 1, Operand 2, Result
+e.g. a=b+c
+2 address
+One address doubles as operand and result
+eg a . . = a+c
+1 address
+Implicit second address (accumulator)
+0 address
+All addresses are implicitly defined
+Stack based computer
+
+Memoria
+
+Word size: The “natural” unit of organization of memory. The size of a word is typically
+equal to the number of bits used to represent an integer and to the instruction
+length
+
+Big / Little Endian
+/* Libro página 452 10th edition*/
+
+Direccionamiento
+Addressing: The mode or modes by which the address of an operand is
+specified.
+
+Espacio de direcciones ( address space)
+■■ Memory: The memory space includes system main memory. It also includes
+PCIe I/O devices. Certain ranges of memory addresses map into I/O devices.
+■■ I/O: This address space is used for legacy PCI devices, with reserved memory
+address ranges used to address legacy I/O devices.
+■■ Configuration: This address space enables the TL to read/write configuration
+registers associated with I/O devices.
+■■ Message: This address space is for control
+
+Categorías
+Aritméticas y lógicas
+add , subtract , multiply , divide (BPF c/s, Decimal, BPFlot
+and, or , xor
+Movimiento de datos
+load, store , move
+Entrada / Salida
+start I/O
+Control de flujo
+branch , jump , compare, call , return

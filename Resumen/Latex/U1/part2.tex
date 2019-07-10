@@ -1,0 +1,246 @@
+\section{Formato y Configuracion}
+
+\subsection{Definición}
+\begin{itemize}
+\item Formato: Representación computacional
+\item Configuración: Representación en una determinada base de un número en un formato
+\end{itemize}
+
+\subsection{Expansión y truncamiento}
+\subsection{Definición}
+\begin{itemize}
+\item Expandir formato: Significa completar la representación computacional sin alterar el numero representado
+en el mismo. 
+\item Truncar formato: Descartar digitos de su representación sin alterar el número representado en el mismo.
+\end{itemize}
+
+\subsection{Formatos}
+
+%Binario punto fijo sin signo
+\subsubsection{Binario punto fijo sin signo}
+\begin{itemize}
+\item Base: 2
+\item Representa: números enteros positivos
+\item Máximo: $2^{n-1}_{10}$
+\item Mínimo: 0
+\end{itemize}
+
+\paragraph{Almacenar}
+\begin{enumerate}
+\item Pasar el numero a base 2
+\item completar con ceros a izquierda la capacidad del formato
+\end{enumerate}
+\paragraph{Recuperar}
+\begin{enumerate}
+\item Pasamos el numero de base 2 a la base deseada 
+\end{enumerate}
+
+%Binario de punto fijo con signo
+\subsubsection{Binario de punto fijo con signo}
+\begin{itemize}
+\item Base: 2
+\item Representa: Enteros positivos y negativos
+\item Primer bit: reservado para el signo
+\item Máximo: $2^{n-1}-1$
+\item Mínimo: $-2^{n-1}$
+\end{itemize}
+
+\paragraph{Almacenar}
+\begin{enumerate}
+\item Pasar el numero a base 2
+\item completar con ceros a izquierda la capacidad del formato
+\item Si es un numero negativo hacerle el complemento a 2
+\end{enumerate}
+\paragraph{Recuperar}
+\begin{enumerate}
+\item Si el bit de signo es cero, se pasa de base 2 a base 10
+\item Si el bit es 1, el numero es negativo, por lo que debemos complementarlo
+\item Quitamos los ceros a la izquierda
+\item Numero de base 2 a base 10
+\item Colocamos el signo
+\end{enumerate}
+
+\paragraph{Expansión}
+\begin{enumerate}
+\item Se completa con el bit de signo a la izquierda
+\end{enumerate}
+\paragraph{Truncamiento}
+\begin{enumerate}
+\item Se extraen bits a la izquierda siempre y cuando no se esté alterando el bit de signo del número.
+\end{enumerate}
+
+%Empaquetado
+\subsubsection{Empaquetado}
+\begin{itemize}
+\item Base: 16
+\item Representa: Enteros positivos y negativos
+\item Máximo: $10^{2n-1} -1$
+\item Mínimo: $-10^{2n-1} +1$
+\end{itemize}
+
+\paragraph{Almacenar}
+\begin{enumerate}
+\item numero a base 10
+\item Colocal cada digito decimal en un nibble dejando el ultimo nibble ya que en el mismo se almacena el signo.
+\item Colocar en el ultimo nible el signo, CAFE = + , DF = -
+\item Se rellena con 0 hasta alcanzar la cantidad de bytes usados
+\end{enumerate}
+\paragraph{Recuperar}
+\begin{enumerate}
+\item los pasos en orden inverso
+\end{enumerate}
+
+%Zoneado
+\subsubsection{Zoneado}
+\begin{itemize}
+\item Base: 16
+\item Representa: Enteros positivos y negativos
+\item Máximo: $10^{n} -1$
+\item Mínimo: $-10^{n} +1$
+\end{itemize}
+
+\paragraph{Almacenar}
+\begin{enumerate}
+\item numero a base 10
+\item colocar cada uno de los digitos decimales en un nibble derecho
+\item completar todos los nibbles de izquierda con F salvo el ultimo que se completa con el signo siguiendo las mismas reglas que para empaquetados.  CAFE = + , DF = -
+\item se rellena con F0 hasta alcanzar la cantidad de bytes usados
+\end{enumerate}
+\paragraph{Recuperar}
+\begin{enumerate}
+\item los pasos en orden inverso
+\end{enumerate}
+
+\subsubsection{Binario de punto Flotante}
+es la manera que tiene una arquitectura de representar a los numeros reales.
+su notación cientifica se expresa de la siguiente manera $M x B^E$
+M: Mantissa B: base E: Exponente
+
+Un numero binario está normalizado si el digito de la izquierda del punto es igual a 1.
+
+\paragraph{IEEE754}
+\begin{itemize}
+\item Precision Simple: signo: 1 bit exponente: 8 bits fraccion: 23 bits Exponente: Exceso 127
+\item Precision Doble: signo: 1 bit exponente 11bits fraccion: 52 bits Exponente: Exceso 1023
+\end{itemize}
+
+\paragraph{Ancho de paso}\mbox{}\\\\
+Marca cual es la distancia entre un flotante y su siguiente numero representable en el formato
+
+\paragraph{Overflow}\mbox{}\\\\
+el exponente excede el limite superior, tanto para mantisas positivas como para negatvias, dando lugar a +inf, - inf
+\paragraph{Underflow}\mbox{}\\\\
+el exponente excede el minimo valor permitido y caga en el intervalo (-inf, -0) y (+0,+inf)
+
+\paragraph{Desnormalizados - Subnormales}\mbox{}\\\\
+tienen como exponente al cero, y el bit implicito a la izquierda del punto binario, es ahora un cero implicito. la diferencia entre los desnormalizados y los normalizados es que, estos ultimos no permiten al cero como exponente. Los normalizados tienen 24 bits significativos, mientras que los normalizados poseen 23.
+
+\begin{table}[h]
+\begin{tabular}{lllll}
+\cline{1-4}
+\multicolumn{1}{|l|}{Normalizado} & \multicolumn{1}{l|}{+/-} & \multicolumn{1}{l|}{0<exp<max} &  \multicolumn{1}{l|}{cualquier patron de bits} &  \\ \cline{1-4}
+\multicolumn{1}{|l|}{Desnormalizado} & \multicolumn{1}{l|}{+/-} & \multicolumn{1}{l|}{0} &  \multicolumn{1}{l|}{cualquier patron de bits != 0} &  \\ \cline{1-4}
+\multicolumn{1}{|l|}{Cero} & \multicolumn{1}{l|}{+/-} & \multicolumn{1}{l|}{0} &  \multicolumn{1}{l|}{0} &  \\ \cline{1-4}
+\multicolumn{1}{|l|}{Infinito} & \multicolumn{1}{l|}{+/-} & \multicolumn{1}{l|}{11...11} &  \multicolumn{1}{l|}{0} &  \\ \cline{1-4}
+\multicolumn{1}{|l|}{NAN} & \multicolumn{1}{l|}{+/-} & \multicolumn{1}{l|}{11...11} &  \multicolumn{1}{l|}{Cualquier patron de bits != 0} &  \\ \cline{1-4}
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item Infinito dividido Infinito = NAN
+\item Cero + = 0 00000000 00000000000000000000000
+\item Cero - = 1 00000000 00000000000000000000000
+\item Infinito + = 0 11111111 00000000000000000000000
+\item Infinito - = 1 11111111 00000000000000000000000
+\item No normalizados/Subnormales (no se asume que haya que añadir un 1 al significando para obtener su valor).
+\end{itemize}
+
+\paragraph{Valores no numericos}\mbox{}\\\\
+NaN (Not a number). 2 tipos, QNaN (quiet nan) y SNaN (signalling nan) Qnan = indeterminado Snan = operacion no valida
+
+\begin{itemize}
+\item Infinito dividido Infinito = NAN
+\item qnan = 0 11111111 10000100000000000000000
+\item snan = 1 11111111 00100010001001010101010
+\end{itemize}
+
+\begin{table}[h]
+\begin{tabular}{lllll}
+\cline{1-2}
+\multicolumn{1}{|l|}{Operacion} & \multicolumn{1}{l|}{Resultado} &   \\ \cline{1-2}
+\multicolumn{1}{|l|}{n $\pm$ infinito } & \multicolumn{1}{l|}{0} &   \\ \cline{1-2}
+\multicolumn{1}{|l|}{$\pm$ infinito $\cdot$ $\pm$infinito } & \multicolumn{1}{l|}{$\pm$infinito} &   \\ \cline{1-2}
+\multicolumn{1}{|l|}{ $\pm$n $\div$ 0   } & \multicolumn{1}{l|}{ $\pm$infinito } &   \\ \cline{1-2}
+\multicolumn{1}{|l|}{ Infinito + Infinito   } & \multicolumn{1}{l|}{ Infinito } &   \\ \cline{1-2}
+\multicolumn{1}{|l|}{Cualquier operación contra un NaN   } & \multicolumn{1}{l|}{ NaN } &   \\ \cline{1-2}
+\multicolumn{1}{|l|}{ $\pm$0 $\div$ $\pm$0   } & \multicolumn{1}{l|}{ NaN } &   \\ \cline{1-2}
+\multicolumn{1}{|l|}{ Infinito - Infinito   } & \multicolumn{1}{l|}{  NaN} &   \\ \cline{1-2}
+\multicolumn{1}{|l|}{ $\pm$Infinito  $\div$ $\pm$Infinito  } & \multicolumn{1}{l|}{  NaN} &   \\ \cline{1-2}
+\multicolumn{1}{|l|}{ $\pm$Infinito  $\cdot$ $\pm$0 } & \multicolumn{1}{l|}{  NaN} &   \\ \cline{1-2}
+\end{tabular}
+\end{table}
+
+\paragraph{Almacenar -6,12510}\mbox{}\\
+\begin{enumerate}    
+  \item El bit 31 tomará el valor del signo del número. 
+  \item Pasar a binario la mantisa decimal.
+  \begin{itemize}
+    \item $6=110_2$
+    \item $0,125=0,001_2$
+    \item $6,125=110,001_2$
+  \end{itemize}
+  \item Normalizar
+  \begin{itemize}
+    \item Desplazamiento a la derecha  -> Exponente negativo
+    \item Desplazamiento a la izquierda -> Exponente positivo
+    \item 1,10001 , exponente = 2
+    \item 2 expresado en Exceso 127 es 129 $0000001_2$
+  \end{itemize}
+  \item Mantisa representada con bit implícito: 1,10001 -> 10001
+   \item El número final es 1 10000001 100010000000000000000002 (Se agregan a la derecha los “0” necesarios para completar los 23 bits de la mantisa)
+\end{enumerate}
+
+\paragraph{Recuperar}\mbox{}\\\\
+\begin{enumerate}    
+  \item Se realizan los pasos en orden inverso
+\end{enumerate}
+
+\paragraph{Binario de Punto Flotante (IBM mainframe)}
+\begin{itemize}
+\item Base: 16
+\item Representa: enteros con coma decimal positivos y negativos
+\item Precision : imple 4 bytes, doble, 8 bytes, extendida 16 bytes.
+\item estructura: S nnnnnnn dddddd
+\begin{itemize}
+    \item s = signo 1- 0+
+    \item n = digitos de la caracteristica, en total son 7 bits se usan para calcular el exponente 
+    \item C = E + 4016 donde E corresponde al exponente
+    \item d =  mantisa normalizada -> 0,dddddd x $10^e_{16}$
+  \end{itemize}
+\end{itemize}
+
+\paragraph{Almacenar - 321,54 10 -> Binario de punto flotante precisión simple}\mbox{}\\\\
+\begin{enumerate}    
+  \item $321,54_{10} = 141,8A3_{16}$
+  \item $0,1418A3 x 10^3 _{16}$
+  \item $C = E + 40_{16} = 3 + 40_{16} = 43_{16} en base 2 sería 100011_{2}$
+  \item Agregamos el bit de signo: $1100011_{2}$ que en base 16 es $C3_{16}$
+  \item Resultado final : $C31418A3_{16}$
+\end{enumerate}
+
+\paragraph{Ancho de paso }\mbox{}\\\\
+distancia entre un flotante y su siguiente numero representable en el formato
+
+\paragraph{Absorcion}\mbox{}\\\\
+se da en las operaciones de suma y resta entre flotantes
+
+\begin{itemize}    
+  \item $A = 0,15A4 x 105_{16}$
+  \item $B = 0,54F x 10^-2_{16}$
+\end{itemize}
+
+para poder operar entre flotantes debemos igualar los exponentes llevandolos al mayor de todos
+\begin{itemize}    
+  \item $A+B = 0.15A400 * 10^5 + 0,00...00 * 10^5 = 0,15A4000 * 10^5 _{16}$
+\end{itemize}
+lo minimo que se puede sumar es el ancho de paso del numero de mayor exponente

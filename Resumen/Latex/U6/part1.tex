@@ -1,0 +1,366 @@
+\section{Almacenamiento secundario}
+
+\subsection{Discos magnéticos}
+Plato circular construido de un material no magnético,
+llamado substrato (aluminio o vidrio), cubierto por un
+material magnetizable
+
+\subsubsection{Mecanismos de lectura/escritura magnético}
+\begin{itemize}
+\item Cabeza de lectura/escritura única: bobina conductora estática, el disco está girando constantemente debajo de ella. Usado en los viejos discos rígidos y floppy disk
+\item Escritura : cuando circula electricidad a través de una bobina se produce un campo magnético. Los patrones magnéticos resultantes se graban en la superficie (diferentes patrones para corrientes + y - 
+\item Lectura : un campo magnético que se mueve por una bobina produce corriente eléctrica en ella. Cuando la superficie del disco pasa debajo de la cabeza se genera una corriente de la misma polaridad grabada
+\item Cabeza de lectura diferenciada de la de escritura
+\item Tiene un sensor magneto resistivo (MR)
+\item La resistencia eléctrica del material depende de la dirección de la magnetización del medio que se mueve por debajo
+\item Se hace pasar una corriente a través del sensor MR y los cambios de resistencia se detectan como señales de voltaje
+\item Provee mayores densidades de grabación y velocidades de operación que el mecanismo anterior
+\end{itemize}
+/*img 187*/
+
+Data are recorded on and later retrieved from the disk via a conducting coil named
+the head; in many systems, there are two heads, a read head and a write head. During
+a read or write operation, the head is stationary while the platter rotates beneath it.
+The write mechanism exploits the fact that electricity flowing through a coil
+produces a magnetic field. Electric pulses are sent to the write head, and the resulting
+magnetic patterns are recorded on the surface below, with different patterns for
+positive and negative currents. The write head itself is made of easily magnetizable
+material and is in the shape of a rectangular doughnut with a gap along one side and
+a few turns of conducting wire along the opposite side (Figure 6.1). An electric current
+in the wire induces a magnetic field across the gap, which in turn magnetizes a
+small area of the recording medium. Reversing the direction of the current reverses
+the direction of the magnetization on the recording medium.
+The traditional read mechanism exploits the fact that a magnetic field moving
+relative to a coil produces an electrical current in the coil. When the surface of the
+disk passes under the head, it generates a current of the same polarity as the one
+already recorded. The structure of the head for reading is in this case essentially
+the same as for writing and therefore the same head can be used for both. Such
+single heads are used in floppy disk systems and in older rigid disk systems.
+Contemporary rigid disk systems use a different read mechanism, requiring
+a separate read head, positioned for convenience close to the write head. The read
+head consists of a partially shielded magnetoresistive (MR) sensor. The MR material
+has an electrical resistance that depends on the direction of the magnetization of
+the medium moving under it. By passing a current through the MR sensor, resistance
+changes are detected as voltage signals. The MR design allows higher-frequency
+operation, which equates to greater storage densities and operating speeds.
+
+\subsubsection{Data Organization and Formatting}
+\begin{itemize}
+\item Pistas concéntricas
+\item El ancho de la pista es igual al ancho de la cabeza lectora/grabadora
+\item Entre las pistas hay un gap ( Intertrack gap) para minimizar errores de desalineamiento de la cabeza e interferencias magnéticas
+\item La superficie del disco está subdividida en sectores, en general de tamaño fijo (512 bytes)
+\item Hay un gap ( Intersector gap) entre los sectores para evitar errores de sincronización
+\item CAV ( Constant Angular Velocity ): el disco gira a velocidad constante
+\item La cabeza lectora/grabadora puede operar a la misma tasa de transferencia
+\item Los bits exteriores giran a mayor velocidad que los interiores (velocidad lineal variable)
+\item Para compensar, los bits exteriores están más espaciados entre sí
+\item Ventaja : se puede referenciar a cada bloque de información a través de pista/sector
+\item Desventaja : no se aprovecha el máximo de densidad (bits por pulgada lineal) de la superficie del disco
+\end{itemize}
+
+/*img 188*/
+The head is a relatively small device capable of reading from or writing to a portion
+of the platter rotating beneath it. This gives rise to the organization of data on the
+platter in a concentric set of rings, called tracks. Each track is the same width as the
+head. There are thousands of tracks per surface.
+Figure 6.2 depicts this data layout. Adjacent tracks are separated by gaps. This
+prevents, or at least minimizes, errors due to misalignment of the head or simply
+interference of magnetic fields.
+Data are transferred to and from the disk in sectors (Figure 6.2). There are
+typically hundreds of sectors per track, and these may be of either fixed or variable
+length. In most contemporary systems, fixed-length sectors are used, with 512 bytes
+being the nearly universal sector size. To avoid imposing unreasonable precision
+requirements on the system, adjacent sectors are separated by intratrack (intersector)
+gaps.
+A bit near the center of a rotating disk travels past a fixed point (such as a read–
+write head) slower than a bit on the outside. Therefore, some way must be found
+to compensate for the variation in speed so that the head can read all the bits at the
+same rate. This can be done by increasing the spacing between bits of information
+recorded in segments of the disk. The information can then be scanned at the same
+rate by rotating the disk at a fixed speed, known as the constant angular velocity
+(CAV). Figure 6.3a shows the layout of a disk using CAV. The disk is divided into
+a number of pie-shaped sectors and into a series of concentric tracks. The advantage
+of using CAV is that individual blocks of data can be directly addressed by
+track and sector. To move the head from its current location to a specific address, it
+only takes a short movement of the head to a specific track and a short wait for the
+proper sector to spin under the head. The disadvantage of CAV is that the amount
+of data that can be stored on the long outer tracks is the only same as what can be
+stored on the short inner tracks.
+
+\subsubsection{Grabación multizona}
+/*189*/
+\begin{itemize}
+\item La superficie del disco se divide en zonas concéntricas (por lo general 16
+\item La cantidad de bits por pista dentro de una zona es constante
+\item Las zonas exteriores contienen más bits por pulgada (más sectores) que las zonas interiores
+\end{itemize}
+
+Ventaja: 
+\begin{itemize}
+\item mayor capacidad de almacenamiento
+\end{itemize}
+
+Desventajas: 
+\begin{itemize}
+\item mayor complejidad en la circuitería para trabajar con tiempos de lectura/escritura diferentes
+\item según la zona (la longitud de los bits varía)
+\end{itemize}
+
+Because the density, in bits per linear inch, increases in moving from the outermost
+track to the innermost track, disk storage capacity in a straightforward CAV
+system is limited by the maximum recording density that can be achieved on the
+innermost track. To increase density, modern hard disk systems use a technique
+known as multiple zone recording, in which the surface is divided into a number
+of concentric zones (16 is typical). Within a zone, the number of bits per track is
+constant. Zones farther from the center contain more bits (more sectors) than zones
+closer to the center. This allows for greater overall storage capacity at the expense
+of somewhat more complex circuitry. As the disk head moves from one zone to
+another, the length (along the track) of individual bits changes, causing a change
+in the timing for reads and writes. Figure 6.3b suggests the nature of multiple zone
+recording; in this illustration, each zone is only a single track wide.
+Some means is needed to locate sector positions within a track. Clearly, there
+must be some starting point on the track and a way of identifying the start and end
+of each sector. These requirements are handled by means of control data recorded
+on the disk. Thus, the disk is formatted with some extra data used only by the disk
+drive and not accessible to the user.
+
+/**189/
+An example of disk formatting is shown in Figure 6.4. In this case, each track
+contains 30 fixed-length sectors of 600 bytes each. Each sector holds 512 bytes of
+data plus control information useful to the disk controller. The ID field is a unique
+identifier or address used to locate a particular sector. The SYNCH byte is a special
+bit pattern that delimits the beginning of the field. The track number identifies a
+track on a surface. The head number identifies a head, because this disk has multiple
+surfaces (explained presently). The ID and data fields each contain an errordetecting
+code.
+
+\subsubsection{Physical Characteristics}
+Movimiento de la cabeza
+\begin{itemize}
+\item fija: había una cabeza lectora/grabadora por pista (muy costosos, no se usan más) Ej. IBM 2305
+\item móvil: hay una única cabeza lectora/grabadora por superficie del plato. Se mueve por todas las pistas y está montada en un brazo
+\end{itemize}
+Portabilidad
+\begin{itemize}
+\item Discos no removibles: disco rígido (se monta en un disk drive
+\item Removibles: se puede sacar y poner en la unidad (Ej. floppy disk)
+\end{itemize}
+Lados
+\begin{itemize}
+\item Un solo lado: solo es usable una cara
+\item Dos lados: el recubrimiento magnético está en ambas caras
+\end{itemize}
+Platos
+\begin{itemize}
+\item Un solo plato
+\item Múltiples platos: varios discos en un mismo disk drive
+	\begin{itemize}
+	\item Cilindro: conjunto de pistas que están a la misma distancia relativa del entro en los platos de un disk drive
+	\end{itemize}
+\end{itemize}
+Mecanismo de la cabeza
+\begin{itemize}
+\item Contacto: toma contacto con la superficie del disco (Ej. floppy
+\item Espacio fijo: se ubica a una posición fija por encima del disco
+\item Espacio aerodinámico (flotante): se ubica flotante por sobre el disco gracias a la presión de aire que genera la rotación del disco
+\end{itemize}
+
+/*img191*/
+
+\subsubsection{Parámetros de performance}
+\begin{itemize}
+\item Desempeño del disco: depende del computador, sistema operativo, módulo de E/S y controlador de disco
+\item Tiempo de seek : tiempo necesario para mover la cabeza lectora/grabadora a la pista deseada
+\item Tiempo de demora rotacional o latencia: tiempo de espera hasta que el sector deseado pasa por la cabeza lectora/grabadora
+\item Tiempo de acceso: tiempo necesario para estar enposición para escribir o leer
+	\begin{itemize}
+	\item Tiempo acceso = tiempo de seek promedio + tiempo de latencia promedio
+	\end{itemize}
+\item Tiempo de transferencia: tiempo necesario para transferir la información al disco
+	\begin{itemize}
+	\item T = b/ rN 
+	\item donde T= tiempo de transf .; b=bytes a transf 	r=velocidad de rotación en revoluciones por segundo; N=bytes por pista
+	\end{itemize}
+\item Tiempo total lectura/escritura
+	\begin{itemize}
+	\item T = Tseek + 1 / 2r + b / rN
+		\begin{itemize}
+		\item r: velocidad de rotación en revoluciones por segundo
+		\item b: bytes a transferir
+		\item N: bytes por pista
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+Ejemplo:
+\begin{itemize}
+\item Comparación de tiempos de lectura
+\item Disco: tiempo seek promedio = 4ms; 15000 RPM;
+\item sectores de 512 bytes; 500 sectores por pista
+\item Archivo: 2500 sectores (1,28 MB)
+\end{itemize}
+
+\subsubsection{Organización secuencial}
+\subsubsection{Organización aleatorial}
+
+\subsubsection{RAID}
+As discussed earlier, the rate in improvement in secondary storage performance
+has been considerably less than the rate for processors and main memory. This
+mismatch has made the disk storage system perhaps the main focus of concern in
+improving overall computer system performance.
+As in other areas of computer performance, disk storage designers recognize
+that if one component can only be pushed so far, additional gains in performance
+are to be had by using multiple parallel components. In the case of disk storage, this
+leads to the development of arrays of disks that operate independently and in parallel.
+With multiple disks, separate I/O requests can be handled in parallel, as long
+as the data required reside on separate disks. Further, a single I/O request can be
+executed in parallel if the block of data to be accessed is distributed across multiple
+disks.
+With the use of multiple disks, there is a wide variety of ways in which the
+data can be organized and in which redundancy can be added to improve reliability.
+This could make it difficult to develop database schemes that are usable
+on a number of platforms and operating systems. Fortunately, industry has
+agreed on a standardized scheme for multiple-disk database design, known as
+RAID (Redundant Array of Independent Disks). The RAID scheme consists
+of seven levels,2 zero through six. These levels do not imply a hierarchical relationship
+but designate different design architectures that share three common
+characteristics:
+
+\begin{itemize}
+\item Vectores de discos que operan en forma independiente y en paralelo
+\item Se puede manejar un pedido de E/S en paralelo si los datos residen en discos separados
+\item Hay distintas maneras de organizar la información y agregarle confiabilidad a los datos
+\item RAID es un estandar que consiste en 7 niveles (0 a 6). Pueden implementarse combinaciones de niveles (ej. RAID 0+1, RAID 5+0, etc.)
+\end{itemize}
+	
+	
+\paragraph{RAID Características generales}\mbox{}\\\\%%
+\begin{itemize}
+\item Es un conjunto de discos que son vistos por el sistema operativo como una única unidad lógica
+\item Los datos se distribuyen en los discos del vector en un esquema llamado “ striping
+\item Se usa capacidad redundante para guardar información de paridad y garantizar recuperación ante fallas (a excepción de RAID 0
+\end{itemize}
+
+\paragraph{RAID Niveles}\mbox{}\\\\%%
+
+\subparagraph{Nivel 0 ( Stripping}\mbox{}\\\\%%
+\begin{itemize}
+\item No incluye redundancia
+\item Se requieren N discos
+\item Se distribuyen los datos en el vector de discos en strips (pueden ser sectores, bloques u otra unidad)
+\item Ventajas:
+	\begin{itemize}
+	\item -Simplicidad
+	\item -Performance
+	\end{itemize}
+\item Desventaja:
+	\begin{itemize}
+	\item -Riesgo ante fallos, no hay recuperación posible
+	\end{itemize}
+\end{itemize}
+
+\subparagraph{Nivel 1 (Espejado)}\mbox{}\\\\%%
+\begin{itemize}
+\item Redundancia por espejado de datos
+\item Se requieren 2N discos
+\item Ventajas:	
+	\begin{itemize}
+	\item -Un pedido de lectura puede resolverse por cualquiera de los dos discos
+	\item -La escritura se hace en forma independiente en cada disco y no se penaliza
+	\item -Simple recuperación ante fallas
+	\item -Alta disponibilidad de datos
+	\end{itemize}
+\item Desventajas:
+	\begin{itemize}
+	\item Costo
+	\end{itemize}
+\end{itemize}
+
+\subparagraph{Nivel 2 (Redundancia por código de Hamming}\mbox{}\\\\%%
+\begin{itemize}
+\item Strips pequeños (un byte o palabra)
+\item Se calcula redundancia por código autocorrector (ej. Hamming
+\item Se requieren N + m discos
+\item Se graban bits de paridad en discos separados
+\item Se leen/escriben todos los discos en paralelo, en forma sincronizada
+\item No existe uso comercial
+\item Ventajas:
+	\begin{itemize}
+	\item -Disponibilidad de datos
+	\end{itemize}
+\item Desventaja:
+	\begin{itemize}
+	\item -Costos por método de redundancia
+	\end{itemize}
+\end{itemize}
+
+\subparagraph{Nivel 3 (Paridad por intercalamiento de bits)}\mbox{}\\\\%%
+\begin{itemize}
+\item Solo se usa un disco de paridad
+\item Se requieren N+1 discos
+\item La paridad se calcula mediante un bit a través del conjunto individual de bits de la misma posición de todos los discos
+\item Se leen/escriben todos los discos en paralelo, en forma sincronizada
+\item Ventajas:
+	\begin{itemize}
+	\item -Cálculo sencillo de paridad
+	\item -No hay impacto significativo de performance ante fallas
+	\end{itemize}
+\item Desventajas:
+	\begin{itemize}
+	\item -Controlador complejo
+	\end{itemize}
+\end{itemize}
+
+\subparagraph{Nivel 4 (Paridad por intercalamiento de bloques)}\mbox{}\\\\%%
+\begin{itemize}
+\item Se accede en forma independiente a cada disco
+\item Se requieren N+1 discos
+\item Se puede dar servicio a pedidos de E/S en paralelo
+\item Se usan strips grandes.
+\item Los bits de paridad se calculan igual que en RAID 3 y se guarda un strip de paridad
+\item No hay uso comercial
+\item Ventajas:
+	\begin{itemize}
+	\item -Altas tasas de lectura
+	\end{itemize}
+\item Desventaja:
+	\begin{itemize}
+	\item -Dos lecturas y dos escrituras en caso de update de datos
+	\item -Cuello de botella por disco de paridad
+	\end{itemize}
+\end{itemize}
+
+\subparagraph{Nivel 5 (Paridad por intercalamiento distribuido de bloques)}\mbox{}\\\\%%
+\begin{itemize}
+\item Se accede en forma independiente a cada disco
+\item Se requieren N+1 discos
+\item Los strips de paridad se distribuyen en todos los discos
+\item Ventajas:
+	\begin{itemize}
+	\item Resuelve el cuello de botella del nivel 4
+	\end{itemize}
+\item Desventajas:
+	\begin{itemize}
+	\item -Controlador complejo
+	\end{itemize}
+\end{itemize}
+
+\subparagraph{Nivel 6 (Doble paridad por intercalamiento distribuido de bloques)}\mbox{}\\\\%%
+\begin{itemize}
+\item Se accede en forma independiente a cada disco
+\item Se requieren N+2 discos
+\item Se usan dos algoritmos de control de paridad
+\item Ventajas:
+	\begin{itemize}
+	\item -Provee disponibilidad de datos extremadamente alta
+	\end{itemize}
+\item Desventaja:
+	\begin{itemize}
+	\item -Controlador complejo
+	\item -Costos por doble paridad
+	\end{itemize}
+\end{itemize}
+
+
+/*raid comparison 204*/

@@ -1,0 +1,676 @@
+Componentes de un computador
+
+Procesador#############################################
+Tiempo de ejecución de programa  = Número de instrucciones * Ciclos por Instrucción * Tiempo ciclo Reloj
+
+
+
+CISC: Complex Instruction Set Computer
+Pocos registros de procesador (especializados)
+Set de Instrucciones amplio
+Muchas instrucciones para trabaja con memoria
+Microarquitectura en sofware /hardware compleja
+Instrucciones complejas (más de un ciclo de reloj)
+Varios modos de direccionamiento
+Muchos tipos de datos
+Muchos formatos de instrucción (variables ohíbridos)
+Orientado al hardware, compiladores relativamente
+simples (tamaño de código pequeño)
+
+RISC ( Reduced Instruction Set Computer)
+Muchos registros de procesador de uso general
+Set de Instrucciones pequeño
+Solo acceso a memoria a través de LOAD/STORE
+Microarquitectura en hardware simple
+Instrucciones simples (un ciclo de reloj)
+Pocos modos de direccionamiento
+Pocos tipos de datos
+Pocos formatos de instrucción (fijos)
+Orientado al software, compiladores relativamente
+complejos (tamaño de código largo)
+
+Paralelismo
+El paralelismo es una función que realiza el procesador para ejecutar varias tareas al mismos tiempo, es decir puede realizar varias cálculos simultáneamente, basados en principio de dividir los problemas grandes para obtener varios problemas pequeños.
+
+Limitación de la velocidad del reloj ???
+
+Técnicas
+	A nivel instrucción
+Un programa de ordenador es, en esencia, una corriente de instrucciones ejecutadas por un procesador. Estas instrucciones pueden ser reordenadas y se combinan en grupos que luego se ejecutan en paralelo sin cambiar el resultado del programa. Esto se conoce como paralelismo a nivel de instrucción. 
+Los procesadores modernos tienen tuberías de instrucciones de múltiples etapas. Cada etapa en la tubería corresponde a una acción diferente que el procesador lleva a cabo en el que la instrucción en esa etapa; un procesador con una tubería N-etapa puede tener hasta N diferentes instrucciones en diferentes fases de ejecución. El ejemplo canónico de un procesador segmentado es un procesador RISC, con cinco etapas: extracción de instrucción, decodificar, ejecutar, acceso a la memoria, y escribir de nuevo. El procesador Pentium 4 con una cartera de 35 etapas.
+
+Este mecanismo consiste en romper el flujo secuencial de instrucciones para simultanear la ejecución de varias en el mismo procesador. Existen diferentes estrategias para lograrlo.
+
+Pipelining: The execution of an instruction involves multiple stages of operation,
+including fetching the instruction, decoding the opcode, fetching operands,
+performing a calculation, and so on. Pipelining enables a processor to
+work simultaneously on multiple instructions by performing a different phase
+for each of the multiple instructions at the same time. The processor overlaps
+operations by moving data or instructions into a conceptual pipe with all
+stages of the pipe processing simultaneously. For example, while one instruction
+is being executed, the computer is decoding the next instruction. This is
+the same principle as seen in an assembly line.
+
+Hazards:
+The model of sequential execution assumes that each instruction completes before the next one begins; this assumption is not true on a pipelined processor. A situation where the expected result is problematic is known as a hazard. 
+
+Processors that can compute the presence of a hazard may stall[definition needed], delaying processing of the second instruction (and subsequent instructions) until the values it requires as input are ready. This creates a bubble[definition needed] in the pipeline, also partly negating the advantages of pipelining.
+Some processors can not only compute the presence of a hazard but can compensate by having additional data paths that provide needed inputs to a computation step before a subsequent instruction would otherwise compute them, an attribute called operand forwarding.[5][6]
+Some processors can determine that instructions other than the next sequential one are not dependent on the current ones and can be executed without hazards. Such processors may perform out-of-order execution.
+
+Intel 80486 Pipelining
+An instructive example of an instruction pipeline is that of the Intel 80486. The
+80486 implements a five-stage pipeline:
+ 
+Instruction fetch unit
+Instruction decode unit
+Calculate the effective address
+Fetch the operands from memory
+Instruction execution unit
+Write back unit
+
+/*6 U5 CPU*/
+
+
+Dual pipelining:  was introduced in the Intel Pentium processor. This technology allows the processor to break down a command into two shorter commands and execute them simultaneously when it receives a long command. If there are separate tasks that must be completed for a result that are independent of one another, they can be executed simultaneously to save time
+/*8 U5 CPU*/
+
+Superescalar:
+A superscalar implementation of a processor architecture is one in which common
+instructions—integer and floating-point arithmetic, loads, stores, and conditional
+branches—can be initiated simultaneously and executed independently. Such implementations
+raise a number of complex design issues related to the instruction pipeline.
+Superscalar design arrived on the scene hard on the heels of RISC architecture.
+Although the simplified instruction set architecture of a RISC machine lends
+itself readily to superscalar techniques, the superscalar approach can be used on
+either a RISC or CISC architecture.
+Whereas the gestation period for the arrival of commercial RISC machines
+from the beginning of true RISC research with the IBM 801 and the Berkeley
+RISC I was seven or eight years, the first superscalar machines became commercially
+available within just a year or two of the coining of the term superscalar.
+The superscalar approach has now become the standard method for implementing
+high-performance microprocessors.
+/*10 U5 CPU*/
+
+A nivel procesador
+	Procesadores paralelos de datos
+		- Una sola unidad de control
+	 	- Múltiples procesadores
+		 Métodos
+		 	- SIMD - Single Instruction Multiple data
+		 		- Múltiples procesadores ejecutan la misma secuencia de pasos sobre un conjunto diferente de datos.
+		 	- Vector processors: la ruta de datos se multiplexa en tiempo entre los elementos del vector de operandos. No ahorra tiempo de proceso, solo permite disminuir el tamaño del código por el uso de instrucciones vectoriales
+	Multiprocesadores
+		-Múltiples CPUs que comparten memoria común
+		-CPUs fuertemente acoplados
+		-Diferentes implementaciones
+			-Single bus y memoria compartida (centralizada) (UMA Uniform memory access)
+			- CPUs con memoria local y memoria compartida (NUMA non uniform memory access)
+	Multicomputadores
+		-Computadores interconectados con memoria local (memoria distribuida)
+		-No hay memoria compartida
+		-CPUs ligeramente acoplados
+		-Intercambio de mensajes
+		-Topologías de grillas, árboles o anillos
+
+Structured Computer Organization  6ta edición. Andrew Tanenbaum / Todd Austin
+
+
+Memoria#############################################
+
+Definición:
+
+Formado por elementos con distintas cualidades:
+	Tecnología
+	Organización
+	Performance
+	Costo
+Jerarquía de subsistemas de memoria
+	Internos al sistema (accedidos directamente por el procesador)
+		- Registros
+		- Memoria interna para unidad de control
+		- Memoria Cache
+	Externo al sistema (accedidos por el procesador a través de un módulo de E/S)
+		- Dispositivos de almacenamiento perifericos,  discos, cintas, etc.
+
+Puntos importantes:
+	Capacidad
+	Tiempo de acceso 
+	Costo
+
+/*Grafico pág 4*/
+
+A medida que se baja la piramide
+	- Costo por bit decreciente
+	- Capacidad decreciente
+	- Tiempo de acceso creciente
+	- Frecuencia de acceso de la memoria por parte del procesador decreciente
+
+Características
+	Capacidad
+		bytes/palabras (memoria interna)
+		bytes (memoria externa)
+	Unidad de transferencia
+		número de líneas eléctricas del módulo de memoria, típicamente el tamaño de palabra o 64, 128, o 256 bits (memoria interna)
+		bloques (memoria externa)
+
+Métodos de acceso de unidades de datos
+	Acceso secuencial
+		Unidades de datos: registros 
+		Acceso lineal en secuencia
+		Se deben pasar y descartar todos los registros intermedios antes de acceder al registro deseado
+		Tiempo de acceso variable
+		ej cintas magnéticas
+	Acceso directo
+		Dirección única para bloques o registros basada en su posición física
+		Tiempo de acceso variable
+		ej discos magnéticos
+	Acceso aleatorio
+		cada posición direccionable de memoria tiene un mecanismo de direccionamiento cableado físicamente
+		tiempo de acceso constante, independiente de la secuencia de accesos anteriores
+		ej memoria principal y algunas memorias cache
+	Acceso asociativo
+		Tipo de acceso aleatorio por comparación de patrón de bits
+		La palabra se busca por una porción de su contenido en vez de por su dirección
+		Cada posición de memoria tiene un mecanismo de direccionamiento propio
+		Tiempo de acceso constante, independiente de la secuencia de accesos anteriores o su ubicación
+		Ej. memorias cache
+
+Parámetros de performance
+	Tiempo de acceso (latencia)
+		- Memorias de acceso aleatorio: tiempo necesario para hacer una operación de lectura o escritura
+		- memorias sin acceso aleatorio: tiempo necesario para posicionar el mecanismo de lectura/escritura en la posición deseada
+	Tiempo de ciclo de memoria
+		- memorias de acceso aleatorio: tiempo de acceso más el tiempo adicional necesario para que una nueva operación pueda comenzar
+	Tasa de transferencia
+		- tasa con la cual los datos son transferidos dentro o fuera de la unidad de memoria
+		- memorias de acceso aleatorio: 1/tiempo de ciclo de memoria
+		- memorias sin acceso aleatorio: t_n+T_a+n/R
+		donde:
+		t_n = tiempo promedio para leer escribir n bits
+		T_a = tiempo promedio de acceso
+		n = numero de bits
+		R = tasa de transferencia, en bits por segundo
+
+Tipos físicos de memoria:
+	Memorias semiconductoras (memoria principal y cache)
+	Memorias de superficie magnética (discos y cintas)
+	Memorias ópticas (medios ópticos)
+Características físicas de memoria:
+	Memorias volátiles: se pierde su contenido ante la falta de energía eléctrica (Ej. algunas memorias semiconductoras)
+	Memorias no volátiles: no se necesita de energía eléctrica para mantener su contenido (Ej. memorias de superficie magnéticas y algunas memorias semiconductoras)
+	Memorias de solo lectura: (ROM –ReadOnlyMemory) no se puede borrar su contenido (Ej. algunas memorias semiconductoras)
+
+Principio de localidad de referencia:
+	“Durante la ejecución de un programa, las referencias a memoria que hace el procesador tanto para instrucciones como datos tienden a estar agrupadas”
+	(Ej. loops, subrutinas, tablas, vectores)
+
+Memoria cache:
+	Memoria semiconductora más rápida (y costosa) que la principal
+	Se ubica entre el procesador y la memoria principal
+	Permite mejorar la performance general de acceso a memoria principal
+	Contiene una copia de porciones de memoria principal
+
+	¿cómo funciona?
+	CPU trata de leer una palabra de la memoria principal
+	Se chequea primero si existe en la memoria cache.
+		Si es así se la entrega al CPU
+		Sino se lee un bloque de memoria principal (número fijo de palabras), se incorpora a la cache y la palabra buscada se entrega al CPU
+	Por el principio de localidad de referencia es probable que próximas palabras buscadas estén dentro del bloque de memoria subido a la cache
+
+Estructura sistema cache/memoria principal
+	Memoria principal
+	2^n palabras direccionables(dirección única de n-bits para cada una)
+	Bloques fijos de Kpalabras cada uno (M bloques)
+	Cache
+	mbloques llamados líneas
+	Cada linea contiene:
+		Kpalabras
+		Tag(conjunto de bits para indicar qué bloque está almacenado, usualmente una porción de la dirección de memoria principal)
+		Bits de control (Ej. bit para indicar si la línea se modificó desde la última vez que se cargó en la cache)
+
+“StructuredComputerOrganization” 6ta edición. Andrew Tanenbaum/ ToddAustin
+
+INTERRUPCIONES#############################################
+
+¿Qué son?
+Mecanismos por los cuales otros modulos (E/S y memoria) interrumpen el normal procesamiento del CPU
+
+¿Para qué existen?
+Para mejorar la eficiencia de procesamiento de un computador
+
+Clases de interrupciones
+- programa
+- reloj
+- e/s
+- fallas de hardware
+
+Ciclo de instruccion
+	Fetch instruction
+	Decode instruction
+	Fetch operand
+	Execute instruction
+	Store result
+	----------------> interrupt breakpoint
+	process interrupt
+
+Transferencia de control al S.O. (Handler)
+/*4pdf*/
+
+Procesamiento de interrupciones 
+/*5pdf*/
+
+/*6pdf ejemplo*/
+
+Multiples interrupciones
+	Deshabilitar interrupciones (secuencia)
+	/*7pdf*/
+	Priorizar interrupciones (anidadas)
+	/*8pdf*/
+
+Múltiples interrupciones - ejemplo
+Tres dispositivos de E/S
+Línea de comunicación (Prioridad 1)
+Disco (Prioridad 2)
+Impresora (Prioridad 3)
+
+Eventos
+T=10 Interrupción de Impresora
+T=15 Interrupción de línea de comunicación
+T=20 Interrupción de disco
+/*10pdf*/
+
+MODULO DE E/S#############################################
+
+¿Qué hace?
+Conecta a los periféricos con la CPU y la memoria a través del bus del sistema o switch central y permite la comunicación entre ellos
+¿Para qué sirve?
+Oculta detalles de timing, formatos y electro mecánica de los dispositivos periféricos
+¿Por qué existe?
+- Amplia variedad de periféricos con distintos métodos de operación
+- La tasa de transferencia de los periféricos es generalmente mucho más lenta que la de la memoria y procesador
+- Los periféricos usan distintos formatos de datos y tamaños de palabra
+
+/*4pdf*/ 230 stalling
+
+Interface interna - bus del sistema
+	datos
+	direcciones
+	control
+Interface externa - perifericos
+	datos
+	control
+	estado
+
+Funciones
+Control & Timing
+	Controla flujo de tráfico entre CPU/Memoria y periféricos
+Comunicación con el procesador
+	Decodificación de comandos: The I/O module accepts commands from the processor,
+	typically sent as signals on the control bus. For example, an I/O module for a
+	disk drive might accept the following commands: READ SECTOR, WRITE
+	SECTOR, SEEK track number, and SCAN record ID. The latter two commands
+	each include a parameter that is sent on the data bus
+	Datos: Data are exchanged between the processor and the I/O module over the
+	data bus.
+	Información de estado:
+	Because peripherals are so slow, it is important to know the
+	status of the I/O module. For example, if an I/O module is asked to send data
+	to the processor (read), it may not be ready to do so because it is still working
+	on the previous I/O command. This fact can be reported with a status signal.
+	Common status signals are BUSY and READY. There may also be signals to
+	report various error conditions.
+	Reconocimiento de direcciones: Just as each word of memory has an address, so does
+	each I/O device. Thus, an I/O module must recognize one unique address for
+	each peripheral it controls.
+Comunicación con el dispositivo
+	Comandos
+	Información de estado
+	Datos
+Buffering de datos
+Detección de errores
+
+The control of the transfer of data from
+an external device to the processor might involve the following sequence of steps:
+1. The processor interrogates the I/O module to check the status of the attached
+device.
+2. The I/O module returns the device status.
+3. If the device is operational and ready to transmit, the processor requests the
+transfer of data, by means of a command to the I/O module.
+4. The I/O module obtains a unit of data (e.g., 8 or 16 bits) from the external
+device.
+5. The data are transferred from the I/O module to the processor.
+
+/*Diagrama I/O pag 234 Will, 7pdf */
+
+Técnicas para operaciones de E/S
+E/S programada
+E/S manejada por interrupciones
+Acceso directo a memoria (DMA)
+/*pag 237*/
+
+When large volumes of data are to be moved, a more efficient technique is
+required: direct memory access (DMA).
+DMA involves an additional module on the system bus. The DMA module
+(Figure 7.12) is capable of mimicking the processor and, indeed, of taking over control
+of the system from the processor. It needs to do this to transfer data to and from
+memory over the system bus. For this purpose, the DMA module must use the bus
+only when the processor does not need it, or it must force the processor to suspend
+operation temporarily. The latter technique is more common and is referred to as
+cycle stealing, because the DMA module in effect steals a bus cycle.
+When the processor wishes to read or write a block of data, it issues a command
+to the DMA module, by sending to the DMA module the following information:
+■■ Whether a read or write is requested, using the read or write control line
+between the processor and the DMA module.
+■■ The address of the I/O device involved, communicated on the data lines.
+■■The starting location in memory to read from or write to, communicated on
+the data lines and stored by the DMA module in its address register.
+■■ The number of words to be read or written, again communicated via the data
+lines and stored in the data count register.
+/*pag 249*/ 
+The processor then continues with other work. It has delegated this I/O operation
+to the DMA module. The DMA module transfers the entire block of data,
+one word at a time, directly to or from memory, without going through the processor.
+When the transfer is complete, the DMA module sends an interrupt signal to
+the processor. Thus, the processor is involved only at the beginning and end of the
+transfer
+
+/*  250 Figure 7.13 DMA and Interrupt Breakpoints during an Instruction Cycle*/
+
+/* 251 Figure 7.14 Alternative DMA Configurations*/
+
+The DMA mechanism can be configured in a variety of ways. Some possibilities
+are shown in Figure 7.14. In the first example, all modules share the same system
+bus. The DMA module, acting as a surrogate processor, uses programmed I/O to
+exchange data between memory and an I/O module through the DMA module. This
+configuration, while it may be inexpensive, is clearly inefficient. As with processor-
+controlled programmed I/O, each transfer of a word consumes two bus cycles
+The number of required bus cycles can be cut substantially by integrating the
+DMA and I/O functions. As Figure 7.14b indicates, this means that there is a path
+between the DMA module and one or more I/O modules that does not include
+the system bus. The DMA logic may actually be a part of an I/O module, or it may
+be a separate module that controls one or more I/O modules. This concept can
+be taken one step further by connecting I/O modules to the DMA module using
+an I/O bus (Figure 7.14c). This reduces the number of I/O interfaces in the DMA
+module to one and provides for an easily expandable configuration. In both of
+these cases (Figures 7.14b and c), the system bus that the DMA module shares with
+the processor and memory is used by the DMA module only to exchange data with
+memory. The exchange of data between the DMA and I/O modules takes place off
+the system bus.
+
+I /O Channels and Processors
+
+
+	The Evolution of the I/O Function
+As computer systems have evolved, there has been a pattern of increasing complexity
+and sophistication of individual components. Nowhere is this more evident than
+in the I/O function. We have already seen part of that evolution. The evolutionary
+steps can be summarized as follows:
+1. The CPU directly controls a peripheral device. This is seen in simple
+microprocessor-controlled devices.
+2. A controller or I/O module is added. The CPU uses programmed I/O without
+interrupts. With this step, the CPU becomes somewhat divorced from the specific
+details of external device interfaces.
+3. The same configuration as in step 2 is used, but now interrupts are employed.
+The CPU need not spend time waiting for an I/O operation to be performed,
+thus increasing efficiency.
+4. The I/O module is given direct access to memory via DMA. It can now move
+a block of data to or from memory without involving the CPU, except at the
+beginning and end of the transfer.
+5. The I/O module is enhanced to become a processor in its own right, with a
+specialized instruction set tailored for I/O. The CPU directs the I/O processor
+to execute an I/O program in memory. The I/O processor fetches and executes
+these instructions without CPU intervention. This allows the CPU to specify a
+sequence of I/O activities and to be interrupted only when the entire sequence
+has been performed.
+6. The I/O module has a local memory of its own and is, in fact, a computer in its
+own right. With this architecture, a large set of I/O devices can be controlled,
+with minimal CPU involvement. A common use for such an architecture has
+been to control communication with interactive terminals. The I/O processor
+takes care of most of the tasks involved in controlling the terminals.
+
+
+Characteristics of I/O Channels
+
+	The I/O channel represents an extension of the DMA concept. An I/O channel
+	has the ability to execute I/O instructions, which gives it complete control over
+	I/O operations. In a computer system with such devices, the CPU does not execute
+	I/O instructions. Such instructions are stored in main memory to be executed by a
+	special-purpose processor in the I/O channel itself. Thus, the CPU initiates an I/O
+	transfer by instructing the I/O channel to execute a program in memory. The program
+	will specify the device or devices, the area or areas of memory for storage,
+	priority, and actions to be taken for certain error conditions. The I/O channel follows
+	these instructions and controls the data transfer
+
+	Two types of I/O channels are common, as illustrated in Figure 7.18. A
+	selector channel controls multiple high-speed devices and, at any one time, is
+	dedicated to the transfer of data with one of those devices. Thus, the I/O channel
+	selects one device and effects the data transfer. Each device, or a small set of
+	devices, is handled by a controller, or I/O module, that is much like the I/O modules
+	we have been discussing. Thus, the I/O channel serves in place of the CPU
+	in controlling these I/O controllers. A multiplexor channel can handle I/O with
+	multiple devices at the same time. For low-speed devices, a byte multiplexor
+	accepts or transmits characters as fast as possible to multiple devices. For example,
+	the resultant character stream from three devices with different rates and individual
+	streams A1A2A3A4 c, B1B2B3B4 c, and C1C2C3C4 c might be A1B1C1A2C2A3B2C3A4, and so on.
+
+	
+
+	/*263*/
+
+ADMINISTRACION DE MEMORIA#############################################
+
+Sistema Operativo:
+“Software que administra los recursos del
+computador, provee servicios y controla la
+ejecución de otros programas”
+
+Algunos servicios que provee
+Schedule de procesos
+Administración de memoria
+Monitor
+Parte residente del Sistema Operativo
+
+/*284*/
+In a uniprogramming system, main memory is divided into two parts: one part for
+the OS (resident monitor) and one part for the program currently being executed.
+In a multiprogramming system, the “user” part of memory is subdivided to accommodate
+multiple processes. The task of subdivision is carried out dynamically by the
+OS and is known as memory management.
+
+Administración de memoria simple
+Sistema con uniprogramación
+Se divide la memoria en dos partes
+Monitor del S.O.
+Programa en ejecución en ese momento
+Ventajas:
+Simplicidad
+Desventajas:
+Desperdicio de memoria
+Desaprovechamiento de los recursos del computador
+
+Administración de memoria simple 
+/*281*/
+
+simple batch systems Early processors were very expensive, and therefore it
+was important to maximize processor utilization. The wasted time due to scheduling
+and setup time was unacceptable.
+To improve utilization, simple batch operating systems were developed. With
+such a system, also called a monitor, the user no longer has direct access to the processor.
+Rather, the user submits the job on cards or tape to a computer operator,
+who batches the jobs together sequentially and places the entire batch on an input
+device, for use by the monitor.
+To understand how this scheme works, let us look at it from two points of
+view: that of the monitor and that of the processor. From the point of view of the
+monitor, the monitor controls the sequence of events. For this to be so, much of the
+monitor must always be in main memory and available for execution (Figure 8.3).
+That portion is referred to as the resident monitor. The rest of the monitor consists
+of utilities and common functions that are loaded as subroutines to the user program
+at the beginning of any job that requires them. The monitor reads in jobs one
+at a time from the input device (typically a card reader or magnetic tape drive). As it
+is read in, the current job is placed in the user program area, and control is passed to
+this job. When the job is completed, it returns control to the monitor, which immediately
+reads in the next job. The results of each job are printed out for delivery to
+the user.
+Now consider this sequence from the point of view of the processor. At a certain
+point in time, the processor is executing instructions from the portion of main memory
+containing the monitor. These instructions cause the next job to be read in to
+another portion of main memory. Once a job has been read in, the processor will
+encounter in the monitor a branch instruction that instructs the processor to continue
+execution at the start of the user program. The processor will then execute
+the instruction in the user’s program until it encounters an ending or error condition.
+Either event causes the processor to fetch its next instruction from the monitor
+program. Thus the phrase “control is passed to a job” simply means that the processor
+is now fetching and executing instructions in a user program, and “control is
+returned to the monitor” means that the processor is now fetching and executing
+instructions from the monitor program.
+It should be clear that the monitor handles the scheduling problem. A batch of
+jobs is queued up, and jobs are executed as rapidly as possible, with no intervening
+idle time.
+How about the job setup time? The monitor handles this as well. With each
+job, instructions are included in a job control language (JCL). This is a special type
+of programming language used to provide instructions to the monitor.
+
+/*Multiprogramming*/
+Varios procesos de usuario en ejecución a lavez
+Se divide la memoria de usuario entre los
+procesos en ejecución
+Se comparte el tiempo de procesador entre los
+procesos en ejecución ( timeslice
+Condiciones de finalización:
+Termina el trabajo
+Se detecta un error y se cancela
+Requiere una operación de E/S (suspensión)
+Termina el timeslice (suspención
+
+
+The simplest scheme for partitioning available memory is to use fixed-
+sizepartitions, as shown in Figure 8.13. Note that, although the partitions are of fixed size, they need not be of equal size. When a process is brought into memory, it is placed in the
+smallest available partition that will hold it.
+Even with the use of unequal fixed-size partitions, there will be wasted memory.
+In most cases, a process will not require exactly as much memory as provided by the partition.
+A more efficient approach is to use variable-size partitions. When a process is
+brought into memory, it is allocated exactly as much memory as it requires and no more.
+As this example shows, this method starts out well, but eventually it leads to a
+situation in which there are a lot of small holes in memory. As time goes on, memory
+becomes more and more fragmented, and memory utilization declines. One
+technique for overcoming this problem is compaction: From time to time, the OS
+shifts the processes in memory to place all the free memory together in one block.
+This is a time-consuming procedure, wasteful of processor time.
+
+Memory management: partitioning
+Partitioning
+Sistema con multiprogramación
+La memoria de usuario se divide en particiones detamaño fijo:
+Iguales
+Distintas
+Ventajas:
+Permite compartir la memoria entre varios procesos
+Desventajas:
+Desperdicio de memoria
+Fragmentación interna (dentro de una partición)
+Fragmentación externa (particiones no usadas)
+
+Memory management: swapping
+Sistema con multiprogramación
+Swapping
+La memoria de usuario se divide en particiones de tamaño variable
+Compactación para eliminar la fragmentación
+Se usa un recurso de hardware (registro de reasignación) para la realocación
+Realocación dinámica en tiempo de ejecución
+Ventajas:
+Permite compartir la memoria entre varios procesos
+Elimina el desperdicio por fragmentación interna. Con la
+compactación se elimina además la fragmentación externa
+Desventajas:
+La tarea de compactación es costosa
+
+Memory management: paging
+Both unequal fixed-size and variable-size
+partitions are inefficient in the use of memory.
+Suppose, however, that memory is partitioned into equal fixed-size
+chunks that are relatively small, and that each process is also divided into small fixed-
+size chunks of some size. Then the chunks of a program, known as pages, could be assigned to
+available chunks of memory, known as frames, or page frames. At most, then, the
+wasted space in memory for that process is a fraction of the last page.
+
+Administración de memoria paginada simple
+Sistema con multiprogramación
+Se divide el address space del proceso en partes iguales (páginas)
+Se divide la memoria principal en partes iguales ( frames)
+Hay una tabla de páginas por proceso
+Hay una lista de frames disponibles
+Se cargan a memoria las páginas del proceso en los
+frames disponibles (no es necesario que sean contiguos)
+Las direcciones lógicas se ven como número de página y
+un offset
+Se traducen las direcciones lógicas en físicas con soporte
+del hardware
+La paginación es transparente para el programador
+
+Ventajas:
+Permite compartir la memoria entre varios procesos
+Minimiza la fragmentación interna (solo existe dentro de la última página de cada proceso)
+Elimina la fragmentación externa
+Desventajas:
+Se requiere subir todas las páginas del proceso a memoria
+Se requieren estructuras de datos adicionales para mantener información de páginas y frames
+
+Administración de memoria paginada por demanda
+
+Sistema con multiprogramación
+Solo se cargan las páginas necesarias para la ejecución de un proceso
+Cuando se quiere acceder a una posición de memoria de una página no cargada se produce un page fault
+El page fault dispara una interrupción por hardware atendida por el sistema operativo
+Se levanta la página solicitada desde memoria secundaria (memoria virtual)
+Algoritmos para reemplazo de páginas
+Thrashing : el CPU pasa más tiempo reemplazando páginas que ejecutando instrucciones
+
+Ventajas:
+No es necesario cargar todas las páginas de un proceso a la vez
+Maximiza el uso de la memoria al permitir cargar más procesos a la vez
+Un proceso puede ocupar más memoria de la efectivamente instalada en el computador
+Desventajas:
+Mayor complejidad por la necesidad de implementar el reemplazo de páginas
+
+Administración de memoria por segmentación
+Sistemas con multiprogramación
+Generalmente visible al programador
+La memoria del programa se ve como un conjunto de segmentos (múltiples espacios de direcciones)
+Los segmentos son de tamaño variable y dinámico
+El sistema operativo administra una tabla de segmentos por proceso
+Permite separar datos e instrucciones
+Permite dar privilegios y protección de memoria como por ej . lectura, escritura, ejecución. ( segmentation faults como mecanismos de excepción de hardware para accesos indebidos)
+Las referencias a memoria se forman con un número de segmento y un offset dentro de él. Con ayuda de hardware (MMU Memory Management Unit ) se hacen las traducciones de las direcciones lógicas a físicas
+Se pueden usar para implementar memoria virtual (solo se suben a
+memoria física algunos segmentos por proceso)
+
+Ventajas:
+Simplifica el manejo de estructuras de datos con crecimiento
+Permite compartir información entre procesos dentro de un segmento
+Permite aplicar protección/privilegios sobre un segmento fácilmente
+Desventajas:
+Fragmentación externa en la memoria principal por no poder alojar un segmento
+Hardware más complejo que memoria paginada para la traducción de direcciones
+
+Address Spaces
+The x86 includes hardware for both segmentation and paging. Both mechanisms can
+be disabled, allowing the user to choose from four distinct views of memory:
+
+■ Unsegmented unpaged memory: In this case, the virtual address is the same
+as the physical address. This is useful, for example, in low- complexity, high- performance controller applications.
+■■ Unsegmented paged memory: Here memory is viewed as a paged linear
+address space. Protection and management of memory is done via paging.
+This is favored by some operating systems (e.g., Berkeley UNIX).
+■■ Segmented unpaged memory: Here memory is viewed as a collection of
+logical address spaces. The advantage of this view over a paged approach is
+that it affords protection down to the level of a single byte, if necessary. Furthermore,
+unlike paging, it guarantees that the translation table needed (the segment table) is on-chip
+when the segment is in memory. Hence, segmented unpaged memory results in predictable access times.
+■ Segmented paged memory: Segmentation is used to define logical memory
+partitions subject to access control, and paging is used to manage the allocation
+of memory within the partitions. Operating systems such as UNIX System
+V favor this view.
+
+
+789 linkeo

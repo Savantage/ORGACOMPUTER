@@ -1,0 +1,5 @@
+nasm main.asm -f win32 -o archivo.o
+
+gcc archivo.o -m32 -o ejecutable
+
+./ejecutable

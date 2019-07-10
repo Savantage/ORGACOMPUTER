@@ -1,0 +1,176 @@
+\subsection{MODULO DE E/S }
+
+\subsubsection{Que hace}
+Conecta a los periféricos con la CPU y la memoria a través del bus del sistema o switch central y permite la comunicación entre ellos
+\subsubsection{Para que sirve}
+Oculta detalles de timing, formatos y electro mecánica de los dispositivos periféricos
+\subsubsection{Por que existe?}
+\begin{itemize}
+\item Amplia variedad de periféricos con distintos métodos de operación
+\item La tasa de transferencia de los periféricos es generalmente mucho más lenta que la de la memoria y procesador
+\item Los periféricos usan distintos formatos de datos y tamaños de palabra
+\end{itemize}
+
+/*4pdf*/ 230 stalling
+
+\subsubsection{Interface interna - bus del sistema}
+\begin{itemize}
+\item Datos
+\item Direcciones
+\item Control
+\end{itemize}
+
+\subsubsection{Interface externa - perifericos}
+\begin{itemize}
+\item Datos
+\item Estado
+\item Control
+\end{itemize}
+
+
+\subsubsection{Funciones}
+\paragraph{Control and Timing}\mbox{}\\\\%%
+ontrola flujo de tráfico entre CPU/Memoria y periféricos
+\paragraph{Comunicación con el procesador}\mbox{}\\\\%%
+Decodificación de comandos: The I/O module accepts commands from the processor, typically sent as signals on the control bus. For example, an I/O module for a disk drive might accept the following commands: READ SECTOR, WRITE SECTOR, SEEK track number, and SCAN record ID. The latter two commands each include a parameter that is sent on the data bus
+\begin{itemize}
+	\item Datos: Data are exchanged between the processor and the I/O module over the data bus.
+	\item Información de estado: Because peripherals are so slow, it is important to know the	status of the I/O module. For example, if an I/O module is asked to send data to the processor (read), it may not be ready to do so because it is still working on the previous I/O command. This fact can be reported with a status signal.	Common status signals are BUSY and READY. There may also be signals to report various error conditions.
+	\item Reconocimiento de direcciones: Just as each word of memory has an address, so does each I/O device. Thus, an I/O module must recognize one unique address for each peripheral it controls.
+\end{itemize}
+\paragraph{Comunicación con el dispositivo}\mbox{}\\\\%%
+\begin{itemize}
+\item Comandos
+\item Información de estado
+\item Datos
+\end{itemize}
+\paragraph{Buffering de datos}\mbox{}\\\\%%
+\paragraph{Detección de errores}\mbox{}\\\\%%
+
+\subsubsection{The control of the transfer of data from an external device to the processor might involve the following sequence of steps}
+\begin{enumerate}
+\item The processor interrogates the I/O module to check the status of the attached device.
+\item The I/O module returns the device status.
+\item If the device is operational and ready to transmit, the processor requests the transfer of data, by means of a command to the IO module.
+\item  The I/O module obtains a unit of data (e.g., 8 or 16 bits) from the external device.
+\item The data are transferred from the I/O module to the processor.
+\end{enumerate}
+
+/*Diagrama I/O pag 234 Will, 7pdf */
+
+\subsubsection{Tecnicas para operaciones de E/S}
+\begin{enumerate}
+\item  E/S programada
+\item  E/S manejada por interrupciones
+\item  Acceso directo a memoria (DMA)
+\end{enumerate}
+
+/*pag 237*/
+
+When large volumes of data are to be moved, a more efficient technique is
+required: direct memory access (DMA).
+DMA involves an additional module on the system bus. The DMA module
+(Figure 7.12) is capable of mimicking the processor and, indeed, of taking over control
+of the system from the processor. It needs to do this to transfer data to and from
+memory over the system bus. For this purpose, the DMA module must use the bus
+only when the processor does not need it, or it must force the processor to suspend
+operation temporarily. The latter technique is more common and is referred to as
+cycle stealing, because the DMA module in effect steals a bus cycle.
+When the processor wishes to read or write a block of data, it issues a command
+to the DMA module, by sending to the DMA module the following information:
+\begin{enumerate}
+\item  Whether a read or write is requested, using the read or write control line
+between the processor and the DMA module.
+\item  The address of the I/O device involved, communicated on the data lines.
+\item  The starting location in memory to read from or write to, communicated on
+the data lines and stored by the DMA module in its address register.
+\item  The number of words to be read or written, again communicated via the data
+lines and stored in the data count register.
+\end{enumerate}
+/*pag 249*/ 
+The processor then continues with other work. It has delegated this I/O operation
+to the DMA module. The DMA module transfers the entire block of data,
+one word at a time, directly to or from memory, without going through the processor.
+When the transfer is complete, the DMA module sends an interrupt signal to
+the processor. Thus, the processor is involved only at the beginning and end of the
+transfer
+
+/*  250 Figure 7.13 DMA and Interrupt Breakpoints during an Instruction Cycle*/
+
+/* 251 Figure 7.14 Alternative DMA Configurations*/
+
+The DMA mechanism can be configured in a variety of ways. Some possibilities
+are shown in Figure 7.14. In the first example, all modules share the same system
+bus. The DMA module, acting as a surrogate processor, uses programmed I/O to
+exchange data between memory and an I/O module through the DMA module. This
+configuration, while it may be inexpensive, is clearly inefficient. As with processor-
+controlled programmed I/O, each transfer of a word consumes two bus cycles
+The number of required bus cycles can be cut substantially by integrating the
+DMA and I/O functions. As Figure 7.14b indicates, this means that there is a path
+between the DMA module and one or more I/O modules that does not include
+the system bus. The DMA logic may actually be a part of an I/O module, or it may
+be a separate module that controls one or more I/O modules. This concept can
+be taken one step further by connecting I/O modules to the DMA module using
+an I/O bus (Figure 7.14c). This reduces the number of I/O interfaces in the DMA
+module to one and provides for an easily expandable configuration. In both of
+these cases (Figures 7.14b and c), the system bus that the DMA module shares with
+the processor and memory is used by the DMA module only to exchange data with
+memory. The exchange of data between the DMA and I/O modules takes place off
+the system bus.
+
+\subsubsection{I /O Channels and Processors}
+The Evolution of the I/O Function
+As computer systems have evolved, there has been a pattern of increasing complexity
+and sophistication of individual components. Nowhere is this more evident than
+in the I/O function. We have already seen part of that evolution. The evolutionary
+steps can be summarized as follows:
+\begin{enumerate}
+\item The CPU directly controls a peripheral device. This is seen in simple
+microprocessor-controlled devices.
+\item A controller or I/O module is added. The CPU uses programmed I/O without
+interrupts. With this step, the CPU becomes somewhat divorced from the specific
+details of external device interfaces.
+\item  The same configuration as in step 2 is used, but now interrupts are employed.
+The CPU need not spend time waiting for an I/O operation to be performed,
+thus increasing efficiency.
+\item The I/O module is given direct access to memory via DMA. It can now move
+a block of data to or from memory without involving the CPU, except at the
+beginning and end of the transfer.
+\item  The I/O module is enhanced to become a processor in its own right, with a
+specialized instruction set tailored for I/O. The CPU directs the I/O processor
+to execute an I/O program in memory. The I/O processor fetches and executes
+these instructions without CPU intervention. This allows the CPU to specify a
+sequence of I/O activities and to be interrupted only when the entire sequence
+has been performed.
+\item The I/O module has a local memory of its own and is, in fact, a computer in its
+own right. With this architecture, a large set of I/O devices can be controlled,
+with minimal CPU involvement. A common use for such an architecture has
+been to control communication with interactive terminals. The I/O processor
+takes care of most of the tasks involved in controlling the terminals.
+\end{enumerate}
+
+\subsubsection{Characteristics of I/O Channels}
+	The I/O channel represents an extension of the DMA concept. An I/O channel
+	has the ability to execute I/O instructions, which gives it complete control over
+	I/O operations. In a computer system with such devices, the CPU does not execute
+	I/O instructions. Such instructions are stored in main memory to be executed by a
+	special-purpose processor in the I/O channel itself. Thus, the CPU initiates an I/O
+	transfer by instructing the I/O channel to execute a program in memory. The program
+	will specify the device or devices, the area or areas of memory for storage,
+	priority, and actions to be taken for certain error conditions. The I/O channel follows
+	these instructions and controls the data transfer
+
+	Two types of I/O channels are common, as illustrated in Figure 7.18. A
+	selector channel controls multiple high-speed devices and, at any one time, is
+	dedicated to the transfer of data with one of those devices. Thus, the I/O channel
+	selects one device and effects the data transfer. Each device, or a small set of
+	devices, is handled by a controller, or I/O module, that is much like the I/O modules
+	we have been discussing. Thus, the I/O channel serves in place of the CPU
+	in controlling these I/O controllers. A multiplexor channel can handle I/O with
+	multiple devices at the same time. For low-speed devices, a byte multiplexor
+	accepts or transmits characters as fast as possible to multiple devices. For example,
+	the resultant character stream from three devices with different rates and individual
+	streams A1A2A3A4 c, B1B2B3B4 c, and C1C2C3C4 c might be A1B1C1A2C2A3B2C3A4, and so on.
+	
+
+	/*263*/

@@ -1,0 +1,70 @@
+ARM GAS  example.s 			page 1
+
+
+   1              	@@@ PRINT STRINGS, CHARACTERS, INTEGERS TO STDOUT
+   2              	.equ SWI_PrChr,0x00 @ Write an ASCII char to Stdout
+   3              	.equ SWI_PrStr, 0x69 @ Write a null-ending string
+   4              	.equ SWI_PrInt,0x6b @ Write an Integer
+   5              	.equ Stdout, 1 @ Set output mode to be Output View
+   6              	.equ SWI_Exit, 0x11 @ Stop execution
+   7              	.global _start
+   8              	.text
+   9              	_start:
+  10              	@ print a string to Stdout
+  11 0000 0100A0E3 	mov R0,#Stdout @ mode is Stdout
+  12 0004 50109FE5 	ldr R1, =Message1 @ load address of Message1
+  13 0008 690000EF 	swi SWI_PrStr @ display message to Stdout
+  14              	@ print a new line as a string to Stdout
+  15 000c 0100A0E3 	mov R0,#Stdout @ mode is Stdout
+  16 0010 48109FE5 	ldr r1, =EOL @ end of line
+  17 0014 690000EF 	swi SWI_PrStr
+  18              	@ print a character to the screen
+  19 0018 4100A0E3 	mov R0, #'A @ R0 = char to print
+  20 001c 000000EF 	swi SWI_PrChr
+  21              	@ print a blank character (from data)
+  22 0020 3C009FE5 	ldr r0,=Blank
+  23 0024 0000D0E5 	ldrb r0,[r0] @ R0 = char to print = blank
+  24 0028 000000EF 	swi SWI_PrChr
+  25              	@ print a second character to Stdout
+  26 002c 4200A0E3 	mov R0, #'B @ R0 = char to print
+  27 0030 000000EF 	swi SWI_PrChr
+  28              	@ print a new line as a character to Stdout
+  29 0034 2C009FE5 	ldr r0,=NewL
+  30 0038 0000D0E5 	ldrb r0,[r0] @ R0 = char to print = new line
+  31 003c 000000EF 	swi SWI_PrChr
+  32              	@ print an integer to Stdout
+  33 0040 0100A0E3 	mov R0,#Stdout @ mode is Output view
+  34 0044 2A10A0E3 	mov r1, #42 @ integer to print
+  35 0048 6B0000EF 	swi SWI_PrInt
+  36              	@ print a new line as a string to Stdout
+  37 004c 0100A0E3 	mov R0,#Stdout @ mode is Output view
+  38 0050 08109FE5 	ldr r1, =EOL @ end of line
+  39 0054 690000EF 	swi SWI_PrStr
+  40 0058 110000EF 	swi SWI_Exit @ stop executing: end of program
+  41              	.data
+  42 0000 48656C6C 	Message1: .asciz "Hello World!"
+  42      6F20576F 
+  42      726C6421 
+  42      00
+  43 000d 0A00     	
+  44 000f 0A       	EOL: .asciz "\n"
+  45 0010 20       	NewL: .ascii "\n"
+  46              	Blank: .ascii " "
+ARM GAS  example.s 			page 2
+
+
+DEFINED SYMBOLS
+           example.s:2      *ABS*:00000000 SWI_PrChr
+           example.s:3      *ABS*:00000069 SWI_PrStr
+           example.s:4      *ABS*:0000006b SWI_PrInt
+           example.s:5      *ABS*:00000001 Stdout
+           example.s:6      *ABS*:00000011 SWI_Exit
+           example.s:9      .text:00000000 _start
+           example.s:11     .text:00000000 $a
+           example.s:42     .data:00000000 Message1
+           example.s:43     .data:0000000d EOL
+           example.s:45     .data:00000010 Blank
+           example.s:44     .data:0000000f NewL
+           example.s:46     .text:0000005c $d
+
+NO UNDEFINED SYMBOLS

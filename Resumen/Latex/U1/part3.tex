@@ -1,0 +1,137 @@
+\section{Cadenas de caracteres}
+
+En una cadena de caracteres, cada caracter ocupa 1 byte y se representa según el codigo de caracteres que se esté utilizando.
+
+\subsection{ASCII}
+abbreviated from American Standard Code for Information Interchange, is a character encoding standard for electronic communication. ASCII codes represent text in computers, telecommunications equipment, and other devices. Most modern character-encoding schemes are based on ASCII, although they support many additional characters.
+
+\subsection{EBCDIC}
+is an eight-bit character encoding used mainly on IBM mainframe and IBM midrange computer operating systems. It descended from the code used with punched cards and the corresponding six-bit binary-coded decimal code used with most of IBM's computer peripherals of the late 1950s and early 1960s.
+
+\subsection{UNICODE}
+Unicode is a computing industry standard for the consistent encoding, representation, and handling of text expressed in most of the world's writing systems. The Unicode Standard consists of a set of code charts for visual reference, an encoding method and set of standard character encodings, a set of reference data files, and a number of related items, such as character properties, rules for normalization, decomposition, collation, rendering, and bidirectional display order (for the correct display of text containing both right-to-left scripts, such as Arabic and Hebrew, and left-to-right scripts).
+
+\subsubsection{Codificación}
+codificación organizada en planos. Cada plano tiene un espacio de 16 bits y la cantidad de planos definida es 17. plano 0 al plano 16. por lo que la cantidad de codigos posibles es $17*2^{16} = 1.114.112$
+
+U-XXXXYYYY
+XXXX el valor hexadecimal del plano
+YYYY el valor hexadecimal correspondiente al caracter dentro del plano
+
+U-00000040 significa plano 0 codigo $40_{16}$ y corresponde especificamente a la representación de la letra M.
+
+Para el caso particular del plano 0 suele usarse una notación simplificaa la cual omite expresar el numero del plano y remplazar el - posterior a la U por el signo +. U+YYYY. Para el caso de ejemplo quedaría U+0040. 
+
+El rango total entonces es: 00000000 al 0010FFFF
+
+\subsubsection{UTF - Unicode Transformation Format}
+Consiste en un mapeo algoritmico de un codigo unicode a una secuencia de bytes.
+
+\paragraph{Tipos}
+\begin{enumerate}    
+  \item UTF-8
+  \item UTF-16
+  \item UTF-32
+\end{enumerate}
+
+\subsubsection{UTF - 8}
+
+Segun el rango al cual corresponde dentro de la tabla Unicode, un caracter puede representarse como 1, 2, 3 o 4 tiras de 8 bits.
+
+\begin{verbatim}
+Rango [00...7F]
+	Se necesitan 7 bits y se representan en 1 byte.
+		Primer bit en 0 y el resto igual que el codigo ASCII
+
+Rango [80...7FF]
+	Se necesitan 11 bits y se representan en 2 bytes.
+		byte 1:
+			Los primeros 3 bits son fijos 110. Los 2 primeros en 1 previous a un 0 dan la señal de que se usaran 2 bytes para
+			la representación.
+		byte 2:
+			los primeros 2 bits son fijos 10
+			los 6 bits siguientes contienen los ultimos 6 del caracter segun la tabla unicode
+
+rango [800...FFFF]
+		byte 1: los primeros 4 bits son fijos 1110
+				los 4 bits siguienten contienen los 4 primeros del caracter segun la tabla unicode
+		byte 2:	los primeros 2 bits son fijos 10
+				los siguientes 6 bits contienen los siguientes 6 del caracter segun la tabla unicode
+		byte 3:	idem segundo byte
+
+rango [10000... 10FFFF]
+	Se necesitan 21 bits y se representan en 3 bytes
+		byte1:
+			los primeros 5 bits son fijos 11110
+			los 3 siguientes contienen los 3 primeros del caracter segun la tabla unicode
+		byte2:
+			los primeros 2 bits son fijos 10
+			los siguientes 6 bits contienen los siguientes 6 del caracter segun la tabla unicode
+		byte3
+			idem segundo byte
+		byte4
+			idem segundo byte
+\end{verbatim}
+
+\paragraph{Ejemplo}\mbox{}\\\\
+El código Unicode de la ñ es el 00F116 = 0000 0000 1111 0001\\
+    Se encuentra en el rango entre el “80 y 7FF”, por lo tanto se necesitan 11 bits (00011110001) y se usarán 2 bytes para la representación:\\
+        Byte 1: 11000011\\
+        Byte 2: 10110001\\
+            Representación Unicode 11000011101100012 = C3B1
+  
+\subsubsection{UTF - 16}
+Según el rango al cual corresponde dentro de la tabla Unicode, un caracter puede representarse como 1 o 2 tiras de 16 bits cada una.
+
+\begin{verbatim}
+Rango [0...FFFF]
+	Se necesitan 16 bits y se representan en 2 bytes tal cual se define en la tabla Unicode
+		Rango [10000... 10FFFF]
+			Siendo U el código unicode del caracter a representar, y dado que el máximo
+			valor es 10FFFF se calcula:
+			C = U-10000 donde C siempre tendrá 20 bits
+			Se necesitaran 20 bits y se representan en 4 bytes
+			byte 1 y 2
+			Los primeros 6 bits son fijos 110110
+			Los restantes 10 bits son los primeros 10 de C
+			byte 3 y 4
+			primeros 6 bits son fijos 110111
+			Los restantes 10 bits son los últimos 10 de C
+\end{verbatim}
+
+
+\paragraph{Ejemplo}\mbox{}\\\\
+El código Unicode es el 1D11E
+			C = 10000 - 1D11E = 0D11E16 = 0000 1101 0001 0001 1110
+			Byte 1 y 2: 1101100000 1101 00
+			Byte 3 y 4: 11011101 0001 1110
+			Representación Unicode:
+			11011000001101 00110111010001 11102 = D834 DD1E
+			
+\subsubsection{UTF - 32}
+Es la mas simple de las 3 formas ya que todos los caracteres se representan en 32 bits en forma idéntica a como se codifican en la tabla Unicode.
+
+\subsubsection{Decodificación y detección de errores}
+\paragraph{UTF-8}\mbox{}\\\\
+Al decodificar una tira de bits codificados en UTF-8 se mira mirar el primer bit
+			Si es 0, entonces el caracter a decodificar está en los siguientes 7 bits.
+			Si es 1:
+				Si el siguiente 0, es un error.
+				Sino hay que contar cuantos unos (1) en total hay antes del primer 0.
+				Si son más de 4, es un error.
+				Sino, los siguientes N bytes (siendo N la cantidad de unos 
+				encontrados) deben comenzar con los bits 10, sino, es error.
+				El código Unicode final se arma con los últimos 7-N bits del
+				primer byte seguido de los últimos 6 bits de los bytes siguientes.
+
+\paragraph{UTF-16}\mbox{}\\\\
+Para decodificar una tira de bits codificados en UTF-16 se comienza evaluando 	los primeros 6 bits del primer byte.
+			Si son distintos de 110110, es un dato coficado en 2 bytes y se lo
+			busca en la tabla Unicode
+			Sino, se verifican los primeros 6 bits del tercer byte:
+				Si son distintos de 110111 es un error.
+				Sino se arma el código Unicode con los últimos 2 bits del primer
+				byte, seguidos por los 8 bits del segundo byte. A esto se le
+				suman los últimos 2 bits del siguiente byte, mas los 8 bits del
+				último byte.
+

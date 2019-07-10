@@ -1,0 +1,83 @@
+\subsection{SSD}
+One of the most significant developments in computer architecture in recent years is
+the increasing use of solid state drives (SSDs) to complement or even replace hard
+disk drives (HDDs), both as internal and external secondary memory. The term solid
+state refers to electronic circuitry built with semiconductors. An SSD is a memory
+device made with solid state components that can be used as a replacement to a
+hard disk drive. The SSDs now on the market and coming on line use NAND flash
+memory, which is described in Chapter 5.
+
+\begin{itemize}
+\item Historia
+	\begin{itemize}
+	\item Basados en RAM (volátiles – energía auxiliar)
+	\end{itemize}
+\item Texas memory: 16KB (1978)
+	\begin{itemize}
+	\item Basados en flash (no volátiles)
+	\end{itemize}
+\item M-Systems (1995)
+\item Tecnología actual
+	\begin{itemize}
+	\item NAND Flash
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{SSD Compared to HDD}
+As the cost of flash-based SSDs has dropped and the performance and bit density increased, SSDs have become increasingly competitive with HDDs. Table 6.5 shows typical measures of comparison at the time of this writing. SSDs have the following advantages over HDDs:
+\begin{itemize}
+\item High-performanceinput/output operations per second (IOPS): Significantly increases performance I/O subsystems.
+\item Durability: Less susceptible to physical shock and vibration.
+\item Longer lifespan: SSDs are not susceptible to mechanical wear.
+\item Lower power consumption: SSDs use considerably less power than comparable-size HDDs.
+\item Quieter and cooler running capabilities: Less space required, lower energy costs, and a greener enterprise.
+\item Lower access times and latency rates: Over 10 times faster than the spinning disks in an HDD.
+\end{itemize}
+Currently, HDDs enjoy a cost per bit advantage and a capacity advantage, but
+these differences are shrinking.
+
+/*215*/
+The interface component in Figure 6.8 refers to the physical and electrical
+interface between the host processor and the SSD peripheral device. If the device is
+an internal hard drive, a common interface is PCIe. For external devices, one common
+interface is USB.
+
+\begin{itemize}
+\item Controller: Provides SSD device level interfacing and firmware execution.
+\item Addressing: Logic that performs the selection function across the flash memory components.
+\item Data buffer/cache: High speed RAM memory components used for speed
+matching and to increased data throughput.
+\item Error correction: Logic for error detection and correction.
+\item Flash memory components: Individual NAND flash chips.
+\end{itemize}
+
+\subsubsection{Comparación con discos magnéticos}
+Ventajas
+\begin{itemize}
+\item Arranque más rápido
+\item Gran velocidad de lectura y escritura
+\item Baja latencia de lectura y escritura
+\item Menor consumo de energía
+\item Menor producción de calor
+\item Sin ruido
+\item Mejor MTBF (tiempo medio entre fallas)
+\item Mayor seguridad de datos
+\item Rendimiento determinístico
+\item Menor peso y tamaño
+\item Mayor resistencia a golpes, caídas y vibraciones
+\end{itemize}
+Desventajas
+\begin{itemize}
+\item Precio xGB
+\item Menos recuperación ante fallos
+\item Capacidad
+\item Vida útil
+\end{itemize}
+
+
+
+
+
+
+
+

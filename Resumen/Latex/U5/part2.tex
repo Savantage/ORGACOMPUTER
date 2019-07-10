@@ -1,0 +1,160 @@
+\subsection{Memoria}
+
+\subsubsection{Definicion}
+Computer memory is any physical device capable of storing information temporarily like RAM (random access memory), or permanently, like ROM (read-only memory). Memory devices utilize integrated circuits and are used by operating systems, software, and hardware.
+
+
+\subsubsection{Formado por elementos con distintas cualidades}
+	\begin{itemize}
+	\item Tecnología
+	\item Organización
+	\item Performance
+	\item Costo
+	\end{itemize}
+\subsubsection{Jerarquía de subsistemas de memoria}
+	\begin{itemize}
+	\item Internos al sistema (accedidos directamente por el procesador)
+		\item Registros
+		\item Memoria interna para unidad de control
+		\item Memoria Cache
+	\item Externo al sistema (accedidos por el procesador a través de un módulo de E/S)
+		\item Dispositivos de almacenamiento perifericos,  discos, cintas, etc.
+	\end{itemize}
+\subsubsection{Puntos importantes}
+	\begin{itemize}
+	\item Capacidad
+	\item Tiempo de acceso 
+	\item Costo
+	\end{itemize}
+
+/*Grafico pág 4*/
+
+\subsubsection{A medida que se baja la piramide}
+	\begin{itemize}
+	\item Costo por bit decreciente
+	\item Capacidad decreciente
+	\item Tiempo de acceso creciente
+	\item Frecuencia de acceso de la memoria por parte del procesador decreciente
+	\end{itemize}
+
+\subsubsection{Caracteristicas}
+	\begin{itemize}
+	\item Capacidad
+		\begin{itemize}
+		\item bytes/palabras (memoria interna)
+		\item bytes (memoria externa)
+		\end{itemize}
+	\item Unidad de transferencia
+		\item número de líneas eléctricas del módulo de memoria, típicamente el tamaño de palabra o 64, 128, o 256 bits (memoria interna)
+		\item bloques (memoria externa)
+	\end{itemize}
+	
+\subsubsection{Metodos de acceso de unidades de datos}
+	\begin{itemize}
+	\item Acceso secuencial
+		\begin{itemize}
+		\item Unidades de datos: registros 
+		\item Acceso lineal en secuencia
+		\item Se deben pasar y descartar todos los registros intermedios antes de acceder al registro deseado
+		\item Tiempo de acceso variable
+		\item ej cintas magnéticas
+		\end{itemize}
+	\item Acceso directo
+		\begin{itemize}
+		\item Dirección única para bloques o registros basada en su posición física
+		\item Tiempo de acceso variable
+		\item ej discos magnéticos
+		\end{itemize}
+	\item Acceso aleatorio
+		\begin{itemize}
+		\item cada posición direccionable de memoria tiene un mecanismo de direccionamiento cableado físicamente
+		\item tiempo de acceso constante, independiente de la secuencia de accesos anteriores
+		\item ej memoria principal y algunas memorias cache
+		\end{itemize}
+	\item Acceso asociativo
+		\begin{itemize}
+		\item Tipo de acceso aleatorio por comparación de patrón de bits
+		\item La palabra se busca por una porción de su contenido en vez de por su dirección
+		\item Cada posición de memoria tiene un mecanismo de direccionamiento propio
+		\item Tiempo de acceso constante, independiente de la secuencia de accesos anteriores o su ubicación
+		\item Ej. memorias cache
+		\end{itemize}
+	\end{itemize}
+	
+\subsubsection{Parametros de performance}
+	\begin{itemize}
+	\item Tiempo de acceso (latencia)
+		\begin{itemize}
+		\item Memorias de acceso aleatorio: tiempo necesario para hacer una operación de lectura o escritura
+		\item memorias sin acceso aleatorio: tiempo necesario para posicionar el mecanismo de lectura/escritura en la posición deseada
+		\end{itemize}
+	\item Tiempo de ciclo de memoria
+		\begin{itemize}
+		\item memorias de acceso aleatorio: tiempo de acceso mas el tiempo adicional necesario para que una nueva operacion pueda comenzar
+		\end{itemize}
+	\item Tasa de transferencia
+		\begin{itemize}
+		\item tasa con la cual los datos son transferidos dentro o fuera de la unidad de memoria
+		\item memorias de acceso aleatorio: 1/tiempo de ciclo de memoria
+		\item memorias sin acceso aleatorio: $t_n+T_a+n/R$
+		\item donde
+			\begin{itemize}
+			\item $t_n$ = tiempo promedio para leer escribir n bits
+			\item $T_a$ = tiempo promedio de acceso
+			\item n = numero de bits
+			\item R = tasa de transferencia, en bits por segundo
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+
+\subsubsection{Tipos fisicos de memoria}
+	\begin{itemize}
+	\item Memorias semiconductoras (memoria principal y cache)
+	\item Memorias de superficie magnética (discos y cintas)
+	\item Memorias ópticas (medios ópticos)
+	\end{itemize}
+	
+\subsubsection{Caracteristicas fisicas de memoria}
+	\begin{itemize}
+	\item Memorias volátiles: se pierde su contenido ante la falta de energía eléctrica (Ej. algunas memorias semiconductoras)
+	\item Memorias no volátiles: no se necesita de energía eléctrica para mantener su contenido (Ej. memorias de superficie magnéticas y algunas memorias semiconductoras)
+	\item Memorias de solo lectura: (ROM –ReadOnlyMemory) no se puede borrar su contenido (Ej. algunas memorias semiconductoras)
+	\end{itemize}
+	
+\subsubsection{Principio de localidad de referencia}
+Durante la ejecución de un programa, las referencias a memoria que hace el procesador tanto para instrucciones como datos tienden a estar agrupadas	(Ej. loops, subrutinas, tablas, vectores)
+
+
+\subsubsection{Memoria cache}
+	\begin{itemize}
+	\item Memoria semiconductora más rápida (y costosa) que la principal
+	\item Se ubica entre el procesador y la memoria principal
+	\item Permite mejorar la performance general de acceso a memoria principal
+	\item Contiene una copia de porciones de memoria principal
+	\item como funciona
+		\begin{itemize}
+		\item CPU trata de leer una palabra de la memoria principal
+		\item Se chequea primero si existe en la memoria cache.
+			\begin{itemize}
+			\item Si es así se la entrega al CPU
+			\item Sino se lee un bloque de memoria principal (número fijo de palabras), se incorpora a la cache y la palabra buscada se entrega al CPU
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	Por el principio de localidad de referencia es probable que próximas palabras buscadas estén dentro del bloque de memoria subido a la cache
+	
+\subsubsection{Estructura Memoria principal}
+	\begin{itemize}
+	\item $2^n$ palabras direccionables(direccion única de n-bits para cada una)
+	\item Bloques fijos de Kpalabras cada uno (M bloques)
+	\end{itemize}
+\subsubsection{Estructura Memoria Cache}
+	\begin{itemize}
+	\item mbloques llamados líneas
+	\item Cada linea contiene:
+		\begin{itemize}
+		\item Kpalabras
+		\item Tag(conjunto de bits para indicar qué bloque está almacenado, usualmente una porción de la dirección de memoria principal)
+		\item Bits de control (Ej. bit para indicar si la línea se modificó desde la última vez que se cargó en la cache)
+		\end{itemize}
+	\end{itemize}

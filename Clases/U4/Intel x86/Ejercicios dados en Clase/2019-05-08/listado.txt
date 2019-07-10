@@ -1,0 +1,5 @@
+Fiat      S              2010AAA-111       
+Foxx      E              2015BBB-222       
+Ford      D              2009CCC-333       
+Chevrolet E              20ppDDD-444       
+Peugeot   S              2018EEE-555       

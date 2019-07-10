@@ -1,0 +1,665 @@
+Almacenamiento secundario
+
+################################################################
+Discos magnéticos
+
+Plato circular construido de un material no magnético,
+llamado substrato (aluminio o vidrio), cubierto por un
+material magnetizable
+
+Mecanismos de lectura/escritura magnético
+Cabeza de lectura/escritura única: bobina conductora estática,
+el disco está girando constantemente debajo de ella
+Usado en los viejos discos rígidos y floppy disk
+Escritura : cuando circula electricidad a través de una bobina
+se produce un campo magnético. Los patrones magnéticos
+resultantes se graban en la superficie (diferentes patrones
+para corrientes + y -
+Lectura : un campo magnético que se mueve por una bobina
+produce corriente eléctrica en ella. Cuando la superficie del
+disco pasa debajo de la cabeza se genera una corriente de la
+misma polaridad grabada
+Cabeza de lectura diferenciada de la de escritura
+Tiene un sensor magneto resistivo (MR)
+La resistencia eléctrica del material depende de la
+dirección de la magnetización del medio que se
+mueve por debajo
+Se hace pasar una corriente a través del sensor MR
+y los cambios de resistencia se detectan como
+señales de voltaje
+Provee mayores densidades de grabación y
+velocidades de operación que el mecanismo anterior
+/*img 187*/
+Data are recorded on and later retrieved from the disk via a conducting coil named
+the head; in many systems, there are two heads, a read head and a write head. During
+a read or write operation, the head is stationary while the platter rotates beneath it.
+The write mechanism exploits the fact that electricity flowing through a coil
+produces a magnetic field. Electric pulses are sent to the write head, and the resulting
+magnetic patterns are recorded on the surface below, with different patterns for
+positive and negative currents. The write head itself is made of easily magnetizable
+material and is in the shape of a rectangular doughnut with a gap along one side and
+a few turns of conducting wire along the opposite side (Figure 6.1). An electric current
+in the wire induces a magnetic field across the gap, which in turn magnetizes a
+small area of the recording medium. Reversing the direction of the current reverses
+the direction of the magnetization on the recording medium.
+The traditional read mechanism exploits the fact that a magnetic field moving
+relative to a coil produces an electrical current in the coil. When the surface of the
+disk passes under the head, it generates a current of the same polarity as the one
+already recorded. The structure of the head for reading is in this case essentially
+the same as for writing and therefore the same head can be used for both. Such
+single heads are used in floppy disk systems and in older rigid disk systems.
+Contemporary rigid disk systems use a different read mechanism, requiring
+a separate read head, positioned for convenience close to the write head. The read
+head consists of a partially shielded magnetoresistive (MR) sensor. The MR material
+has an electrical resistance that depends on the direction of the magnetization of
+the medium moving under it. By passing a current through the MR sensor, resistance
+changes are detected as voltage signals. The MR design allows higher-frequency
+operation, which equates to greater storage densities and operating speeds.
+
+Data Organization and Formatting
+/*img 188*/
+The head is a relatively small device capable of reading from or writing to a portion
+of the platter rotating beneath it. This gives rise to the organization of data on the
+platter in a concentric set of rings, called tracks. Each track is the same width as the
+head. There are thousands of tracks per surface.
+Figure 6.2 depicts this data layout. Adjacent tracks are separated by gaps. This
+prevents, or at least minimizes, errors due to misalignment of the head or simply
+interference of magnetic fields.
+Data are transferred to and from the disk in sectors (Figure 6.2). There are
+typically hundreds of sectors per track, and these may be of either fixed or variable
+length. In most contemporary systems, fixed-length sectors are used, with 512 bytes
+being the nearly universal sector size. To avoid imposing unreasonable precision
+requirements on the system, adjacent sectors are separated by intratrack (intersector)
+gaps.
+A bit near the center of a rotating disk travels past a fixed point (such as a read–
+write head) slower than a bit on the outside. Therefore, some way must be found
+to compensate for the variation in speed so that the head can read all the bits at the
+same rate. This can be done by increasing the spacing between bits of information
+recorded in segments of the disk. The information can then be scanned at the same
+rate by rotating the disk at a fixed speed, known as the constant angular velocity
+(CAV). Figure 6.3a shows the layout of a disk using CAV. The disk is divided into
+a number of pie-shaped sectors and into a series of concentric tracks. The advantage
+of using CAV is that individual blocks of data can be directly addressed by
+track and sector. To move the head from its current location to a specific address, it
+only takes a short movement of the head to a specific track and a short wait for the
+proper sector to spin under the head. The disadvantage of CAV is that the amount
+of data that can be stored on the long outer tracks is the only same as what can be
+stored on the short inner tracks.
+
+
+○Pistas concéntricas
+○El ancho de la pista es igual al ancho de la
+cabeza lectora/grabadora
+○Entre las pistas hay un gap ( Intertrack gap) para
+minimizar errores de desalineamiento de la
+cabeza e interferencias magnéticas
+○La superficie del disco está subdividida en
+sectores, en general de tamaño fijo (512 bytes)
+○Hay un gap ( Intersector gap) entre los sectores
+para evitar errores de sincronización
+○CAV ( Constant Angular Velocity ): el disco gira a
+velocidad constante
+○La cabeza lectora/grabadora puede operar a la misma
+tasa de transferencia
+○Los bits exteriores giran a mayor velocidad que los
+interiores (velocidad lineal variable)
+○Para compensar, los bits exteriores están más
+espaciados entre sí
+○Ventaja : se puede referenciar a cada bloque de
+información a través de pista/sector
+○Desventaja : no se aprovecha el máximo de densidad
+(bits por pulgada lineal) de la superficie del disco
+
+Grabación multizona
+/*189*/
+La superficie del disco se divide en zonas concéntricas
+(por lo general 16
+La cantidad de bits por pista dentro de una zona es
+constante
+Las zonas exteriores contienen más bits por pulgada
+(más sectores) que las zonas interiores
+Ventaja: mayor capacidad de almacenamiento
+Desventajas: mayor complejidad en la circuitería para
+trabajar con tiempos de lectura/escritura diferentes
+según la zona (la longitud de los bits varía)
+
+Because the density, in bits per linear inch, increases in moving from the outermost
+track to the innermost track, disk storage capacity in a straightforward CAV
+system is limited by the maximum recording density that can be achieved on the
+innermost track. To increase density, modern hard disk systems use a technique
+known as multiple zone recording, in which the surface is divided into a number
+of concentric zones (16 is typical). Within a zone, the number of bits per track is
+constant. Zones farther from the center contain more bits (more sectors) than zones
+closer to the center. This allows for greater overall storage capacity at the expense
+of somewhat more complex circuitry. As the disk head moves from one zone to
+another, the length (along the track) of individual bits changes, causing a change
+in the timing for reads and writes. Figure 6.3b suggests the nature of multiple zone
+recording; in this illustration, each zone is only a single track wide.
+Some means is needed to locate sector positions within a track. Clearly, there
+must be some starting point on the track and a way of identifying the start and end
+of each sector. These requirements are handled by means of control data recorded
+on the disk. Thus, the disk is formatted with some extra data used only by the disk
+drive and not accessible to the user.
+
+/**189/
+An example of disk formatting is shown in Figure 6.4. In this case, each track
+contains 30 fixed-length sectors of 600 bytes each. Each sector holds 512 bytes of
+data plus control information useful to the disk controller. The ID field is a unique
+identifier or address used to locate a particular sector. The SYNCH byte is a special
+bit pattern that delimits the beginning of the field. The track number identifies a
+track on a surface. The head number identifies a head, because this disk has multiple
+surfaces (explained presently). The ID and data fields each contain an errordetecting
+code.
+
+Physical Characteristics
+Movimiento de la cabeza
+Fija: había una cabeza
+lectora/grabadora por pista
+(muy costosos, no se usan
+más) Ej. IBM 2305
+Móvil: hay una única cabeza
+lectora/grabadora por
+superficie del plato. Se mueve
+por todas las pistas y está
+montada en un brazo
+
+Portabilidad
+Discos no removibles: disco rígido (se monta en un disk drive
+Removibles: se puede sacar y poner en la unidad (Ej. floppy disk)
+○Lados
+Un solo lado: solo es usable una cara
+Dos lados: el recubrimiento magnético está en ambas caras
+○Platos
+Un solo plato
+Múltiples platos: varios discos en un mismo disk drive
+	-Cilindro: conjunto de pistas que están a la misma distancia
+relativa del entro en los platos de un disk drive
+○Mecanismo de la cabeza
+Contacto: toma contacto con la superficie del disco (Ej. floppy
+Espacio fijo: se ubica a una posición fija por encima del disco
+Espacio aerodinámico (flotante): se ubica flotante por sobre el
+disco gracias a la presión de aire que genera la rotación del disco
+
+/*img191*/
+
+
+Parámetros de performance
+○Desempeño del disco: depende del computador, sistema
+operativo, módulo de E/S y controlador de disco
+○Tiempo de seek : tiempo necesario para mover la cabeza
+lectora/grabadora a la pista deseada
+○Tiempo de demora rotacional o latencia: tiempo de espera
+hasta que el sector deseado pasa por la cabeza
+lectora/grabadora
+○Tiempo de acceso: tiempo necesario para estar en
+posición para escribir o leer
+Tiempo acceso = tiempo de seek promedio + tiempo de latencia
+promedio
+○Tiempo de transferencia: tiempo necesario para transferir
+la información al disco
+T = b/ rN donde T= tiempo de transf .; b=bytes a transf .;
+r=velocidad de rotación en revoluciones por segundo; N=bytes por
+pista
+
+Parámetros de performance (cont.)
+○Tiempo total lectura/escritura
+T = Tseek + 1 / 2r + b / rN
+-r: velocidad de rotación en revoluciones por segundo
+-b: bytes a transferir
+-N: bytes por pista
+
+RAID
+As discussed earlier, the rate in improvement in secondary storage performance
+has been considerably less than the rate for processors and main memory. This
+mismatch has made the disk storage system perhaps the main focus of concern in
+improving overall computer system performance.
+As in other areas of computer performance, disk storage designers recognize
+that if one component can only be pushed so far, additional gains in performance
+are to be had by using multiple parallel components. In the case of disk storage, this
+leads to the development of arrays of disks that operate independently and in parallel.
+With multiple disks, separate I/O requests can be handled in parallel, as long
+as the data required reside on separate disks. Further, a single I/O request can be
+executed in parallel if the block of data to be accessed is distributed across multiple
+disks.
+With the use of multiple disks, there is a wide variety of ways in which the
+data can be organized and in which redundancy can be added to improve reliability.
+This could make it difficult to develop database schemes that are usable
+on a number of platforms and operating systems. Fortunately, industry has
+agreed on a standardized scheme for multiple-disk database design, known as
+RAID (Redundant Array of Independent Disks). The RAID scheme consists
+of seven levels,2 zero through six. These levels do not imply a hierarchical relationship
+but designate different design architectures that share three common
+characteristics:
+
+○Vectores de discos que operan en forma
+independiente y en paralelo
+○Se puede manejar un pedido de E/S en paralelo si
+los datos residen en discos separados
+○Hay distintas maneras de organizar la información
+y agregarle confiabilidad a los datos
+○RAID es un estandar que consiste en 7 niveles (0
+a 6). Pueden implementarse combinaciones de
+niveles (ej. RAID 0+1, RAID 5+0, etc.)
+
+RAID Características generales
+○Es un conjunto de discos que son vistos por el
+sistema operativo como una única unidad
+lógica
+○Los datos se distribuyen en los discos del
+vector en un esquema llamado “ striping
+○Se usa capacidad redundante para guardar
+información de paridad y garantizar
+recuperación ante fallas (a excepción de
+RAID 0
+
+RAID Niveles
+○Nivel 0 ( Stripping
+No incluye redundancia
+Se requieren N discos
+Se distribuyen los datos en el vector de discos en strips (pueden ser
+sectores, bloques u otra unidad)
+Ventajas:
+-Simplicidad
+-Performance
+Desventaja:
+-Riesgo ante fallos, no hay recuperación posible
+
+○Nivel 1 (Espejado)
+Redundancia por espejado de datos
+Se requieren 2N discos
+Ventajas:
+-Un pedido de lectura puede resolverse por cualquiera de los dos discos
+-La escritura se hace en forma independiente en cada disco y no se
+penaliza
+-Simple recuperación ante fallas
+-Alta disponibilidad de datos
+Desventajas:
+-Costo
+
+○Nivel 2 (Redundancia por código de Hamming
+Strips pequeños (un byte o palabra)
+Se calcula redundancia por código autocorrector (ej. Hamming
+Se requieren N + m discos
+Se graban bits de paridad en discos separados
+Se leen/escriben todos los discos en paralelo, en forma sincronizada
+No existe uso comercial
+Ventajas:
+-Disponibilidad de datos
+Desventaja:
+-Costos por método de redundancia
+
+○Nivel 3 (Paridad por intercalamiento de bits)
+Solo se usa un disco de paridad
+Se requieren N+1 discos
+La paridad se calcula mediante un bit a través del conjunto individual de bits
+de la misma posición de todos los discos
+Se leen/escriben todos los discos en paralelo, en forma sincronizada
+Ventajas:
+-Cálculo sencillo de paridad
+-No hay impacto significativo de performance ante fallas
+Desventajas:
+-Controlador complejo
+
+○Nivel 4 (Paridad por intercalamiento de bloques)
+Se accede en forma independiente a cada disco
+Se requieren N+1 discos
+Se puede dar servicio a pedidos de E/S en paralelo
+Se usan strips grandes.
+Los bits de paridad se calculan igual que en RAID 3 y se guarda un strip de
+paridad
+No hay uso comercial
+Ventajas:
+-Altas tasas de lectura
+Desventaja:
+-Dos lecturas y dos escrituras en caso de update de datos
+-Cuello de botella por disco de paridad
+
+○Nivel 5 (Paridad por intercalamiento distribuido de
+bloques)
+Se accede en forma independiente a cada disco
+Se requieren N+1 discos
+Los strips de paridad se distribuyen en todos los discos
+Ventajas:
+-Resuelve el cuello de botella del nivel 4
+Desventajas:
+-Controlador complejo
+
+○Nivel 6 (Doble paridad por intercalamiento distribuido de
+bloques)
+Se accede en forma independiente a cada disco
+Se requieren N+2 discos
+Se usan dos algoritmos de control de paridad
+Ventajas:
+-Provee disponibilidad de datos extremadamente alta
+Desventaja:
+-Controlador complejo
+-Costos por doble paridad
+
+/*raid comparison 204*/
+
+################################################################
+Medios Ópticos
+
+In 1983, one of the most successful consumer products of all time was introduced:
+the compact disk (CD) digital audio system. The CD is a nonerasable disk that can
+store more than 60 minutes of audio information on one side. The huge commercial
+success of the CD enabled the development of low-cost optical-disk storage
+technology that has revolutionized computer data storage. A variety of optical-disk
+systems have been introduced (Table 6.6). We briefly review each of these.
+Compact Disk
+CD-ROM Both the audio CD and the CD-ROM (compact disk read-only
+memory) share a similar technology. The main difference is that CD-ROM players
+are more rugged and have error correction devices to ensure that data are properly
+transferred from disk to computer. Both types of disk are made the same way. The
+disk is formed from a resin, such as polycarbonate. Digitally recorded information
+(either music or computer data) is imprinted as a series of microscopic pits on the
+surface of the polycarbonate. This is done, first of all, with a finely focused, highintensity
+laser to create a master disk. The master is used, in turn, to make a die to
+stamp out copies onto polycarbonate. The pitted surface is then coated with a highly
+reflective surface, usually aluminum or gold. This shiny surface is protected against
+dust and scratches by a top coat of clear acrylic. Finally, a label can be silkscreened
+onto the acrylic.
+Information is retrieved from a CD or CD-ROM by a low-powered laser
+housed in an optical-disk player, or drive unit. The laser shines through the clear
+polycarbonate while a motor spins the disk past it (Figure 6.12). The intensity of
+the reflected light of the laser changes as it encounters a pit. Specifically, if the laser
+beam falls on a pit, which has a somewhat rough surface, the light scatters and a low
+intensity is reflected back to the source. The areas between pits are called lands.
+A land is a smooth surface, which reflects back at higher intensity. The change
+between pits and lands is detected by a photosensor and converted into a digital
+signal. The sensor tests the surface at regular intervals. The beginning or end of
+a pit represents a 1; when no change in elevation occurs between intervals, a 0 is
+recorded.
+Recall that on a magnetic disk, information is recorded in concentric tracks.
+With the simplest constant angular velocity (CAV) system, the number of bits per
+track is constant. An increase in density is achieved with multiple zoned recording,
+in which the surface is divided into a number of zones, with zones farther from the
+center containing more bits than zones closer to the center. Although this technique
+increases capacity, it is still not optimal.
+To achieve greater capacity, CDs and CD-ROMs do not organize information
+on concentric tracks. Instead, the disk contains a single spiral track, beginning near
+the center and spiraling out to the outer edge of the disk. Sectors near the outside
+of the disk are the same length as those near the inside. Thus, information is packed
+evenly across the disk in segments of the same size and these are scanned at the
+same rate by rotating the disk at a variable speed. The pits are then read by the laser
+at a constant linear velocity (CLV). The disk rotates more slowly for accesses near
+the outer edge than for those near the center. Thus, the capacity of a track and the
+rotational delay both increase for positions nearer the outer edge of the disk. The
+data capacity for a CD-ROM is about 680 MB.
+
+_____________________________________
+CD
+Compact Disk. A nonerasable disk that stores digitized audio information. The standard system uses
+12-cm disks and can record more than 60 minutes of uninterrupted playing time.
+CD-ROM
+Compact Disk Read-Only Memory. A nonerasable disk used for storing computer data. The standard
+system uses 12-cm disks and can hold more than 650 Mbytes.
+CD-R
+CD Recordable. Similar to a CD-ROM. The user can write to the disk only once.
+CD-RW
+CD Rewritable. Similar to a CD-ROM. The user can erase and rewrite to the disk multiple times.
+DVD
+Digital Versatile Disk. A technology for producing digitized, compressed representation of video information,
+as well as large volumes of other digital data. Both 8 and 12 cm diameters are used, with a
+double-sided capacity of up to 17 Gbytes. The basic DVD is read-only (DVD-ROM).
+DVD-R
+DVD Recordable. Similar to a DVD-ROM. The user can write to the disk only once. Only one-sided
+disks can be used.
+DVD-RW
+DVD Rewritable. Similar to a DVD-ROM. The user can erase and rewrite to the disk multiple times.
+Only one-sided disks can be used.
+Blu-ray DVD
+High-definition video disk. Provides considerably greater data storage density than DVD, using a 405-nm
+(blue-violet) laser. A single layer on a single side can store 25 Gbytes.
+_____________________________________
+
+/*211*/
+/*212*/
+
+Data on the CD-ROM are organized as a sequence of blocks. A typical block
+format is shown in Figure 6.13. It consists of the following fields:
+• Sync: The sync field identifies the beginning of a block. It consists of a byte of
+all 0s, 10 bytes of all 1s, and a byte of all 0s.
+• Header: The header contains the block address and the mode byte. Mode
+0 specifies a blank data field; mode 1 specifies the use of an error-correcting
+code and 2048 bytes of data; mode 2 specifies 2336 bytes of user data with no
+error-correcting code.
+• Data: User data.
+• Auxiliary: Additional user data in mode 2. In mode 1, this is a 288-byte errorcorrecting
+code.
+With the use of CLV, random access becomes more difficult. Locating a specific
+address involves moving the head to the general area, adjusting the rotation
+speed and reading the address, and then making minor adjustments to find and
+access the specific sector.
+CD-ROM is appropriate for the distribution of large amounts of data to a
+large number of users. Because of the expense of the initial writing process, it is not
+appropriate for individualized applications. Compared with traditional magnetic
+disks, the CD-ROM has two advantages:
+• The optical disk together with the information stored on it can be mass replicated
+inexpensively—unlike a magnetic disk. The database on a magnetic disk
+has to be reproduced by copying one disk at a time using two disk drives.
+• The optical disk is removable, allowing the disk itself to be used for archival
+storage. Most magnetic disks are nonremovable. The information on nonremovable
+magnetic disks must first be copied to another storage medium
+before the disk drive/disk can be used to store new information.
+The disadvantages of CD-ROM are as follows:
+• It is read-only and cannot be updated.
+• It has an access time much longer than that of a magnetic disk drive, as much
+as half a second.
+CD RECORDABLE To accommodate applications in which only one or a small
+number of copies of a set of data is needed, the write-once read-many CD, known
+as the CD recordable (CD-R), has been developed. For CD-R, a disk is prepared
+in such a way that it can be subsequently written once with a laser beam of
+modest -intensity. Thus, with a some what more expensive disk controller than for
+CD-ROM, the customer can write once as well as read the disk.
+The CD-R medium is similar to but not identical to that of a CD or
+CD-ROM. For CDs and CD-ROMs, information is recorded by the pitting of
+the surface of the medium, which changes reflectivity. For a CD-R, the medium
+includes a dye layer. The dye is used to change reflectivity and is activated
+by a high-intensity laser. The resulting disk can be read on a CD-R drive or a
+CD-ROM drive.
+The CD-R optical disk is attractive for archival storage of documents and files.
+It provides a permanent record of large volumes of user data.
+CD REWRITABLE The CD-RW optical disk can be repeatedly written and
+overwritten, as with a magnetic disk. Although a number of approaches have been
+tried, the only pure optical approach that has proved attractive is called phase
+change. The phase change disk uses a material that has two significantly different
+reflectivities in two different phase states. There is an amorphous state, in which the
+molecules exhibit a random orientation that reflects light poorly; and a crystalline
+state, which has a smooth surface that reflects light well. A beam of laser light can
+change the material from one phase to the other. The primary disadvantage of
+phase change optical disks is that the material eventually and permanently loses
+its desirable properties. Current materials can be used for between 500,000 and
+1,000,000 erase cycles.
+The CD-RW has the obvious advantage over CD-ROM and CD-R that it can
+be rewritten and thus used as a true secondary storage. As such, it competes with
+magnetic disk. A key advantage of the optical disk is that the engineering tolerances
+for optical disks are much less severe than for high-capacity magnetic disks. Thus,
+they exhibit higher reliability and longer life.
+Digital Versatile Disk
+With the capacious digital versatile disk (DVD), the electronics industry has at last
+found an acceptable replacement for the analog VHS video tape. The DVD has
+replaced the videotape used in video cassette recorders (VCRs) and, more important
+for this discussion, replace the CD-ROM in personal computers and servers.
+The DVD takes video into the digital age. It delivers movies with impressive picture
+quality, and it can be randomly accessed like audio CDs, which DVD machines
+can also play. Vast volumes of data can be crammed onto the disk, currently seven
+times as much as a CD-ROM. With DVD’s huge storage capacity and vivid quality,
+PC games have become more realistic and educational software incorporates more
+video. Following in the wake of these developments has been a new crest of traffic
+over the Internet and corporate intranets, as this material is incorporated into
+Web sites.
+The DVD’s greater capacity is due to three differences from CDs (Figure 6.14):
+1. Bits are packed more closely on a DVD. The spacing between loops of a spiral on a
+CD is 1.6 μm and the minimum distance between pits along the spiral is 0.834 μm.
+
+/*214*/
+
+The DVD uses a laser with shorter wavelength and achieves a loop spacing of
+0.74 μm and a minimum distance between pits of 0.4 μm. The result of these
+two improvements is about a seven-fold increase in capacity, to about 4.7 GB.
+2. The DVD employs a second layer of pits and lands on top of the first layer. A
+dual-layer DVD has a semireflective layer on top of the reflective layer, and
+by adjusting focus, the lasers in DVD drives can read each layer separately.
+This technique almost doubles the capacity of the disk, to about 8.5 GB. The
+lower reflectivity of the second layer limits its storage capacity so that a full
+doubling is not achieved.
+3. The DVD-ROM can be two sided, whereas data are recorded on only one side
+of a CD. This brings total capacity up to 17 GB.
+As with the CD, DVDs come in writeable as well as read-only versions (Table 6.6).
+High-Definition Optical Disks
+High-definition optical disks are designed to store high-definition videos and to
+provide significantly greater storage capacity compared to DVDs. The higher bit
+density is achieved by using a laser with a shorter wavelength, in the blue-violet
+
+/*215*/
+range. The data pits, which constitute the digital 1s and 0s, are smaller on the highdefinition
+optical disks compared to DVD because of the shorter laser wavelength.
+Two competing disk formats and technologies initially competed for market
+acceptance: HD DVD and Blu-ray DVD. The Blu-ray scheme ultimately achieved
+market dominance. The HD DVD scheme can store 15 GB on a single layer on a
+single side. Blu-ray positions the data layer on the disk closer to the laser (shown on
+the right-hand side of each diagram in Figure 6.15). This enables a tighter focus and
+less distortion and thus smaller pits and tracks. Blu-ray can store 25 GB on a single
+layer. Three versions are available: read only (BD-ROM), recordable once (BD-R),
+and rerecordable (BD-RE).
+
+Sony / Panasonic: Tecnología “ Archival Disc”
+https://en.wikipedia.org/wiki/Archival_Disc
+
+Primera generación
+Segunda generación
+Tercera generación
+
+Sony “ Optical Disc Archive”
+https://en.wikipedia.org/wiki/Optical_Disc_Archive
+
+###############################################
+SSD
+One of the most significant developments in computer architecture in recent years is
+the increasing use of solid state drives (SSDs) to complement or even replace hard
+disk drives (HDDs), both as internal and external secondary memory. The term solid
+state refers to electronic circuitry built with semiconductors. An SSD is a memory
+device made with solid state components that can be used as a replacement to a
+hard disk drive. The SSDs now on the market and coming on line use NAND flash
+memory, which is described in Chapter 5.
+
+ Historia
+○ Basados en RAM (volátiles – energía auxiliar)
+ Texas memory: 16KB (1978)
+○ Basados en flash (no volátiles)
+ M-Systems (1995)
+ Tecnología actual
+○ NAND Flash
+
+SSD Compared to HDD
+As the cost of flash-
+based
+SSDs has dropped and the performance and bit density
+increased, SSDs have become increasingly competitive with HDDs. Table 6.5 shows
+typical measures of comparison at the time of this writing.
+SSDs have the following advantages over HDDs:
+■■ High-
+performance
+input/output operations per second (IOPS): Significantly
+increases performance I/O subsystems.
+■■ Durability: Less susceptible to physical shock and vibration.
+■■ Longer lifespan: SSDs are not susceptible to mechanical wear.
+■■ Lower power consumption: SSDs use considerably less power than
+comparable-
+size
+HDDs.
+■■ Quieter and cooler running capabilities: Less space required, lower energy
+costs, and a greener enterprise.
+■■ Lower access times and latency rates: Over 10 times faster than the spinning
+disks in an HDD.
+Currently, HDDs enjoy a cost per bit advantage and a capacity advantage, but
+these differences are shrinking.
+
+/*215*/
+The interface component in Figure 6.8 refers to the physical and electrical
+interface between the host processor and the SSD peripheral device. If the device is
+an internal hard drive, a common interface is PCIe. For external devices, one common
+interface is USB.
+Controller: Provides SSD device level interfacing and firmware execution.
+■■ Addressing: Logic that performs the selection function across the flash
+memory components.
+■■ Data buffer/cache: High speed RAM memory components used for speed
+matching and to increased data throughput.
+■■ Error correction: Logic for error detection and correction.
+■■ Flash memory components: Individual NAND flash chips.
+
+Comparación con discos magnéticos
+○ Ventajas
+ Arranque más rápido
+ Gran velocidad de lectura y escritura
+ Baja latencia de lectura y escritura
+ Menor consumo de energía
+ Menor producción de calor
+ Sin ruido
+ Mejor MTBF (tiempo medio entre fallas)
+ Mayor seguridad de datos
+ Rendimiento determinístico
+ Menor peso y tamaño
+ Mayor resistencia a golpes, caídas y vibraciones
+
+○ Desventajas
+ Precio ($/GB)
+ Menos recuperación ante fallos
+ Capacidad
+ Vida útil
+
+################################################################
+MAGNETIC TAPE
+
+Cintas magnéticas
+Medio
+○Poliester flexible cubierto de material magnetizable
+Carretes abiertos
+Paquetes cerrados (cartuchos)
+○Ancho de cinta entre 0.38 cm (0.25 pulgadas) y 1.27 cm (0.5 pulgadas)
+○Acceso secuencial a la información: si estoy en el registro 1 y quiero llegar al N tengo que “leer” los N-1 del medio
+○Si quiero leer un registro anterior tengo que rebobinar y volver a buscar el registro
+
+Técnicas de grabación
+○Grabación en paralelo
+Técnica usada originalmente
+Cabeza de grabación estacionaria
+Se graban pistas en paralelo a lo largo de la cinta
+Al principio eran de 9 pistas (8 bits de datos y 1 bit de paridad para detectar errores)
+Luego fueron 18 (palabra) o 36 (doble palabra) pistas
+○Grabación en serie
+Sistema moderno de grabación
+Cabeza de grabación estacionaria
+Se escriben los datos a lo largo de una pista primero hasta llegar al final de la cinta y luego se pasa a otra
+ Grabación en “serpentina”
+Pueden grabarse n pistas adyacentes en simultáneo (n entre 2 y 8)
+○Grabación helicoidal
+Cabeza de grabación rotatoria
+Símil video casseteras
+Evita problema de movimiento veloz de la cinta de las otras técnicas
+La cinta se mueve en forma lenta mientras que la cabeza rota en forma rápida
+Las pistas pueden estar más cercanas unas a otras
+
+Modos de operación
+○Modo start-stop por bloque
+Viejo uso de grabación por registro/bloque
+La cinta se usaba para guardar archivos para procesamiento posterior
+Se podía actualizar un registro/bloque particular siempre y cuando no cambiara su tamaño
+Los datos se grababan en bloques físicos
+Entre los bloques había espacios (IRG – Inter Record Gap) para sincronización de la unidad
+○Modo streaming
+Uso para backup o archivo de información
+No se requiere operación de start-stop por bloque
+No se requiere actualización de bloques particulares dentro de un archivo
+Se escriben archivos completos como un “stream” de datos contiguo
+La información de graba físicamente en bloques pero no se pueden localizar o modificar bloques particulares
+
+Usos y características
+○Fue el primer medio de almacenamiento secundario
+○Aun es usado para backup y archivo de información (30 años o más de duración) dado su bajo costo por byte y su capacidad de almacenamiento
+○Es el medio más lento de la pirámide de jerarquía de memoria
+○Marcas físicas en las cintas
+BOT (Beginning of tape)
+EOT (End of tape)
+15

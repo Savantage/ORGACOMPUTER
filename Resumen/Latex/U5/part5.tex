@@ -1,0 +1,244 @@
+\subsection{ADMINISTRACION DE MEMORIA }
+
+\subsubsection{Sistema Operativo}
+Software que administra los recursos del computador, provee servicios y controla la ejecución de otros programas
+\subsubsection{Algunos servicios que provee}
+\begin{itemize}
+\item Schedule de procesos
+\item Administración de memoria
+\item Monitor
+\item Parte residente del Sistema Operativo
+\end{itemize}
+/*284*/
+In a uniprogramming system, main memory is divided into two parts: one part for
+the OS (resident monitor) and one part for the program currently being executed.
+In a multiprogramming system, the “user” part of memory is subdivided to accommodate
+multiple processes. The task of subdivision is carried out dynamically by the
+OS and is known as memory management.
+
+\subsubsection{Administración de memoria simple}
+\subsubsection{Sistema con uniprogramación}
+
+Se divide la memoria en dos partes
+Monitor del S.O.
+Programa en ejecución en ese momento
+\paragraph{Ventajas:}\mbox{}\\\\%%
+
+Simplicidad
+
+\paragraph{DESVentajas:}\mbox{}\\\\%%
+\begin{itemize}
+\item Desperdicio de memoria
+\item Desaprovechamiento de los recursos del computador
+\end{itemize}
+Administración de memoria simple 
+/*281*/
+
+simple batch systems Early processors were very expensive, and therefore it
+was important to maximize processor utilization. The wasted time due to scheduling
+and setup time was unacceptable.
+To improve utilization, simple batch operating systems were developed. With
+such a system, also called a monitor, the user no longer has direct access to the processor.
+Rather, the user submits the job on cards or tape to a computer operator,
+who batches the jobs together sequentially and places the entire batch on an input
+device, for use by the monitor.
+To understand how this scheme works, let us look at it from two points of
+view: that of the monitor and that of the processor. From the point of view of the
+monitor, the monitor controls the sequence of events. For this to be so, much of the
+monitor must always be in main memory and available for execution (Figure 8.3).
+That portion is referred to as the resident monitor. The rest of the monitor consists
+of utilities and common functions that are loaded as subroutines to the user program
+at the beginning of any job that requires them. The monitor reads in jobs one
+at a time from the input device (typically a card reader or magnetic tape drive). As it
+is read in, the current job is placed in the user program area, and control is passed to
+this job. When the job is completed, it returns control to the monitor, which immediately
+reads in the next job. The results of each job are printed out for delivery to
+the user.
+Now consider this sequence from the point of view of the processor. At a certain
+point in time, the processor is executing instructions from the portion of main memory
+containing the monitor. These instructions cause the next job to be read in to
+another portion of main memory. Once a job has been read in, the processor will
+encounter in the monitor a branch instruction that instructs the processor to continue
+execution at the start of the user program. The processor will then execute
+the instruction in the user’s program until it encounters an ending or error condition.
+Either event causes the processor to fetch its next instruction from the monitor
+program. Thus the phrase “control is passed to a job” simply means that the processor
+is now fetching and executing instructions in a user program, and “control is
+returned to the monitor” means that the processor is now fetching and executing
+instructions from the monitor program.
+It should be clear that the monitor handles the scheduling problem. A batch of
+jobs is queued up, and jobs are executed as rapidly as possible, with no intervening
+idle time.
+How about the job setup time? The monitor handles this as well. With each
+job, instructions are included in a job control language (JCL). This is a special type
+of programming language used to provide instructions to the monitor.
+
+
+\subsubsection{Multiprogramming}
+\begin{itemize}
+\item Varios procesos de usuario en ejecución a lavez
+\item Se divide la memoria de usuario entre los procesos en ejecución
+\item Se comparte el tiempo de procesador entre los procesos en ejecución ( timeslice
+\item Condiciones de finalización:
+	\begin{itemize}
+	\item Termina el trabajo
+	\item Se detecta un error y se cancela
+	\item Requiere una operación de E/S (suspensión)
+	\item Termina el timeslice (suspención
+	\end{itemize}
+\end{itemize}
+
+The simplest scheme for partitioning available memory is to use fixed-
+sizepartitions, as shown in Figure 8.13. Note that, although the partitions are of fixed size, they need not be of equal size. When a process is brought into memory, it is placed in the
+smallest available partition that will hold it.
+Even with the use of unequal fixed-size partitions, there will be wasted memory.
+In most cases, a process will not require exactly as much memory as provided by the partition.
+A more efficient approach is to use variable-size partitions. When a process is
+brought into memory, it is allocated exactly as much memory as it requires and no more.
+As this example shows, this method starts out well, but eventually it leads to a
+situation in which there are a lot of small holes in memory. As time goes on, memory
+becomes more and more fragmented, and memory utilization declines. One
+technique for overcoming this problem is compaction: From time to time, the OS
+shifts the processes in memory to place all the free memory together in one block.
+This is a time-consuming procedure, wasteful of processor time.
+
+\subsubsection{Memory management: partitioning}
+\begin{itemize}
+\item Sistema con multiprogramación
+\item La memoria de usuario se divide en particiones detamaño fijo:
+	\begin{itemize}
+	\item Iguales
+	\item Distintas
+	\end{itemize}
+\end{itemize}
+Ventajas:
+\begin{itemize}
+\item Permite compartir la memoria entre varios procesos
+\end{itemize}
+Desventajas:
+\begin{itemize}
+\item Desperdicio de memoria
+\item Fragmentación interna (dentro de una partición)
+\item Fragmentación externa (particiones no usadas)
+\end{itemize}
+
+\subsubsection{Memory management: swapping}
+\begin{itemize}
+\item Sistema con multiprogramación
+\item Swapping
+\item La memoria de usuario se divide en particiones de tamaño variable
+\item Compactación para eliminar la fragmentación
+\item Se usa un recurso de hardware (registro de reasignación) para la realocación
+\item Realocación dinámica en tiempo de ejecución
+\end{itemize}
+Ventajas:
+\begin{itemize}
+\item Permite compartir la memoria entre varios procesos
+\item Elimina el desperdicio por fragmentación interna.
+\item Con la compactación se elimina además la fragmentación externa
+\end{itemize}
+Desventajas:
+\begin{itemize}
+\item La tarea de compactación es costosa
+\end{itemize}
+
+\subsubsection{Memory management: paging}
+Both unequal fixed-size and variable-size
+partitions are inefficient in the use of memory.
+Suppose, however, that memory is partitioned into equal fixed-size
+chunks that are relatively small, and that each process is also divided into small fixed-
+size chunks of some size. Then the chunks of a program, known as pages, could be assigned to
+available chunks of memory, known as frames, or page frames. At most, then, the
+wasted space in memory for that process is a fraction of the last page.
+
+\paragraph{Administración de memoria paginada simple}\mbox{}\\\\%%
+\begin{itemize}
+\item Sistema con multiprogramación
+\item Se divide el address space del proceso en partes iguales (páginas)
+\item Se divide la memoria principal en partes iguales ( frames)
+\item Hay una tabla de páginas por proceso
+\item Hay una lista de frames disponibles
+\item Se cargan a memoria las páginas del proceso en los frames disponibles (no es necesario que sean contiguos)
+\item Las direcciones lógicas se ven como número de página y un offset
+\item Se traducen las direcciones lógicas en físicas con soporte del hardware
+\item La paginación es transparente para el programador
+\end{itemize}
+Ventajas:
+\begin{itemize}
+\item Permite compartir la memoria entre varios procesos
+\item Minimiza la fragmentación interna (solo existe dentro de la última página de cada proceso)
+\item Elimina la fragmentación externa
+\end{itemize}
+Desventajas
+\begin{itemize}
+\item Se requiere subir todas las páginas del proceso a memoria
+\item Se requieren estructuras de datos adicionales para mantener información de páginas y frames
+\end{itemize}
+
+\paragraph{Administración de memoria paginada simple}\mbox{}\\\\%%
+\begin{itemize}
+\item Sistema con multiprogramación
+\item Solo se cargan las páginas necesarias para la ejecución de un proceso
+\item Cuando se quiere acceder a una posición de memoria de una página no cargada se produce un page fault
+\item El page fault dispara una interrupción por hardware atendida por el sistema operativo
+\item Se levanta la página solicitada desde memoria secundaria (memoria virtual)
+\item Algoritmos para reemplazo de páginas
+\item Thrashing : el CPU pasa más tiempo reemplazando páginas que ejecutando instrucciones
+\end{itemize}
+Ventajas
+\begin{itemize}
+\item No es necesario cargar todas las páginas de un proceso a la vez
+\item Maximiza el uso de la memoria al permitir cargar más procesos a la vez
+\item Un proceso puede ocupar más memoria de la efectivamente instalada en el computador
+\end{itemize}
+Desventajas
+\begin{itemize}
+\item Mayor complejidad por la necesidad de implementar el reemplazo de páginas
+\end{itemize}
+
+\subsubsection{Administración de memoria por segmentación}
+\begin{itemize}
+\item Sistemas con multiprogramación
+\item Generalmente visible al programador
+\item La memoria del programa se ve como un conjunto de segmentos (múltiples espacios de direcciones)
+\item Los segmentos son de tamaño variable y dinámico
+\item El sistema operativo administra una tabla de segmentos por proceso
+\item Permite separar datos e instrucciones
+\item Permite dar privilegios y protección de memoria como por ej . lectura, escritura, ejecución. ( segmentation faults como mecanismos de excepción de hardware para accesos indebidos)
+\item Las referencias a memoria se forman con un número de segmento y un offset dentro de él. Con ayuda de hardware (MMU \item Memory Management Unit ) se hacen las traducciones de las direcciones lógicas a físicas
+\item Se pueden usar para implementar memoria virtual (solo se suben a
+memoria física algunos segmentos por proceso)
+\end{itemize}
+
+Ventajas:
+\begin{itemize}
+\item Simplifica el manejo de estructuras de datos con crecimiento
+\item Permite compartir información entre procesos dentro de un segmento
+\item Permite aplicar protección/privilegios sobre un segmento fácilmente
+\end{itemize}
+Desventajas:
+\begin{itemize}
+\item Fragmentación externa en la memoria principal por no poder alojar un segmento
+\item Hardware más complejo que memoria paginada para la traducción de direcciones
+\end{itemize}
+
+\subsubsection{Address Spaces}
+The x86 includes hardware for both segmentation and paging. Both mechanisms can
+be disabled, allowing the user to choose from four distinct views of memory:
+
+\begin{itemize}
+\item Unsegmented unpaged memory: In this case, the virtual address is the same
+as the physical address. This is useful, for example, in low- complexity, high- performance controller applications.
+\item Unsegmented paged memory: Here memory is viewed as a paged linear
+address space. Protection and management of memory is done via paging.
+This is favored by some operating systems (e.g., Berkeley UNIX).
+\item Segmented unpaged memory: Here memory is viewed as a collection of
+logical address spaces. The advantage of this view over a paged approach is
+that it affords protection down to the level of a single byte, if necessary. Furthermore,
+unlike paging, it guarantees that the translation table needed (the segment table) is on-chip
+when the segment is in memory. Hence, segmented unpaged memory results in predictable access times.
+\item Segmented paged memory: Segmentation is used to define logical memory
+partitions subject to access control, and paging is used to manage the allocation
+of memory within the partitions. Operating systems such as UNIX System favor this view.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
