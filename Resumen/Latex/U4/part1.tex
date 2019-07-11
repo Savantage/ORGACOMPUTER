@@ -1,1 +1,223 @@
-\section{Intel x86}
+\section{Lenguaje ensamblador}
+
+\subsection{Lenguaje de máquina / código máquina}
+	\subsubsection{Definición}
+	Representación binaria de un programa de computadora el cual es leído e interpretado por el computador. Consiste en una secuencia de instrucciones de máquina
+	
+\subsection{Lenguaje ensamblador}
+	\subsubsection{Definición}
+	Representación simbólica del lenguaje de máquina de un procesador específico.”
+
+\subsection{Transición entre lenguaje de máquina y ensamblador.}
+/*U4 p1 pag 3*/
+
+\subsection{¿Por qué usarlo aún hoy?}
+	\begin{itemize}	
+	\item Debugging y verificación
+	\item Desarrollar compiladores
+	\item Sistemas embebidos
+	\item Drivers de hardware y código de sistema
+	\item Acceder a instrucciones no disponibles en un lenguaje de alto nivel
+	\item Código automodificable
+	\item Optimizar código en tamaño
+	\item Optimizar código en velocidad
+	\item Biblioteca de funciones
+	\end{itemize}	
+	
+\subsection{Elementos que lo componen}
+	\begin{itemize}	
+	\item Etiquetas
+	\item Mnemónicos
+	\item Operandos
+	\item Comentarios
+	\end{itemize}	
+
+\subsection{Tipos de sentencias}
+	\begin{itemize}
+	\item Instrucciones
+	\item Directivas (pseudoinstrucciones)
+		\begin{itemize}
+		\item Macroinstrucciones
+		\end{itemize}
+	\end{itemize}	
+
+\subsection{Traducción versus Interpretación}
+
+	\subsubsection{Traductor}
+	\begin{itemize}
+	\item Programa que convierte un programa de usuario escrito en un lenguaje (fuente) en otro lenguaje (destino)
+	\item Clasificación
+		\begin{itemize}
+		\item Compiladores
+		\item Ensambladores
+		\end{itemize}	
+	\end{itemize}	
+
+	\subsubsection{Intérprete}	
+	Programa que ejecuta directamente un programa de usuario escrito en un lenguaje fuente
+
+\subsection{Ensambladores}
+	\begin{itemize}
+	\item Definición Programa que traduce un programa escrito en lenguaje ensamblador y produce código objeto como salida
+	\item Traducción 1 a 1 a lenguaje máquina
+	\item Hay dos tipos
+		\begin{itemize}
+		\item Dos pasadas
+		\item Una pasada
+		\end{itemize}	
+	\end{itemize}	
+
+
+	\subsubsection{Primera pasada}
+		\begin{itemize}
+		\item Definición de etiquetas -> Tabla de símbolos
+		\item LC: location counter (empieza en 0 con el 1er byte del código objeto ensamblado)
+		\item Se examina cada sentencia de lenguaje ensamblador
+		\item Determina la longitud de la instrucción de máquina (reconoce opcode + modo de direccionamiento + operandos) para actualizar el LC
+		\item Revisa directivas al ensamblador.
+			-Ejemplo: definición de áreas de storage
+		\item Por cada etiqueta encontrada se fija si está en la tabla de símbolos. Si no lo está la agrega (si es la definición, registra el LC como tal, sino lo registra como referenciando a la etiqueta)
+		\end{itemize}	
+
+
+	\subsubsection{Segunda (Traducción)}
+		\begin{itemize}
+		\item Traduce el mnemónico en el opcode binario correspondiente
+		\item Usa el opcode para determinar el formato de la instrucción y la posición y tamaño de cada uno de los campos de la instrucción
+		\item Traduce cada nombre de operando en el registro o código de memoria apropiado
+		\item Traduce cada valor inmediato en un string binario en la instrucción
+		\item Traduce las referencias a etiquetas en el valor apropiado de LC usando la tabla de símbolos
+		\item Setear otros bits necesarios en la codificación de la instrucción.
+			-Ejemplo: indicadores de modo de direccionamiento, bits de código de condición, etc.
+		\end{itemize}	
+
+	\subsubsection{Código objeto}
+		Es la representación en lenguaje de máquina del código fuente programado. Es creado por un compilador o ensamblador y es luego transformado en código ejecutable por el linkeditor”
+
+
+\subsection{Más allá del ensamblado}
+	\subsubsection{Linker}
+		Programa utilitario que combina uno o más archivos con código objeto en un único archivo que contiene código ejecutable o cargable
+
+	\subsubsection{Loader}
+		Rutina de programa que copia un ejecutable a memoria principal para ser ejecutado
+
+		/*pag 3 part2*/
+
+
+	\subsubsection{Dos problemas a resolver}
+	\begin{itemize}
+	\item Direcciones externas
+		\begin{itemize}
+		\item Existen direcciones en el código objeto que no se pueden resolver en tiempo de ensamblado
+		\end{itemize}	
+	\item Reubicabilidad
+		\begin{itemize}
+		\item ¿Por qué es necesaria?
+			\begin{itemize}
+			\item No se sabe que otro programa habrá en memoria a la vez
+			\item Swap a disco en un entorno de multiprogramación
+			\end{itemize}	
+		\end{itemize}	
+	\end{itemize}	
+
+\subsection{Código objeto}
+	\begin{itemize}
+	\item Estructura interna
+		\begin{itemize}
+		\item Identificación: nombre del módulo, longitudes de las partes del módulo
+		\item Tabla de punto de entrada: lista de símbolos que pueden ser referenciados desde otros módulos
+		\item Tabla de referencias externas: lista de símbolos usados en el módulo pero definidos fuera de él y sus referencias en el código
+		\item Código ensamblado y constantes
+		\item Diccionario de reubicabilidad: lista de direcciones a ser reubicadas
+		\item Fin de módulo
+		\end{itemize}
+	\end{itemize}
+
+\subsection{Linking}
+	\begin{itemize}
+	\item Estático (linkage editor)
+	\item Dinámico
+		\begin{itemize}
+		\item Load time dynamic linking
+		\item Run time dynamic linking
+		\end{itemize}
+	\end{itemize}
+
+	\subsubsection{Estático (linkage editor)}
+		\begin{itemize}
+		\item Cada módulo objeto compilado o ensamblado es creado con referencias relativas al inicio del módulo
+		\item Se combinan todos los módulos objeto en un único load module reubicable con todas las referencias relativas al load module
+		\end{itemize}
+
+		Generación del load module
+			\begin{enumerate}
+			\item Construye tabla de todos los módulos objeto y sus longitudes
+			\item Asigna dirección base a cada módulo en base a esa tabla
+			\item Busca todas las instrucciones que referencian a memoria y les suma una constante de reubicación igual a la dirección de inicio de su módulo objeto
+			\item Busca todas las instrucciones que referencian a otros procedimientos e inserta su dirección
+			\end{enumerate}
+
+		/*pag 10 part 2*/
+
+	\subsubsection{Linking dinámico}
+		Se difiere la linkedición de algún módulo hasta luego de la creación del load module
+		
+		Dos tipos:
+			\begin{itemize}
+			\item Load time dynamic linking
+			\item Run time dynamic linking
+			\end{itemize}
+
+		\subsubsection{Load time dynamic linking}
+			\begin{enumerate}
+			\item Se levanta a memoria el load module
+			\item Cualquier referencia a un módulo externo hace que el loader busque ese módulo, lo cargue y cambie la referencia a una dirección relativa desde el inicio del load module
+			\end{enumerate}
+			
+			Ventajas
+			\begin{itemize}
+			\item Facilita la actualización de versión del módulo externo porque no hay que recompilar
+			\item El sistema operativo puede cargar y compartir una única versión del módulo externo
+			\item Facilita la creación de módulos de linkeo dinámico a los programadores (ej. Bibliotecas .so en Unix)
+			\end{itemize}
+
+		\subsubsection{Run time dynamic linking}
+			\begin{itemize}
+			\item Se pospone el linkeo hasta el tiempo de ejecución
+			\item Se mantienen las referencias a módulos externos en el programa cargado
+			\item Cuando efectivamente se invoca al módulo externo, el sistema operativo lo busca, lo carga y linkea al módulo llamador.
+			\end{itemize}
+			
+			Ventajas
+			\begin{itemize}
+			\item No ocupo memoria hasta que la necesito (ej. Bibliotecas DLL de Windows)
+			\end{itemize}
+
+		\subsubsection{Loading}
+			\begin{itemize}
+			\item Loading absoluto
+				\begin{itemize}
+				\item El compilador/ensamblador genera direcciones absolutas
+				\item Solo se puede cargar en un único espacio de memoria
+				\end{itemize}
+			Loading reubicable
+				\begin{itemize}
+				\item El compilador/ensamblador genera direcciones relativas al LC=0
+				\item El loader debe sumar un valor X a cada referencia a memoria cuando carga el módulo en memoria
+				\item El load module tiene que tener información para saber cuales son las referencia a memoria a modificar (diccionario de reubicación)
+				\end{itemize}
+			Loading por registro base
+				\begin{itemize}
+				\item Arquitecturas que usan registros base para el direccionamiento
+				\item Se asigna un valor para el registro base asociado a la ubicación en la que se cargó el programa en memoria
+				\end{itemize}
+			Loading dinámico en tiempo de ejecución
+				\begin{itemize}
+				\item Se difiere el cálculo de las direcciones absolutas hasta que realmente se vaya a ejecutar
+				\item El load module se carga a memoria con las direcciones relativas
+				\item La dirección se calcula solo al momento de ejecutar realmente la instrucción (con soporte de hardware especial)
+				\end{itemize}
+			\end{itemize}
+		/*Linking resumen momentos linkeo pag 17 part 2*/
+		/*Loading resumen de momentos de binding pag 18 part 2*/

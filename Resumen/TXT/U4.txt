@@ -1,2 +1,166 @@
-/*Assembler*/
-/*ARM*/
+Lenguaje ensamblador
+
+
+Lenguaje de máquina / código máquina
+	Definición: “Representación binaria de un programa de computadora el cual es leído e interpretado por el computador. Consiste en una secuencia de instrucciones de máquina”
+Lenguaje ensamblador
+	Definición: “Representación simbólica del lenguaje de máquina de un procesador específico.”
+
+Transición entre lenguaje de máquina y ensamblador.
+/*U4 p1 pag 3*/
+
+¿Por qué usarlo aún hoy?
+	Debugging y verificación
+	Desarrollar compiladores
+	Sistemas embebidos
+	Drivers de hardware y código de sistema
+	Acceder a instrucciones no disponibles en un lenguaje de alto nivel
+	Código automodificable
+	Optimizar código en tamaño
+	Optimizar código en velocidad
+	Biblioteca de funciones
+
+Elementos que lo componen
+	Etiquetas
+	Mnemónicos
+	Operandos
+	Comentarios
+
+Tipos de sentencias
+	Instrucciones
+	Directivas (pseudoinstrucciones)
+		Macroinstrucciones
+
+Traducción versus Interpretación
+
+Traductor
+	Definición: “Programa que convierte un programa de usuario escrito en un lenguaje (fuente) en otro lenguaje (destino)
+	Clasificación:
+		Compiladores
+		Ensambladores
+
+Intérprete
+Definición: “Programa que ejecuta directamente un programa de usuario escrito en un lenguaje fuente”
+
+Ensambladores
+	Definición: “Programa que traduce un programa escrito en lenguaje ensamblador y produce código objeto como salida”
+	Traducción 1 a 1 a lenguaje máquina
+	Hay dos tipos:
+		Dos pasadas
+		Una pasada
+
+
+	Primera pasada 
+		Definición de etiquetas -> Tabla de símbolos
+		LC: location counter (empieza en 0 con el 1er byte del código objeto ensamblado)
+		Se examina cada sentencia de lenguaje ensamblador
+		Determina la longitud de la instrucción de máquina (reconoce opcode + modo de direccionamiento + operandos) para actualizar el LC
+		Revisa directivas al ensamblador.
+			-Ejemplo: definición de áreas de storage
+		Por cada etiqueta encontrada se fija si está en la tabla de símbolos. Si no lo está la agrega (si es la definición, registra el LC como tal, sino lo registra como referenciando a la etiqueta)
+
+
+	Segunda (Traducción)
+		Traduce el mnemónico en el opcode binario correspondiente
+		Usa el opcode para determinar el formato de la instrucción y la posición y tamaño de cada uno de los campos de la instrucción
+		Traduce cada nombre de operando en el registro o código de memoria apropiado
+		Traduce cada valor inmediato en un string binario en la instrucción
+		Traduce las referencias a etiquetas en el valor apropiado de LC usando la tabla de símbolos
+		Setear otros bits necesarios en la codificación de la instrucción.
+			-Ejemplo: indicadores de modo de direccionamiento, bits de código de condición, etc.
+
+	Código objeto
+		Definición: “Es la representación en lenguaje de máquina del código fuente programado. Es creado por un compilador o ensamblador y es luego transformado en código ejecutable por el linkeditor”
+
+
+Más allá del ensamblado
+	Linker
+		Definición: “Programa utilitario que combina uno o más archivos con código objeto en un único archivo que contiene código ejecutable o cargable”
+
+	Loader
+		Definición: “Rutina de programa que copia un ejecutable a memoria principal para ser ejecutado”
+
+		/*pag 3 part2*/
+
+
+Dos problemas a resolver
+	Direcciones externas
+		Existen direcciones en el código objeto que no se pueden resolver en tiempo de ensamblado
+	Reubicabilidad
+		¿Por qué es necesaria?
+			No se sabe que otro programa habrá en memoria a la vez
+			Swap a disco en un entorno de multiprogramación
+
+Código objeto
+
+	Estructura interna
+		○Identificación: nombre del módulo, longitudes de las partes del módulo
+		○Tabla de punto de entrada: lista de símbolos que pueden ser referenciados desde otros módulos
+		○Tabla de referencias externas: lista de símbolos usados en el módulo pero definidos fuera de él y sus referencias en el código
+		○Código ensamblado y constantes
+		○Diccionario de reubicabilidad: lista de direcciones a ser reubicadas
+		○Fin de módulo
+
+Linking
+	Estático (linkage editor)
+	Dinámico
+		Load time dynamic linking
+		Run time dynamic linking
+
+	Estático (linkage editor)
+		Cada módulo objeto compilado o ensamblado es creado con referencias relativas al inicio del módulo
+		Se combinan todos los módulos objeto en un único load module reubicable con todas las referencias relativas al load module
+
+		Generación del load module
+			1.Construye tabla de todos los módulos objeto y sus longitudes
+			2.Asigna dirección base a cada módulo en base a esa tabla
+			3.Busca todas las instrucciones que referencian a memoria y les suma una constante de reubicación igual a la dirección de inicio de su módulo objeto
+			4.Busca todas las instrucciones que referencian a otros procedimientos e inserta su dirección
+
+		/*pag 10 part 2*/
+
+	Linking dinámico
+		Se difiere la linkedición de algún módulo hasta luego de la creación del load module
+		
+		Dos tipos:
+			Load time dynamic linking
+			Run time dynamic linking
+
+		Load time dynamic linking
+			1.Se levanta a memoria el load module
+			2.Cualquier referencia a un módulo externo hace que el loader busque ese módulo, lo cargue y cambie la referencia a una dirección relativa desde el inicio del load module
+			
+			Ventajas
+				Facilita la actualización de versión del módulo externo porque no hay que recompilar
+				El sistema operativo puede cargar y compartir una única versión del módulo externo
+				Facilita la creación de módulos de linkeo dinámico a los programadores (ej. Bibliotecas .so en Unix)
+
+		Run time dynamic linking
+			Se pospone el linkeo hasta el tiempo de ejecución
+			Se mantienen las referencias a módulos externos en el programa cargado
+			Cuando efectivamente se invoca al módulo externo, el sistema operativo lo busca, lo carga y linkea al módulo llamador.
+			
+			Ventajas
+				No ocupo memoria hasta que la necesito (ej. Bibliotecas DLL de Windows)
+
+		Loading
+			Loading absoluto
+				El compilador/ensamblador genera direcciones absolutas
+				Solo se puede cargar en un único espacio de memoria
+			Loading reubicable
+				El compilador/ensamblador genera direcciones relativas al LC=0
+				El loader debe sumar un valor X a cada referencia a memoria cuando carga el módulo en memoria
+				El load module tiene que tener información para saber cuales son las referencia a memoria a modificar (diccionario de reubicación)
+			Loading por registro base
+				Arquitecturas que usan registros base para el direccionamiento
+				Se asigna un valor para el registro base asociado a la ubicación en la que se cargó el programa en memoria
+			Loading dinámico en tiempo de ejecución
+				Se difiere el cálculo de las direcciones absolutas hasta que realmente se vaya a ejecutar
+				El load module se carga a memoria con las direcciones relativas
+				La dirección se calcula solo al momento de ejecutar realmente la instrucción (con soporte de hardware especial)
+
+		/*Linking resumen momentos linkeo pag 17 part 2*/
+		/*Loading resumen de momentos de binding pag 18 part 2*/
+
+Intel x86
+ARM
