@@ -1,0 +1,105 @@
+
+==========================================================================
+¿Cuál es la finalidad de la existencia de los números desnormalizados en el formato de punto flotante IEEE 754? Grafique los valores extremos del rango de números desnormalizados y dé su configuración hexadecimal en el formato.
+
+El formato IEEE 754 asegura que siempre habrá un "1" implícito por lo que, si quisieramos representar por ejemplo el 0 en el formato, no se podría.
+
+La solución a esto es los números desnormalizados. Los números desnormalizados no asumen que existe un 0 implícito, tal número es un cero. En ese caso, sí podríamos representar el cero, haciendo que la mantisa sea cero, e indicando que el exponente es cero. 
+
+Entonces los rangos de valores vendrían a ser
+
+Maximos:
+0 00000000 11111111111111111111111
+1 00000000 11111111111111111111111
+
+Minimos:
+0 00000000 00000000000000000000001
+1 00000000 00000000000000000000001
+
+==========================================================================
+
+Explique claramente que es y cómo funciona el modo de direccionamiento pre-indexado autoindexado en arquitectura ARM de 32 bits. De un ejemplo concreto con una instrucción.
+
+Pre-indexado - base con desplazamiento: Registro indirecto con offset
+LDR R0, [R1, #4]
+Carga en R0 la palabra apuntada por R1+4
+
+Pre-indexado - autoindexado : Registro indirecto con pre-incremento
+
+LDR R0, [R1,#4]!
+Carga R0 con la palabra apuntado por R1+4, luego, actualiza R1 añadiendole 4.
+ 
+===========================================================================
+Enuncie al menos 4 características de la arquitectura de procesadores RISC. Ejemplifique cada una de ellas con alguna arquitectura vista en clase.
+
+- Codigo complejo (tamaño de codigo largo)
+En ARM necesitamos usar más lineas de código para hacer algún programa, comparado con intel x86, el cual requiere menos.
+
+- Set de Instrucciones pequeño
+A comparación de ASM x86, ARM posee un set de instrucciones reducido.
+
+- Basado en la arquitectura load/store 
+Las instrucciones de procesamiento de datos actúan únicamente sobre registros.
+
+- Muchos registros de procesador de uso general
+La arquitectura ARM vista en clase posee muchos registros de uso general.
+
+- Instrucciones simples (un ciclo de reloj)
+La mayor parte de instrucciones se ejecutan en un solo ciclo de reloj
+
+===========================================================================
+
+Indique claramente que es el linking dinamico en tiempo de carga y cuales son las ventajas frente al linking estático.
+
+
+El linkeo de un programa puede ser ejecutado a la hora de compilar el programa u al cargar el programa con el loader, incluso a la hora de correrlo, esto es ejecutado por "linkers", también llamados link editors. 
+
+write -> compile  -> link  -> load  -> execute
+
+Static linking: Copia todos los modulos usados en el programa en el ejecutable generado, esto es hecho por el linker en el último paso de la compilación. A la hora de cargar el programa, el sistema operativo coloca en memoria un unico archivo que contiene el ejecutable. 
+
+Programas linkeados estáticamente son más largos porque colocan programas externos son colocados en el ejecutable.
+
+Si algún programa externo cambió, el ejecutable tiene que ser recompilado.
+
+Programadas Static linked corren en un tiempo "constante"
+
+No poseen errores de compatibilidad (si respetamos la arquitectura) pues no necesitan de librerías adicionales.
+
+Dynamic linking:
+Los "nombres" de las librerías externas son colocadas en el ejecutable, y, el "linking" ocurrer a la hora de ejecutar el programa, en el cual, las librerías y el ejecutable son colocados en memoria. 
+
+Una gran ventaja del linkeo dinamico, es que no necesitamos recompilar el ejecutable si las librerías usadas cambian. 
+
+En el linkeo dinamico, si una libreria es cargada en memoria, y otro programa hará uso de esta, la librería no es cargada dos veces, ahorrandonos tiempo de carga/memoria.
+
+Los programas linkeados dinamicamente usualemente se ejecutan más lento que los linkeados estaticamente (porque tiene que buscar las librerías)
+
+En los programas linkeados dinamicamente, si no poseemos de "x" librerías, el programa no funcionará correctamente.
+
+Load dynamic linking / Run time dynamic linking
+
+La diferencia es que, en el load Dynamic Linking, el modulo es cargado en memoria, y en el run time dynamic linking, el linkeo se pospone hasta la ejecución actual, lo cual ahorra memoria.
+
+
+===========================================================================
+
+Explique claramente de que se trata la técnica de procesamiento en paralelo por multiprocesadores. Identifique cuales son las dos implementaciones existentes y grafiquelas.
+
+El paralelismo es una función que realiza el procesador para ejecutar varias tareas al mismo tiempo, es decir, puede realizar varios cálculos simultáneamente, basados en el principio de dividir los problemas grandes para obtener varios problemas pequeños.
+
+Múltiples CPU's que comparten memoria común
+CPU's fuertemente acoplados
+
+Single bus y memoria compartida (centralizada) - UMA
+
+
+CPUS con memoria local y memoria compartida)- NUMA
+
+===========================================================================
+
+¿Cuáles son las ventajas del nivel 5 de la arquitectura de discos RAID con respecto al nivel 4? Grafique la distribución de la información en los discos en ambos niveles.
+
+===========================================================================
+
+Codificar un programa en assembler ARM de 32 bits que recorra un vector de enteros y los imprima por salida estándar.

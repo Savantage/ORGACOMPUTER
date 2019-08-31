@@ -1,0 +1,91 @@
+Loader
+Loader lo carga deja en memoria
+
+Dos problemas a resolver
+¿Por que es necesario la linkedicion? Hay circunstancias que se tienen que resolver para que sea todo mucho mas versatil y quede todo mas simple y crto. Aporta para resolver dos probleas
+	Direcciones externas:
+		existen direcciones en el codigo objeto que no se pueden resolver en tiempo de ensamblado.
+		El programador no programa TODO lo que va a hacer un programa. Al necesitar que el programa haga uso de una funcion para algo muchas veces se puede usar algo hecho ya por alguien antes.
+		Le "mencionas" al codigo que existe, pero no esta en el codigo sino en una DIRECCION EXTERNA. 
+		Se encarga entonces de "traer" ese codigo que está escrito en otra parte.
+
+	Reubicabilidad:
+		Va a haber referencias a memoria que el compilador o ensamblador no tiene por que saber cual van a ser.
+		EJEMPLO EN CODIGO DE INTEL, lineas al usar variables guardadas (num1), al pedir que sume un dato con num1, en assembler apareceria 00000000 A1[DIRECCION DE NUM1]
+		Se encarga de ubicar en la memoria del computador, referenciando las dirreciones y encargandose de que sea un manejo correcto.
+		Tambien se encarga de realizar el swap a disco en un entorno de multiprogramacion.
+
+
+COdigo objeto
+	Estructura interna generica
+	_______________________________________
+	|										|
+	| END OF MODULE							|
+	|_______________________________________|
+	|										|
+	| RELOCATION DICTIONARY					|
+	|_______________________________________|
+	|										|
+	| MACHINE INSTRUCTIONS AND CONSTANTS	|
+	|_______________________________________|
+	|										|
+	| EXTERNAL REFERENCE TABLE				|
+	|_______________________________________|
+	|										|
+	| ENTRY POINT TABLE						|
+	|_______________________________________|
+	|										|
+	| IDENTIFICATION						|
+	|_______________________________________|
+
+
+LINKING ESTATICO
+Generacion del load module
+	-Construye tabla de todos los modulos pobjet y sus lonitudes
+	-Asigna direccion base4 a cada moulo en base a sesa table
+	-Busca todas las instrucciones que referencian a memoria y les suma una constante de reubicacion igual a la direccion de inicio de su modulo objeto (Ejtengo una direccion a una parte del modulo de A, y la modifico sumandole la direccion de inicio del bloque A)
+	-Busca todas las instrucciones que referencian a otros procedimientos e inserta su direccion.
+
+
+EL PRIMER MODULO NO LO PONE AL PRINCIPIO DEL BLOQUE TOTAL DE MEMORIA SINO EN 100
+UNA POSIBLE CAUSA ES QUE PUEDE HABER EN EL EJECUTABLE CIERTA SECCION ESPECIFICA DEL EJECUTABLE DESTINADO A COSAS COMO TENER UN HEADER.
+
+Linking DINAMICO
+	Difiere la linkedicion de algun modulo hasta luego de la creacion del load module
+
+	Hay dos tipos:
+		-Load time dynamic linking, ocurre al ejecutar el loader
+			Se levanta a memoria del load module
+			Cualquier referencia a un modulo externo hacer que el loader busque ese modulo, lo cargue y cambie la referencia a una direccion relativa desde el inicio del load module
+			Ventajas: 
+				Facilita la actualizacion de version del modulo externo porque no hay que recomplilar
+				El sistema operativo puede cargar y compartir una unica version del modulo externo
+				Facilita la creacion de modulo de linkeo dinamico a los programadores(ej bilbiotecas .so en Unix)
+		-Run time dynamic linking, ocurre en el momento en el que cada instruccion de maquina se ejecuta
+			Se pospone el linkeo hasta el tiempo de ejecucion
+			Se mantienen las referencias a modulos externos en el programa cargado
+			Cuando efectivamente se invoca al modulo externo, el sistema operativo lo busca, lo carga y linkea al modulo llamador.
+			Ventajas:
+				No ocupo memoria hasta que la necesito (ej bibliotecas DLL de Windows)
+
+	Cuando hay una fraccion de codigo que puede varias frecuentemente (poractualizaciones, por ejemplo) para no tener que realizar la linkedicion cada vez se realiza la linkedicion dinamica.
+
+LOADING
+	Loading absoluto (Serviria solo si lo quiero poner en un lugar de la memoria(no sirve) )
+		El compilador / ensamblador genera direcciones absolutas.
+		Solo se puede cargar en un unico espacio de memoria.
+	Loading reubicable (tampoco sirve, son como absolutas pero asignadas por el loader)
+		El compilador / ensamblador genera direcciones relativasa LC=0
+		El loader debe sumar un valor X a cada referencia a memoria cuando carga el modulo en memoria
+		El load module tiene que tener que tener informacion para saber qué referencia a memoria a modificar (diccionario de reubicabilidad)
+	Loading por registro base (se usa en el mainframe de IBM, calcula el valor relativo a un registro, no al absoluto)
+		Arquitecturas que usan registros base para el direccionamiento
+		Se asigna un valor para el registro base asociado a la ubicacion en la que se cargo el programa en memoria
+	Loading dinamico en tiempo de ejecucion (el que se suele usar)
+		Si difiere el calculo de direcciones absolutas
+		El load module se carga a memoria con las direcciones
+		La direccion se calcula solo al momento de ejecutar realmente la instruccion ( con soporte de hardware especial)
+
+MMU Memory management unit:	Ayuda al recalculo de pasar una direccion relativa a una real (es como se suele resolver)
+
+

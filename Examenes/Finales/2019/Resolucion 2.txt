@@ -1,0 +1,29 @@
+==========================================================================
+
+Indique cuales son las microinstrucciones necesarias para ejecutar la instrucción SUMAR 3,100 en la máquina SuperAbacus, siendo  3 un registro de uso general y 100 un valor inmediato. Se pide además graficar el flujo de apertura de compuertas usadas en la fase de búsqueda y ejecución de dicha instrucción.
+
+(Sumar Registro)
+Sumar 3, 4
+
+El contenido del primer registro es colocado en el acumulador
+
+AC <= R3
+
+Se suma el contenido del segundo registro contra el acumulador
+
+AC <= R4 + AC
+
+Se copia el resultado en el primer registro
+
+R3 <= AC
+
+
+(Sumar Inmediato)
+El contenido del primer registro es colocado en el acumulador
+
+AC <= R3
+
+
+
+
+==========================================================================
